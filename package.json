@@ -5,13 +5,17 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "generate-client": "openapi --input https://csuot.herokuapp.com/v1/openapi.json --output ./src/client --client axios"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "core-js": "^3.6.5",
+    "form-data": "^4.0.0",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
+    "vuetify": "^2.6.0",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
@@ -27,8 +31,13 @@
     "@vue/eslint-config-typescript": "^7.0.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "openapi-typescript-codegen": "^0.20.1",
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
     "typescript": "~4.1.5",
-    "vue-template-compiler": "^2.6.11"
+    "vue-cli-plugin-vuetify": "^2.4.8",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.7.0"
   },
   "eslintConfig": {
     "root": true,
