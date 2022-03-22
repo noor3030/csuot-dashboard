@@ -103,7 +103,7 @@ import { UsersService, Paging_User_, User, UserGender } from "@/client";
 export default {
   data() {
     return {
-      genders: [UserGender.MALE, UserGender.FEMALE],
+      genders: Object.values(UserGender), // [UserGender.MALE, UserGender.FEMALE],
       editedItem: {} as any,
       dialogEdit: false,
       dialogDelete: false,
