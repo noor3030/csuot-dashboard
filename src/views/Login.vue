@@ -20,8 +20,7 @@
                     color="#232f34"
                     v-model="form.email"
                     label="E-mail"
-                    value="pts2@gmail.com"
-                    :rules="rules.email"
+                    :rules="email"
                     required
                     prepend-icon="mdi-email"
                     type="email"
@@ -33,14 +32,19 @@
                     :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                     label="Password"
                     :type="showPassword ? 'text' : 'password'"
-                    :rules="rules.passowrd"
+                    :rules="password"
                     hint="At least 8 characters"
                     class="input-group--focused"
                     @click:append="showPassword = !showPassword"
                     prepend-icon="mdi-lock"
                   ></v-text-field>
                   <div class="text-center mt-3">
-                    <v-btn rounded type="submit" color="#232f34" dark 
+                    <v-btn
+                      rounded
+                      type="submit"
+                      color="#232f34"
+                      dark
+                     
                       >SIGN IN
                     </v-btn>
                   </div>
@@ -63,10 +67,21 @@
         </v-card>
       </v-col>
     </v-row>
+    <div class="text-center">
+      <v-dialog v-model="dialog" width="500">
+        <v-card>
+          <v-card-title>Error ouccurred!</v-card-title>
+          <v-card-actions>
+            <v-btn v-btn color="primary" text @click="dialog = false">Ok</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
   </v-container>
 </template>
 <script lang="ts">
 import { AuthService } from "@/client";
+import router from "@/router";
 
 export default {
   data() {
@@ -75,24 +90,37 @@ export default {
       email: "",
     });
     return {
+      dialog: false,
+      loding: false,
       showPassword: true,
       form: Object.assign({}, defaultForm),
-      rules: {
-        email: [
-          (v: any) => !!v || "E-mail is required",
-          (v: any) => /.+@.+/.test(v) || "E-mail must be valid",
-        ],
-        password: [(v: any) => v.length >= 8 || "Min 8 characters"],
-      },
+
+      email: [
+        (v: any) => !!v || "E-mail is required",
+        (v: any) => /.+@.+/.test(v) || "E-mail must be valid",
+      ],
+      password: [(v: any) => v.length >= 8 || "Min 8 characters"],
     };
   },
+
   methods: {
     login() {
       AuthService.loginAccessTokenV1AuthLoginAccessTokenPost({
         username: this.form.email,
         password: this.form.password,
-      });
+      })
+        .then((value) => {
+          localStorage.setItem("token", value.access_token);
+          this.$router.push('/users')
+        })
+        .catch((error) => {
+          console.log(error);
+          this.dialog = true;
+        });
+      this.loding = false;
     },
+
+    
   },
 };
 </script>

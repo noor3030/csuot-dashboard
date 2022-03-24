@@ -11,5 +11,11 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
+  },
+  getters:{
+    isLoggedIn(){
+      return localStorage.getItem("token")  != null
+      
+    }
   }
 })
