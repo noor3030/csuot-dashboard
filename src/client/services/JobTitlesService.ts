@@ -20,7 +20,7 @@ export class JobTitlesService {
      * @returns Paging_JobTitle_ Successful Response
      * @throws ApiError
      */
-    public static readJobTitlesV1JobTitlesGet(
+    public static readJobTitles(
 skip?: number,
 limit: number = 50,
 ): CancelablePromise<Paging_JobTitle_> {
@@ -44,7 +44,7 @@ limit: number = 50,
      * @returns app__schemas__job_title__JobTitle Successful Response
      * @throws ApiError
      */
-    public static createJobTitleV1JobTitlesPost(
+    public static createJobTitle(
 requestBody: JobTitleCreate,
 ): CancelablePromise<app__schemas__job_title__JobTitle> {
         return __request(OpenAPI, {
@@ -65,7 +65,7 @@ requestBody: JobTitleCreate,
      * @returns app__schemas__job_title__JobTitle Successful Response
      * @throws ApiError
      */
-    public static readJobTitleV1JobTitlesIdGet(
+    public static readJobTitle(
 id: string,
 ): CancelablePromise<app__schemas__job_title__JobTitle> {
         return __request(OpenAPI, {
@@ -88,7 +88,7 @@ id: string,
      * @returns app__schemas__job_title__JobTitle Successful Response
      * @throws ApiError
      */
-    public static updateJobTitleV1JobTitlesIdPut(
+    public static updateJobTitle(
 id: string,
 requestBody: JobTitleUpdate,
 ): CancelablePromise<app__schemas__job_title__JobTitle> {
@@ -113,7 +113,7 @@ requestBody: JobTitleUpdate,
      * @returns app__schemas__job_title__JobTitle Successful Response
      * @throws ApiError
      */
-    public static deleteJobTitleV1JobTitlesIdDelete(
+    public static deleteJobTitle(
 id: string,
 ): CancelablePromise<app__schemas__job_title__JobTitle> {
         return __request(OpenAPI, {

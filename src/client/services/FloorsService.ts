@@ -20,7 +20,7 @@ export class FloorsService {
      * @returns Paging_Floor_ Successful Response
      * @throws ApiError
      */
-    public static readFloorsV1FloorsGet(
+    public static readFloors(
 skip?: number,
 limit: number = 50,
 ): CancelablePromise<Paging_Floor_> {
@@ -44,7 +44,7 @@ limit: number = 50,
      * @returns Floor Successful Response
      * @throws ApiError
      */
-    public static createFloorV1FloorsPost(
+    public static createFloor(
 requestBody: FloorCreate,
 ): CancelablePromise<Floor> {
         return __request(OpenAPI, {
@@ -65,7 +65,7 @@ requestBody: FloorCreate,
      * @returns Floor Successful Response
      * @throws ApiError
      */
-    public static readFloorV1FloorsIdGet(
+    public static readFloor(
 id: string,
 ): CancelablePromise<Floor> {
         return __request(OpenAPI, {
@@ -88,7 +88,7 @@ id: string,
      * @returns Floor Successful Response
      * @throws ApiError
      */
-    public static updateFloorV1FloorsIdPut(
+    public static updateFloor(
 id: string,
 requestBody: FloorUpdate,
 ): CancelablePromise<Floor> {
@@ -113,7 +113,7 @@ requestBody: FloorUpdate,
      * @returns Floor Successful Response
      * @throws ApiError
      */
-    public static deleteFloorV1FloorsIdDelete(
+    public static deleteFloor(
 id: string,
 ): CancelablePromise<Floor> {
         return __request(OpenAPI, {

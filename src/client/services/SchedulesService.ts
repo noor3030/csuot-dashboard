@@ -20,7 +20,7 @@ export class SchedulesService {
      * @returns ScheduleSchemas Successful Response
      * @throws ApiError
      */
-    public static readAllScheduleV1ScheduleAllGet(): CancelablePromise<ScheduleSchemas> {
+    public static readAllSchedule(): CancelablePromise<ScheduleSchemas> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/schedule/all',
@@ -33,16 +33,16 @@ export class SchedulesService {
  * q2
      * @param stageId 
      * @param teacherId 
-     * @param roomId 
-     * @param lessonId 
+     * @param classroomId 
+     * @param subjectId 
      * @returns ScheduleDetails Successful Response
      * @throws ApiError
      */
-    public static readScheduleV1ScheduleGet(
+    public static readSchedule(
 stageId?: string,
 teacherId?: string,
-roomId?: string,
-lessonId?: string,
+classroomId?: string,
+subjectId?: string,
 ): CancelablePromise<ScheduleDetails> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -50,8 +50,8 @@ lessonId?: string,
             query: {
                 'stage_id': stageId,
                 'teacher_id': teacherId,
-                'room_id': roomId,
-                'lesson_id': lessonId,
+                'classroom_id': classroomId,
+                'subject_id': subjectId,
             },
             errors: {
                 422: `Validation Error`,
@@ -69,7 +69,7 @@ lessonId?: string,
      * @returns ImageUrl Successful Response
      * @throws ApiError
      */
-    public static getScheduleImageUrlV1ScheduleImageGet(
+    public static getScheduleImageUrl(
 stageId: string,
 theme?: ColorThemeType,
 language?: Language,

@@ -20,7 +20,7 @@ export class CardsService {
      * @returns Paging_Card_ Successful Response
      * @throws ApiError
      */
-    public static readCardsV1CardsGet(
+    public static readCards(
 skip?: number,
 limit: number = 50,
 ): CancelablePromise<Paging_Card_> {
@@ -44,7 +44,7 @@ limit: number = 50,
      * @returns Card Successful Response
      * @throws ApiError
      */
-    public static createCardV1CardsPost(
+    public static createCard(
 requestBody: CardCreate,
 ): CancelablePromise<Card> {
         return __request(OpenAPI, {
@@ -65,7 +65,7 @@ requestBody: CardCreate,
      * @returns Card Successful Response
      * @throws ApiError
      */
-    public static readCardV1CardsIdGet(
+    public static readCard(
 id: string,
 ): CancelablePromise<Card> {
         return __request(OpenAPI, {
@@ -88,7 +88,7 @@ id: string,
      * @returns Card Successful Response
      * @throws ApiError
      */
-    public static updateCardV1CardsIdPut(
+    public static updateCard(
 id: string,
 requestBody: CardUpdate,
 ): CancelablePromise<Card> {
@@ -113,7 +113,7 @@ requestBody: CardUpdate,
      * @returns Card Successful Response
      * @throws ApiError
      */
-    public static deleteCardV1CardsIdDelete(
+    public static deleteCard(
 id: string,
 ): CancelablePromise<Card> {
         return __request(OpenAPI, {

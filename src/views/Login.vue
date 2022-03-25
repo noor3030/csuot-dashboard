@@ -86,7 +86,7 @@ export default Vue.extend({
     });
     return {
       dialog: false,
-      loding: false,
+      loading: false,
       showPassword: true,
       form: Object.assign({}, defaultForm),
 
@@ -100,7 +100,7 @@ export default Vue.extend({
 
   methods: {
     login() {
-      AuthService.loginAccessTokenV1AuthLoginAccessTokenPost({
+      AuthService.loginAccessToken({
         username: this.form.email,
         password: this.form.password,
       })
@@ -112,7 +112,7 @@ export default Vue.extend({
           console.log(error);
           this.dialog = true;
         });
-      this.loding = false;
+      this.loading = false;
     },
   },
 });

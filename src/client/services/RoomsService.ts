@@ -20,7 +20,7 @@ export class RoomsService {
      * @returns Paging_Room_ Successful Response
      * @throws ApiError
      */
-    public static readRoomsV1RoomsGet(
+    public static readRooms(
 skip?: number,
 limit: number = 50,
 ): CancelablePromise<Paging_Room_> {
@@ -44,7 +44,7 @@ limit: number = 50,
      * @returns Room Successful Response
      * @throws ApiError
      */
-    public static createRoomV1RoomsPost(
+    public static createRoom(
 requestBody: RoomCreate,
 ): CancelablePromise<Room> {
         return __request(OpenAPI, {
@@ -65,7 +65,7 @@ requestBody: RoomCreate,
      * @returns Room Successful Response
      * @throws ApiError
      */
-    public static readRoomV1RoomsIdGet(
+    public static readRoom(
 id: string,
 ): CancelablePromise<Room> {
         return __request(OpenAPI, {
@@ -88,7 +88,7 @@ id: string,
      * @returns Room Successful Response
      * @throws ApiError
      */
-    public static updateRoomV1RoomsIdPut(
+    public static updateRoom(
 id: string,
 requestBody: RoomUpdate,
 ): CancelablePromise<Room> {
@@ -113,7 +113,7 @@ requestBody: RoomUpdate,
      * @returns Room Successful Response
      * @throws ApiError
      */
-    public static deleteRoomV1RoomsIdDelete(
+    public static deleteRoom(
 id: string,
 ): CancelablePromise<Room> {
         return __request(OpenAPI, {

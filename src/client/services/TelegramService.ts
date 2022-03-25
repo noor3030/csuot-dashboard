@@ -1,43 +1,33 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Paging_User_ } from '../models/Paging_User_';
-import type { StaffType } from '../models/StaffType';
-import type { User } from '../models/User';
-import type { UserCreate } from '../models/UserCreate';
-import type { UserUpdate } from '../models/UserUpdate';
+import type { Paging_TelegramUser_ } from '../models/Paging_TelegramUser_';
+import type { TelegramUser } from '../models/TelegramUser';
+import type { TelegramUserCreate } from '../models/TelegramUserCreate';
+import type { TelegramUserUpdate } from '../models/TelegramUserUpdate';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
-export class OthersService {
+export class TelegramService {
 
     /**
-     * Read Users
-     * Retrieve users.
-     * @param query 
-     * @param roleId 
-     * @param userType 
+     * Read Telegram Users
+     * Retrieve telegram_users.
      * @param skip 
      * @param limit 
-     * @returns Paging_User_ Successful Response
+     * @returns Paging_TelegramUser_ Successful Response
      * @throws ApiError
      */
-    public static readUsersV1UsersGet(
-query?: string,
-roleId?: string,
-userType?: Array<StaffType>,
+    public static readTelegramUsers(
 skip?: number,
 limit: number = 50,
-): CancelablePromise<Paging_User_> {
+): CancelablePromise<Paging_TelegramUser_> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/v1/users/',
+            url: '/v1/telegram/',
             query: {
-                'query': query,
-                'role_id': roleId,
-                'user_type': userType,
                 'skip': skip,
                 'limit': limit,
             },
@@ -48,18 +38,18 @@ limit: number = 50,
     }
 
     /**
-     * Create User
-     * Create new user.
+     * Create Telegram User
+     * Create new telegram_user.
      * @param requestBody 
-     * @returns User Successful Response
+     * @returns TelegramUser Successful Response
      * @throws ApiError
      */
-    public static createUserV1UsersPost(
-requestBody: UserCreate,
-): CancelablePromise<User> {
+    public static createTelegramUser(
+requestBody: TelegramUserCreate,
+): CancelablePromise<TelegramUser> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/v1/users/',
+            url: '/v1/telegram/',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -69,18 +59,18 @@ requestBody: UserCreate,
     }
 
     /**
-     * Read User
-     * Get user by ID.
+     * Read Telegram User
+     * Get telegram_user by ID.
      * @param id 
-     * @returns User Successful Response
+     * @returns TelegramUser Successful Response
      * @throws ApiError
      */
-    public static readUserV1UsersIdGet(
+    public static readTelegramUser(
 id: string,
-): CancelablePromise<User> {
+): CancelablePromise<TelegramUser> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/v1/users/{id}',
+            url: '/v1/telegram/{id}',
             path: {
                 'id': id,
             },
@@ -91,20 +81,20 @@ id: string,
     }
 
     /**
-     * Update User
-     * Update a user.
+     * Update Telegram User
+     * Update a telegram_user.
      * @param id 
      * @param requestBody 
-     * @returns User Successful Response
+     * @returns TelegramUser Successful Response
      * @throws ApiError
      */
-    public static updateUserV1UsersIdPut(
+    public static updateTelegramUser(
 id: string,
-requestBody: UserUpdate,
-): CancelablePromise<User> {
+requestBody: TelegramUserUpdate,
+): CancelablePromise<TelegramUser> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/v1/users/{id}',
+            url: '/v1/telegram/{id}',
             path: {
                 'id': id,
             },
@@ -117,18 +107,18 @@ requestBody: UserUpdate,
     }
 
     /**
-     * Delete User
-     * Delete a user.
+     * Delete Telegram User
+     * Delete a telegram_user.
      * @param id 
-     * @returns User Successful Response
+     * @returns TelegramUser Successful Response
      * @throws ApiError
      */
-    public static deleteUserV1UsersIdDelete(
+    public static deleteTelegramUser(
 id: string,
-): CancelablePromise<User> {
+): CancelablePromise<TelegramUser> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/v1/users/{id}',
+            url: '/v1/telegram/{id}',
             path: {
                 'id': id,
             },

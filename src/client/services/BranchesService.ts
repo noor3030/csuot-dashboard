@@ -20,7 +20,7 @@ export class BranchesService {
      * @returns Paging_Branch_ Successful Response
      * @throws ApiError
      */
-    public static readBranchesV1BranchesGet(
+    public static readBranches(
 skip?: number,
 limit: number = 50,
 ): CancelablePromise<Paging_Branch_> {
@@ -44,7 +44,7 @@ limit: number = 50,
      * @returns app__schemas__branch__Branch Successful Response
      * @throws ApiError
      */
-    public static createBranchV1BranchesPost(
+    public static createBranch(
 requestBody: BranchCreate,
 ): CancelablePromise<app__schemas__branch__Branch> {
         return __request(OpenAPI, {
@@ -65,7 +65,7 @@ requestBody: BranchCreate,
      * @returns app__schemas__branch__Branch Successful Response
      * @throws ApiError
      */
-    public static readBranchV1BranchesIdGet(
+    public static readBranch(
 id: string,
 ): CancelablePromise<app__schemas__branch__Branch> {
         return __request(OpenAPI, {
@@ -88,7 +88,7 @@ id: string,
      * @returns app__schemas__branch__Branch Successful Response
      * @throws ApiError
      */
-    public static updateBranchV1BranchesIdPut(
+    public static updateBranch(
 id: string,
 requestBody: BranchUpdate,
 ): CancelablePromise<app__schemas__branch__Branch> {
@@ -113,7 +113,7 @@ requestBody: BranchUpdate,
      * @returns app__schemas__branch__Branch Successful Response
      * @throws ApiError
      */
-    public static deleteBranchV1BranchesIdDelete(
+    public static deleteBranch(
 id: string,
 ): CancelablePromise<app__schemas__branch__Branch> {
         return __request(OpenAPI, {

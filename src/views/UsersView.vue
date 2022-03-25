@@ -191,7 +191,7 @@ export default Vue.extend({
   },
   methods: {
     getUsers(): void {
-      UsersService.readUsersV1UsersGet().then((value) => {
+      UsersService.readUsers().then((value) => {
         this.users = value;
       });
     },

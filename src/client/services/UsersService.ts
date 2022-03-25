@@ -16,30 +16,30 @@ export class UsersService {
     /**
      * Read Users
      * Retrieve users.
+     * @param skip 
+     * @param limit 
      * @param query 
      * @param roleId 
      * @param userType 
-     * @param skip 
-     * @param limit 
      * @returns Paging_User_ Successful Response
      * @throws ApiError
      */
-    public static readUsersV1UsersGet(
+    public static readUsers(
+skip?: number,
+limit: number = 50,
 query?: string,
 roleId?: string,
 userType?: Array<StaffType>,
-skip?: number,
-limit: number = 50,
 ): CancelablePromise<Paging_User_> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/users/',
             query: {
+                'skip': skip,
+                'limit': limit,
                 'query': query,
                 'role_id': roleId,
                 'user_type': userType,
-                'skip': skip,
-                'limit': limit,
             },
             errors: {
                 422: `Validation Error`,
@@ -54,7 +54,7 @@ limit: number = 50,
      * @returns User Successful Response
      * @throws ApiError
      */
-    public static createUserV1UsersPost(
+    public static createUser(
 requestBody: UserCreate,
 ): CancelablePromise<User> {
         return __request(OpenAPI, {
@@ -75,7 +75,7 @@ requestBody: UserCreate,
      * @returns User Successful Response
      * @throws ApiError
      */
-    public static readUserV1UsersIdGet(
+    public static readUser(
 id: string,
 ): CancelablePromise<User> {
         return __request(OpenAPI, {
@@ -98,7 +98,7 @@ id: string,
      * @returns User Successful Response
      * @throws ApiError
      */
-    public static updateUserV1UsersIdPut(
+    public static updateUser(
 id: string,
 requestBody: UserUpdate,
 ): CancelablePromise<User> {
@@ -123,7 +123,7 @@ requestBody: UserUpdate,
      * @returns User Successful Response
      * @throws ApiError
      */
-    public static deleteUserV1UsersIdDelete(
+    public static deleteUser(
 id: string,
 ): CancelablePromise<User> {
         return __request(OpenAPI, {

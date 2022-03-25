@@ -3,5 +3,6 @@
 /* eslint-disable */
 
 export type ImageUrl = {
+    name?: string;
     url: string;
 };

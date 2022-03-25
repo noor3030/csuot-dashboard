@@ -20,7 +20,7 @@ export class PeriodsService {
      * @returns Paging_Period_ Successful Response
      * @throws ApiError
      */
-    public static readPeriodsV1PeriodsGet(
+    public static readPeriods(
 skip?: number,
 limit: number = 50,
 ): CancelablePromise<Paging_Period_> {
@@ -44,7 +44,7 @@ limit: number = 50,
      * @returns Period Successful Response
      * @throws ApiError
      */
-    public static createPeriodV1PeriodsPost(
+    public static createPeriod(
 requestBody: PeriodCreate,
 ): CancelablePromise<Period> {
         return __request(OpenAPI, {
@@ -65,7 +65,7 @@ requestBody: PeriodCreate,
      * @returns Period Successful Response
      * @throws ApiError
      */
-    public static readPeriodV1PeriodsIdGet(
+    public static readPeriod(
 id: string,
 ): CancelablePromise<Period> {
         return __request(OpenAPI, {
@@ -88,7 +88,7 @@ id: string,
      * @returns Period Successful Response
      * @throws ApiError
      */
-    public static updatePeriodV1PeriodsIdPut(
+    public static updatePeriod(
 id: string,
 requestBody: PeriodUpdate,
 ): CancelablePromise<Period> {
@@ -113,7 +113,7 @@ requestBody: PeriodUpdate,
      * @returns Period Successful Response
      * @throws ApiError
      */
-    public static deletePeriodV1PeriodsIdDelete(
+    public static deletePeriod(
 id: string,
 ): CancelablePromise<Period> {
         return __request(OpenAPI, {

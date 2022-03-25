@@ -20,7 +20,7 @@ export class BuildingsService {
      * @returns Paging_Building_ Successful Response
      * @throws ApiError
      */
-    public static readBuildingsV1BuildingsGet(
+    public static readBuildings(
 skip?: number,
 limit: number = 50,
 ): CancelablePromise<Paging_Building_> {
@@ -44,7 +44,7 @@ limit: number = 50,
      * @returns Building Successful Response
      * @throws ApiError
      */
-    public static createBuildingV1BuildingsPost(
+    public static createBuilding(
 requestBody: BuildingCreate,
 ): CancelablePromise<Building> {
         return __request(OpenAPI, {
@@ -65,7 +65,7 @@ requestBody: BuildingCreate,
      * @returns Building Successful Response
      * @throws ApiError
      */
-    public static readBuildingV1BuildingsIdGet(
+    public static readBuilding(
 id: string,
 ): CancelablePromise<Building> {
         return __request(OpenAPI, {
@@ -88,7 +88,7 @@ id: string,
      * @returns Building Successful Response
      * @throws ApiError
      */
-    public static updateBuildingV1BuildingsIdPut(
+    public static updateBuilding(
 id: string,
 requestBody: BuildingUpdate,
 ): CancelablePromise<Building> {
@@ -113,7 +113,7 @@ requestBody: BuildingUpdate,
      * @returns Building Successful Response
      * @throws ApiError
      */
-    public static deleteBuildingV1BuildingsIdDelete(
+    public static deleteBuilding(
 id: string,
 ): CancelablePromise<Building> {
         return __request(OpenAPI, {

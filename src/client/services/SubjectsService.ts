@@ -20,7 +20,7 @@ export class SubjectsService {
      * @returns Paging_Subject_ Successful Response
      * @throws ApiError
      */
-    public static readSubjectsV1SubjectsGet(
+    public static readSubjects(
 skip?: number,
 limit: number = 50,
 ): CancelablePromise<Paging_Subject_> {
@@ -44,7 +44,7 @@ limit: number = 50,
      * @returns Subject Successful Response
      * @throws ApiError
      */
-    public static createSubjectV1SubjectsPost(
+    public static createSubject(
 requestBody: SubjectCreate,
 ): CancelablePromise<Subject> {
         return __request(OpenAPI, {
@@ -65,7 +65,7 @@ requestBody: SubjectCreate,
      * @returns Subject Successful Response
      * @throws ApiError
      */
-    public static readSubjectV1SubjectsIdGet(
+    public static readSubject(
 id: string,
 ): CancelablePromise<Subject> {
         return __request(OpenAPI, {
@@ -88,7 +88,7 @@ id: string,
      * @returns Subject Successful Response
      * @throws ApiError
      */
-    public static updateSubjectV1SubjectsIdPut(
+    public static updateSubject(
 id: string,
 requestBody: SubjectUpdate,
 ): CancelablePromise<Subject> {
@@ -113,7 +113,7 @@ requestBody: SubjectUpdate,
      * @returns Subject Successful Response
      * @throws ApiError
      */
-    public static deleteSubjectV1SubjectsIdDelete(
+    public static deleteSubject(
 id: string,
 ): CancelablePromise<Subject> {
         return __request(OpenAPI, {
