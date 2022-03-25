@@ -61,7 +61,10 @@
                   ><v-col>
                     <v-text-field ref="uot_url" label="Uot Url" required>
                     </v-text-field>
-                    <v-color-picker :mode.sync="mode"></v-color-picker> </v-col
+                    <v-color-picker
+                      :mode.sync="mode"
+                      canvas-height="100"
+                    ></v-color-picker> </v-col
                 ></v-row>
               </v-container>
             </v-card-text>
@@ -144,11 +147,11 @@
                     <v-color-picker
                       :mode.sync="mode"
                       :value="editedItem.color"
+                      canvas-height="100"
                     ></v-color-picker> </v-col
                 ></v-row>
               </v-container>
             </v-card-text>
-            
           </v-card>
         </v-dialog>
       </v-toolbar>
