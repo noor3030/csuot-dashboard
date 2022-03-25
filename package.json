@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "generate-client": "openapi --input https://csuot.herokuapp.com/v1/openapi.json --output ./src/client --client axios"
+    "generate-client": "openapi --input http://localhost:8080/v1/openapi-formatted.json --output ./src/client --client axios"
   },
   "dependencies": {
     "axios": "^0.26.1",
