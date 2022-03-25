@@ -3,6 +3,9 @@
     <template v-slot:[`item.uot_url`]="{ item }">
       <a :href="item.uot_url" target="_blank">{{ item.uot_url }}</a>
     </template>
+    <template v-slot:[`item.color`]="{ item }">
+      <v-icon :color="item.color">mdi-square</v-icon>
+    </template>
     <template v-slot:[`item.actions`]="{ item }">
       <v-icon class="pl-2" @click="copyUrl(item)" small
         >mdi-content-copy</v-icon
@@ -19,8 +22,51 @@
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-btn color="primary" class="mb-2 mr-3"> download </v-btn>
-
-        <v-btn color="primary" dark class="mb-2"> New Item </v-btn>
+        <v-btn color="primary" dark class="mb-2" @click="dialog = true">
+          New Item
+        </v-btn>
+        <v-dialog
+          v-model="dialog"
+          fullscreen
+          hide-overlay
+          transition="dialog-bottom-transition"
+        >
+          <v-card>
+            <v-toolbar dark color="primary">
+              <v-btn icon dark @click="dialog = false">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+              <v-toolbar-title>Add New User</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-toolbar-items>
+                <v-btn dark text @click="dialog = false"> Save </v-btn>
+              </v-toolbar-items>
+            </v-toolbar>
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col>
+                    <v-text-field ref="name" label="Name" required>
+                    </v-text-field>
+                  </v-col>
+                  <v-col>
+                    <v-text-field ref="en_name" label="English Name" required>
+                    </v-text-field>
+                  </v-col>
+                  <v-col>
+                    <v-select :items="genders" label="Gender"></v-select>
+                  </v-col>
+                </v-row>
+                <v-row
+                  ><v-col>
+                    <v-text-field ref="uot_url" label="Uot Url" required>
+                    </v-text-field>
+                    <v-color-picker :mode.sync="mode"></v-color-picker> </v-col
+                ></v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px"
           ><v-card>
             <v-card-title class="text-h5"
@@ -36,8 +82,23 @@
               <v-spacer></v-spacer>
             </v-card-actions> </v-card
         ></v-dialog>
-        <v-dialog v-model="dialogEdit" persistent :retain-focus="false">
+        <v-dialog
+          v-model="dialogEdit"
+          fullscreen
+          hide-overlay
+          transition="dialog-bottom-transition"
+        >
           <v-card>
+            <v-toolbar dark color="primary">
+              <v-btn icon dark @click="dialogEdit = false">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+              <v-toolbar-title>Edit User</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-toolbar-items>
+                <v-btn dark text @click="dialog = false"> Save </v-btn>
+              </v-toolbar-items>
+            </v-toolbar>
             <v-card-text>
               <v-container>
                 <v-row
@@ -79,17 +140,15 @@
                       label="Uot Url"
                       required
                     >
-                    </v-text-field></v-col
+                    </v-text-field>
+                    <v-color-picker
+                      :mode.sync="mode"
+                      :value="editedItem.color"
+                    ></v-color-picker> </v-col
                 ></v-row>
               </v-container>
             </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="dialogEdit = false">
-                Cancel
-              </v-btn>
-              <v-btn color="blue darken-1" text> Save </v-btn>
-            </v-card-actions>
+            
           </v-card>
         </v-dialog>
       </v-toolbar>
@@ -110,6 +169,8 @@ import Vue from "vue";
 export default Vue.extend({
   data() {
     return {
+      mode: "hexa",
+      dialog: false,
       genders: Object.values(UserGender), // [UserGender.MALE, UserGender.FEMALE],
       editedItem: {} as UserUpdate,
       dialogEdit: false,
@@ -120,6 +181,7 @@ export default Vue.extend({
         { text: "English Name", value: "en_name" },
         { text: "Gender", value: "gender" },
         { text: "Uot Url", value: "uot_url" },
+        { text: "Color", value: "color" },
         { text: "Actions", value: "actions", sortable: false },
       ],
     };
