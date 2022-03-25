@@ -98,13 +98,20 @@
 </template>
 
 <script lang="ts">
-import { UsersService, Paging_User_, User, UserGender } from "@/client";
+import {
+  UsersService,
+  Paging_User_,
+  User,
+  UserGender,
+  UserUpdate,
+} from "@/client";
+import Vue from "vue";
 
-export default {
+export default Vue.extend({
   data() {
     return {
       genders: Object.values(UserGender), // [UserGender.MALE, UserGender.FEMALE],
-      editedItem: {} as any,
+      editedItem: {} as UserUpdate,
       dialogEdit: false,
       dialogDelete: false,
       users: {} as Paging_User_,
@@ -140,7 +147,7 @@ export default {
   created(): void {
     this.getUsers();
   },
-};
+});
 </script>
 
 <style>

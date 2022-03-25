@@ -39,12 +39,7 @@
                     prepend-icon="mdi-lock"
                   ></v-text-field>
                   <div class="text-center mt-3">
-                    <v-btn
-                      rounded
-                      type="submit"
-                      color="#232f34"
-                      dark
-                     
+                    <v-btn rounded type="submit" color="#232f34" dark
                       >SIGN IN
                     </v-btn>
                   </div>
@@ -81,9 +76,9 @@
 </template>
 <script lang="ts">
 import { AuthService } from "@/client";
-import router from "@/router";
+import Vue from "vue";
 
-export default {
+export default Vue.extend({
   data() {
     const defaultForm = Object.freeze({
       password: "",
@@ -96,10 +91,10 @@ export default {
       form: Object.assign({}, defaultForm),
 
       email: [
-        (v: any) => !!v || "E-mail is required",
-        (v: any) => /.+@.+/.test(v) || "E-mail must be valid",
+        (v: string) => !!v || "E-mail is required",
+        (v: string) => /.+@.+/.test(v) || "E-mail must be valid",
       ],
-      password: [(v: any) => v.length >= 8 || "Min 8 characters"],
+      password: [(v: string) => v.length >= 8 || "Min 8 characters"],
     };
   },
 
@@ -111,7 +106,7 @@ export default {
       })
         .then((value) => {
           localStorage.setItem("token", value.access_token);
-          this.$router.push('/users')
+          this.$router.push("/users");
         })
         .catch((error) => {
           console.log(error);
@@ -119,8 +114,6 @@ export default {
         });
       this.loding = false;
     },
-
-    
   },
-};
+});
 </script>
