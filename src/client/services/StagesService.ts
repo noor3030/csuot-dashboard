@@ -15,27 +15,27 @@ export class StagesService {
     /**
      * Read Stages
      * Retrieve stages.
-     * @param skip 
-     * @param limit 
      * @param branchId 
      * @param branchName 
+     * @param page 
+     * @param perPage 
      * @returns Paging_Stage_ Successful Response
      * @throws ApiError
      */
     public static readStages(
-skip?: number,
-limit: number = 50,
 branchId?: string,
 branchName?: string,
+page: number = 1,
+perPage: number = 15,
 ): CancelablePromise<Paging_Stage_> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/stages/',
             query: {
-                'skip': skip,
-                'limit': limit,
                 'branch_id': branchId,
                 'branch_name': branchName,
+                'page': page,
+                'per_page': perPage,
             },
             errors: {
                 422: `Validation Error`,

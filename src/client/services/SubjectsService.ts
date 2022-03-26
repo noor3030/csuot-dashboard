@@ -15,21 +15,21 @@ export class SubjectsService {
     /**
      * Read Subjects
      * Retrieve subjects.
-     * @param skip 
-     * @param limit 
+     * @param page 
+     * @param perPage 
      * @returns Paging_Subject_ Successful Response
      * @throws ApiError
      */
     public static readSubjects(
-skip?: number,
-limit: number = 50,
+page: number = 1,
+perPage: number = 15,
 ): CancelablePromise<Paging_Subject_> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/subjects/',
             query: {
-                'skip': skip,
-                'limit': limit,
+                'page': page,
+                'per_page': perPage,
             },
             errors: {
                 422: `Validation Error`,

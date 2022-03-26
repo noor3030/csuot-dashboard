@@ -15,21 +15,21 @@ export class CardsService {
     /**
      * Read Cards
      * Retrieve cards.
-     * @param skip 
-     * @param limit 
+     * @param page 
+     * @param perPage 
      * @returns Paging_Card_ Successful Response
      * @throws ApiError
      */
     public static readCards(
-skip?: number,
-limit: number = 50,
+page: number = 1,
+perPage: number = 15,
 ): CancelablePromise<Paging_Card_> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/cards/',
             query: {
-                'skip': skip,
-                'limit': limit,
+                'page': page,
+                'per_page': perPage,
             },
             errors: {
                 422: `Validation Error`,

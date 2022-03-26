@@ -15,21 +15,21 @@ export class DepartmentsService {
     /**
      * Read Departments
      * Retrieve departments.
-     * @param skip 
-     * @param limit 
+     * @param page 
+     * @param perPage 
      * @returns Paging_Department_ Successful Response
      * @throws ApiError
      */
     public static readDepartments(
-skip?: number,
-limit: number = 50,
+page: number = 1,
+perPage: number = 15,
 ): CancelablePromise<Paging_Department_> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/departments/',
             query: {
-                'skip': skip,
-                'limit': limit,
+                'page': page,
+                'per_page': perPage,
             },
             errors: {
                 422: `Validation Error`,

@@ -15,21 +15,21 @@ export class RoomsService {
     /**
      * Read Rooms
      * Retrieve rooms.
-     * @param skip 
-     * @param limit 
+     * @param page 
+     * @param perPage 
      * @returns Paging_Room_ Successful Response
      * @throws ApiError
      */
     public static readRooms(
-skip?: number,
-limit: number = 50,
+page: number = 1,
+perPage: number = 15,
 ): CancelablePromise<Paging_Room_> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/rooms/',
             query: {
-                'skip': skip,
-                'limit': limit,
+                'page': page,
+                'per_page': perPage,
             },
             errors: {
                 422: `Validation Error`,

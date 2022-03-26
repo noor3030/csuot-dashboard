@@ -5,7 +5,7 @@
 import type { CollageShifts } from './CollageShifts';
 
 export type StageCreate = {
-    name?: string;
+    name: string;
     shift?: CollageShifts;
     level?: number;
     branch_id?: string;

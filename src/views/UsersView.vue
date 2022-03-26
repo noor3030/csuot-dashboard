@@ -194,13 +194,14 @@
 <script lang="ts">
 import { UsersService, User, UserGender, UserUpdate } from "@/client";
 import Vue from "vue";
+import { DataOptions } from "vuetify";
 
 export default Vue.extend({
   data() {
     return {
       users: [] as User[],
       search: null as string | null,
-      pagination: { totalItems: 0, rowsPerPage: 50, page: 0 },
+      pagination: { totalItems: 0, rowsPerPage: 50, page: 1 } as any,
 
       loading: false,
       editedItem: {} as UserUpdate,

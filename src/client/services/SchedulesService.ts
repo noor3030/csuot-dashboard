@@ -30,7 +30,6 @@ export class SchedulesService {
     /**
      * Read Schedule
      * Retrieve Single schedule.
- * q2
      * @param stageId 
      * @param teacherId 
      * @param classroomId 

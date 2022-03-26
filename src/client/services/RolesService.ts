@@ -15,21 +15,21 @@ export class RolesService {
     /**
      * Read Roles
      * Retrieve roles.
-     * @param skip 
-     * @param limit 
+     * @param page 
+     * @param perPage 
      * @returns Paging_Role_ Successful Response
      * @throws ApiError
      */
     public static readRoles(
-skip?: number,
-limit: number = 50,
+page: number = 1,
+perPage: number = 15,
 ): CancelablePromise<Paging_Role_> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/roles/',
             query: {
-                'skip': skip,
-                'limit': limit,
+                'page': page,
+                'per_page': perPage,
             },
             errors: {
                 422: `Validation Error`,

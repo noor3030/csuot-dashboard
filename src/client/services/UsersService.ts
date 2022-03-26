@@ -16,30 +16,30 @@ export class UsersService {
     /**
      * Read Users
      * Retrieve users.
-     * @param skip 
-     * @param limit 
-     * @param query 
+     * @param searchQuery 
      * @param roleId 
      * @param userType 
+     * @param page 
+     * @param perPage 
      * @returns Paging_User_ Successful Response
      * @throws ApiError
      */
     public static readUsers(
-skip?: number,
-limit: number = 50,
-query?: string,
+searchQuery?: string,
 roleId?: string,
 userType?: Array<StaffType>,
+page: number = 1,
+perPage: number = 15,
 ): CancelablePromise<Paging_User_> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/users/',
             query: {
-                'skip': skip,
-                'limit': limit,
-                'query': query,
+                'search_query': searchQuery,
                 'role_id': roleId,
                 'user_type': userType,
+                'page': page,
+                'per_page': perPage,
             },
             errors: {
                 422: `Validation Error`,

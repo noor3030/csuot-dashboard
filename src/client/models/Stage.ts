@@ -6,7 +6,7 @@ import type { app__schemas__stage__Branch } from './app__schemas__stage__Branch'
 import type { CollageShifts } from './CollageShifts';
 
 export type Stage = {
-    name?: string;
+    name: string;
     shift?: CollageShifts;
     level?: number;
     branch_id?: string;

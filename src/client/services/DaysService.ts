@@ -15,21 +15,21 @@ export class DaysService {
     /**
      * Read Days
      * Retrieve days.
-     * @param skip 
-     * @param limit 
+     * @param page 
+     * @param perPage 
      * @returns Paging_Day_ Successful Response
      * @throws ApiError
      */
     public static readDays(
-skip?: number,
-limit: number = 50,
+page: number = 1,
+perPage: number = 15,
 ): CancelablePromise<Paging_Day_> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/days/',
             query: {
-                'skip': skip,
-                'limit': limit,
+                'page': page,
+                'per_page': perPage,
             },
             errors: {
                 422: `Validation Error`,

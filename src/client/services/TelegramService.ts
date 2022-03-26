@@ -15,21 +15,21 @@ export class TelegramService {
     /**
      * Read Telegram Users
      * Retrieve telegram_users.
-     * @param skip 
-     * @param limit 
+     * @param page 
+     * @param perPage 
      * @returns Paging_TelegramUser_ Successful Response
      * @throws ApiError
      */
     public static readTelegramUsers(
-skip?: number,
-limit: number = 50,
+page: number = 1,
+perPage: number = 15,
 ): CancelablePromise<Paging_TelegramUser_> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/telegram/',
             query: {
-                'skip': skip,
-                'limit': limit,
+                'page': page,
+                'per_page': perPage,
             },
             errors: {
                 422: `Validation Error`,

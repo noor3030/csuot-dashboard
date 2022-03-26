@@ -15,21 +15,21 @@ export class PeriodsService {
     /**
      * Read Periods
      * Retrieve periods.
-     * @param skip 
-     * @param limit 
+     * @param page 
+     * @param perPage 
      * @returns Paging_Period_ Successful Response
      * @throws ApiError
      */
     public static readPeriods(
-skip?: number,
-limit: number = 50,
+page: number = 1,
+perPage: number = 15,
 ): CancelablePromise<Paging_Period_> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/periods/',
             query: {
-                'skip': skip,
-                'limit': limit,
+                'page': page,
+                'per_page': perPage,
             },
             errors: {
                 422: `Validation Error`,
