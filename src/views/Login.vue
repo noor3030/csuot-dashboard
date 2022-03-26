@@ -19,27 +19,34 @@
                   <v-text-field
                     color="#232f34"
                     v-model="form.email"
-                    label="E-mail"
                     :rules="email"
-                    required
-                    prepend-icon="mdi-email"
+                    label="Email"
+                    name="email"
                     type="email"
+                    prepend-icon="mdi-email"
+                    required
                   ></v-text-field>
                   <v-text-field
                     color="#232f34"
                     v-model="form.password"
-                    name="input-10-2"
-                    :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                    label="Password"
-                    :type="showPassword ? 'text' : 'password'"
                     :rules="password"
+                    label="Password"
+                    name="password"
+                    :type="showPassword ? 'text' : 'password'"
+                    :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                     hint="At least 8 characters"
                     class="input-group--focused"
                     @click:append="showPassword = !showPassword"
                     prepend-icon="mdi-lock"
+                    required
                   ></v-text-field>
                   <div class="text-center mt-3">
-                    <v-btn rounded type="submit" color="#232f34" dark
+                    <v-btn
+                      rounded
+                      name="submit"
+                      type="submit"
+                      color="#232f34"
+                      dark
                       >SIGN IN
                     </v-btn>
                   </div>
@@ -86,8 +93,8 @@ export default Vue.extend({
     });
     return {
       dialog: false,
-      loding: false,
-      showPassword: true,
+      loading: false,
+      showPassword: false,
       form: Object.assign({}, defaultForm),
 
       email: [
@@ -100,7 +107,7 @@ export default Vue.extend({
 
   methods: {
     login() {
-      AuthService.loginAccessTokenV1AuthLoginAccessTokenPost({
+      AuthService.loginAccessToken({
         username: this.form.email,
         password: this.form.password,
       })
@@ -112,7 +119,7 @@ export default Vue.extend({
           console.log(error);
           this.dialog = true;
         });
-      this.loding = false;
+      this.loading = false;
     },
   },
 });

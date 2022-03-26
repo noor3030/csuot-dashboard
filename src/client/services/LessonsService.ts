@@ -20,7 +20,7 @@ export class LessonsService {
      * @returns Paging_Lesson_ Successful Response
      * @throws ApiError
      */
-    public static readLessonsV1LessonsGet(
+    public static readLessons(
 skip?: number,
 limit: number = 50,
 ): CancelablePromise<Paging_Lesson_> {
@@ -44,7 +44,7 @@ limit: number = 50,
      * @returns Lesson Successful Response
      * @throws ApiError
      */
-    public static createLessonV1LessonsPost(
+    public static createLesson(
 requestBody: LessonCreate,
 ): CancelablePromise<Lesson> {
         return __request(OpenAPI, {
@@ -65,7 +65,7 @@ requestBody: LessonCreate,
      * @returns Lesson Successful Response
      * @throws ApiError
      */
-    public static readLessonV1LessonsIdGet(
+    public static readLesson(
 id: string,
 ): CancelablePromise<Lesson> {
         return __request(OpenAPI, {
@@ -88,7 +88,7 @@ id: string,
      * @returns Lesson Successful Response
      * @throws ApiError
      */
-    public static updateLessonV1LessonsIdPut(
+    public static updateLesson(
 id: string,
 requestBody: LessonUpdate,
 ): CancelablePromise<Lesson> {
@@ -113,7 +113,7 @@ requestBody: LessonUpdate,
      * @returns Lesson Successful Response
      * @throws ApiError
      */
-    public static deleteLessonV1LessonsIdDelete(
+    public static deleteLesson(
 id: string,
 ): CancelablePromise<Lesson> {
         return __request(OpenAPI, {

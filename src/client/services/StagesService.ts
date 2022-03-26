@@ -15,27 +15,27 @@ export class StagesService {
     /**
      * Read Stages
      * Retrieve stages.
-     * @param branchId 
-     * @param branchName 
      * @param skip 
      * @param limit 
+     * @param branchId 
+     * @param branchName 
      * @returns Paging_Stage_ Successful Response
      * @throws ApiError
      */
-    public static readStagesV1StagesGet(
-branchId?: string,
-branchName?: string,
+    public static readStages(
 skip?: number,
 limit: number = 50,
+branchId?: string,
+branchName?: string,
 ): CancelablePromise<Paging_Stage_> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/stages/',
             query: {
-                'branch_id': branchId,
-                'branch_name': branchName,
                 'skip': skip,
                 'limit': limit,
+                'branch_id': branchId,
+                'branch_name': branchName,
             },
             errors: {
                 422: `Validation Error`,
@@ -50,7 +50,7 @@ limit: number = 50,
      * @returns Stage Successful Response
      * @throws ApiError
      */
-    public static createStageV1StagesPost(
+    public static createStage(
 requestBody: StageCreate,
 ): CancelablePromise<Stage> {
         return __request(OpenAPI, {
@@ -71,7 +71,7 @@ requestBody: StageCreate,
      * @returns Stage Successful Response
      * @throws ApiError
      */
-    public static readStageV1StagesIdGet(
+    public static readStage(
 id: string,
 ): CancelablePromise<Stage> {
         return __request(OpenAPI, {
@@ -94,7 +94,7 @@ id: string,
      * @returns Stage Successful Response
      * @throws ApiError
      */
-    public static updateStageV1StagesIdPut(
+    public static updateStage(
 id: string,
 requestBody: StageUpdate,
 ): CancelablePromise<Stage> {
@@ -119,7 +119,7 @@ requestBody: StageUpdate,
      * @returns Stage Successful Response
      * @throws ApiError
      */
-    public static deleteStageV1StagesIdDelete(
+    public static deleteStage(
 id: string,
 ): CancelablePromise<Stage> {
         return __request(OpenAPI, {

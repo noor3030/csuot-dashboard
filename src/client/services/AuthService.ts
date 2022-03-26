@@ -1,10 +1,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Body_login_access_token_v1_auth_login_access_token_post } from '../models/Body_login_access_token_v1_auth_login_access_token_post';
-import type { Body_reset_password_v1_auth_reset_password__post } from '../models/Body_reset_password_v1_auth_reset_password__post';
+import type { Body_auth_login_access_token } from '../models/Body_auth_login_access_token';
+import type { Body_auth_reset_password } from '../models/Body_auth_reset_password';
 import type { Message } from '../models/Message';
-import type { Role } from '../models/Role';
 import type { Token } from '../models/Token';
 import type { User } from '../models/User';
 import type { UserCreate } from '../models/UserCreate';
@@ -22,8 +21,8 @@ export class AuthService {
      * @returns Token Successful Response
      * @throws ApiError
      */
-    public static loginAccessTokenV1AuthLoginAccessTokenPost(
-formData: Body_login_access_token_v1_auth_login_access_token_post,
+    public static loginAccessToken(
+formData: Body_auth_login_access_token,
 ): CancelablePromise<Token> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -43,7 +42,7 @@ formData: Body_login_access_token_v1_auth_login_access_token_post,
      * @returns Message Successful Response
      * @throws ApiError
      */
-    public static signUpV1AuthSignupPost(
+    public static signUp(
 requestBody: UserCreate,
 ): CancelablePromise<Message> {
         return __request(OpenAPI, {
@@ -63,7 +62,7 @@ requestBody: UserCreate,
      * @returns User Successful Response
      * @throws ApiError
      */
-    public static testTokenV1AuthLoginTestJsonTokenPost(): CancelablePromise<User> {
+    public static testToken(): CancelablePromise<User> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/v1/auth/login/test.json-token',
@@ -73,10 +72,10 @@ requestBody: UserCreate,
     /**
      * My Permissions
      * Return my permissions
-     * @returns Role Successful Response
+     * @returns any Successful Response
      * @throws ApiError
      */
-    public static myPermissionsV1AuthPermissionsGet(): CancelablePromise<Role> {
+    public static myPermissions(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/auth/permissions/',
@@ -90,8 +89,8 @@ requestBody: UserCreate,
      * @returns Message Successful Response
      * @throws ApiError
      */
-    public static resetPasswordV1AuthResetPasswordPost(
-requestBody: Body_reset_password_v1_auth_reset_password__post,
+    public static resetPassword(
+requestBody: Body_auth_reset_password,
 ): CancelablePromise<Message> {
         return __request(OpenAPI, {
             method: 'POST',

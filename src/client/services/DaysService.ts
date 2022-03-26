@@ -20,7 +20,7 @@ export class DaysService {
      * @returns Paging_Day_ Successful Response
      * @throws ApiError
      */
-    public static readDaysV1DaysGet(
+    public static readDays(
 skip?: number,
 limit: number = 50,
 ): CancelablePromise<Paging_Day_> {
@@ -44,7 +44,7 @@ limit: number = 50,
      * @returns Day Successful Response
      * @throws ApiError
      */
-    public static createDayV1DaysPost(
+    public static createDay(
 requestBody: DayCreate,
 ): CancelablePromise<Day> {
         return __request(OpenAPI, {
@@ -65,7 +65,7 @@ requestBody: DayCreate,
      * @returns Day Successful Response
      * @throws ApiError
      */
-    public static readDayV1DaysIdGet(
+    public static readDay(
 id: string,
 ): CancelablePromise<Day> {
         return __request(OpenAPI, {
@@ -88,7 +88,7 @@ id: string,
      * @returns Day Successful Response
      * @throws ApiError
      */
-    public static updateDayV1DaysIdPut(
+    public static updateDay(
 id: string,
 requestBody: DayUpdate,
 ): CancelablePromise<Day> {
@@ -113,7 +113,7 @@ requestBody: DayUpdate,
      * @returns Day Successful Response
      * @throws ApiError
      */
-    public static deleteDayV1DaysIdDelete(
+    public static deleteDay(
 id: string,
 ): CancelablePromise<Day> {
         return __request(OpenAPI, {

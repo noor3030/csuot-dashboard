@@ -20,7 +20,7 @@ export class RolesService {
      * @returns Paging_Role_ Successful Response
      * @throws ApiError
      */
-    public static readRolesV1RolesGet(
+    public static readRoles(
 skip?: number,
 limit: number = 50,
 ): CancelablePromise<Paging_Role_> {
@@ -44,7 +44,7 @@ limit: number = 50,
      * @returns Role Successful Response
      * @throws ApiError
      */
-    public static createRoleV1RolesPost(
+    public static createRole(
 requestBody: RoleCreate,
 ): CancelablePromise<Role> {
         return __request(OpenAPI, {
@@ -65,7 +65,7 @@ requestBody: RoleCreate,
      * @returns Role Successful Response
      * @throws ApiError
      */
-    public static readRoleV1RolesIdGet(
+    public static readRole(
 id: string,
 ): CancelablePromise<Role> {
         return __request(OpenAPI, {
@@ -88,7 +88,7 @@ id: string,
      * @returns Role Successful Response
      * @throws ApiError
      */
-    public static updateRoleV1RolesIdPut(
+    public static updateRole(
 id: string,
 requestBody: RoleUpdate,
 ): CancelablePromise<Role> {
@@ -113,7 +113,7 @@ requestBody: RoleUpdate,
      * @returns Role Successful Response
      * @throws ApiError
      */
-    public static deleteRoleV1RolesIdDelete(
+    public static deleteRole(
 id: string,
 ): CancelablePromise<Role> {
         return __request(OpenAPI, {

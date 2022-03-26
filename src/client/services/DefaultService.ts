@@ -5,17 +5,17 @@ import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
-export class ModelsService {
+export class DefaultService {
 
     /**
-     * Get All Models
+     * Openapi Formatted
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static getAllModelsV1ModelsGet(): CancelablePromise<any> {
+    public static defaultOpenapiFormatted(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/v1/models/',
+            url: '/v1/openapi-formatted.json',
         });
     }
 

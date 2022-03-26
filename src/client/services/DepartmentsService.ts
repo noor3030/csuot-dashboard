@@ -20,7 +20,7 @@ export class DepartmentsService {
      * @returns Paging_Department_ Successful Response
      * @throws ApiError
      */
-    public static readDepartmentsV1DepartmentsGet(
+    public static readDepartments(
 skip?: number,
 limit: number = 50,
 ): CancelablePromise<Paging_Department_> {
@@ -44,7 +44,7 @@ limit: number = 50,
      * @returns Department Successful Response
      * @throws ApiError
      */
-    public static createDepartmentV1DepartmentsPost(
+    public static createDepartment(
 requestBody: DepartmentCreate,
 ): CancelablePromise<Department> {
         return __request(OpenAPI, {
@@ -65,7 +65,7 @@ requestBody: DepartmentCreate,
      * @returns Department Successful Response
      * @throws ApiError
      */
-    public static readDepartmentV1DepartmentsIdGet(
+    public static readDepartment(
 id: string,
 ): CancelablePromise<Department> {
         return __request(OpenAPI, {
@@ -88,7 +88,7 @@ id: string,
      * @returns Department Successful Response
      * @throws ApiError
      */
-    public static updateDepartmentV1DepartmentsIdPut(
+    public static updateDepartment(
 id: string,
 requestBody: DepartmentUpdate,
 ): CancelablePromise<Department> {
@@ -113,7 +113,7 @@ requestBody: DepartmentUpdate,
      * @returns Department Successful Response
      * @throws ApiError
      */
-    public static deleteDepartmentV1DepartmentsIdDelete(
+    public static deleteDepartment(
 id: string,
 ): CancelablePromise<Department> {
         return __request(OpenAPI, {
