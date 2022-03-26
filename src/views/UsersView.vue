@@ -1,5 +1,13 @@
 <template>
-  <v-data-table :headers="headers" :items="users.results" class="elevation-1">
+  <v-data-table
+    :headers="headers"
+    :items="users"
+    class="elevation-1"
+    :options.sync="options"
+    :server-items-length="total"
+    
+    :loading="loading"
+  >
     <template v-slot:[`item.uot_url`]="{ item }">
       <a :href="item.uot_url" target="_blank">{{ item.uot_url }}</a>
     </template>
@@ -172,13 +180,20 @@ import Vue from "vue";
 export default Vue.extend({
   data() {
     return {
-      users: {} as Paging_User_,
-      mode: "hexa",
-      dialogCreate: false,
+      users: [] as any,
+      total: 0,
+      options: {
+        page: 0,
+        itemsPerPage: 50,
+      } as any,
+      loading: true,
+
       editedItem: {} as UserUpdate,
+      dialogCreate: false,
       dialogEdit: false,
       dialogDelete: false,
       genders: Object.values(UserGender), // [UserGender.MALE, UserGender.FEMALE],
+      mode: "hexa",
       headers: [
         { text: "Name", value: "name" },
         { text: "English Name", value: "en_name" },
@@ -189,11 +204,27 @@ export default Vue.extend({
       ],
     };
   },
+  watch: {
+    options: {
+      handler() {
+        this.getUsers();
+      },
+      deep: true,
+    },
+  },
+
   methods: {
     getUsers(): void {
-      UsersService.readUsers().then((value) => {
-        this.users = value;
+      this.loading = true;
+      const { sortBy, sortDesc, page, itemsPerPage } = this.options;
+
+      UsersService.readUsers(page).then((value) => {
+        this.total = value.count;
+        console.log("Hello");
+
+        this.users = value.results;
       });
+      this.loading = false;
     },
     copyUrl(item: User) {
       navigator.clipboard.writeText(
@@ -210,7 +241,7 @@ export default Vue.extend({
     },
   },
   created(): void {
-    this.getUsers();
+    // this.getUsers();
   },
 });
 </script>
