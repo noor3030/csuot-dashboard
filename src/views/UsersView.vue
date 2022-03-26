@@ -22,24 +22,24 @@
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-btn color="primary" class="mb-2 mr-3"> download </v-btn>
-        <v-btn color="primary" dark class="mb-2" @click="dialog = true">
+        <v-btn color="primary" dark class="mb-2" @click="dialogCreate = true">
           New Item
         </v-btn>
         <v-dialog
-          v-model="dialog"
+          v-model="dialogCreate"
           fullscreen
           hide-overlay
           transition="dialog-bottom-transition"
         >
           <v-card>
             <v-toolbar dark color="primary">
-              <v-btn icon dark @click="dialog = false">
+              <v-btn icon dark @click="dialogCreate = false">
                 <v-icon>mdi-close</v-icon>
               </v-btn>
               <v-toolbar-title>Add New User</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-toolbar-items>
-                <v-btn dark text @click="dialog = false"> Save </v-btn>
+                <v-btn dark text @click="dialogCreate = false"> Save </v-btn>
               </v-toolbar-items>
             </v-toolbar>
             <v-card-text>
@@ -99,7 +99,7 @@
               <v-toolbar-title>Edit User</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-toolbar-items>
-                <v-btn dark text @click="dialog = false"> Save </v-btn>
+                <v-btn dark text @click="dialogCreate = false"> Save </v-btn>
               </v-toolbar-items>
             </v-toolbar>
             <v-card-text>
@@ -172,13 +172,13 @@ import Vue from "vue";
 export default Vue.extend({
   data() {
     return {
+      users: {} as Paging_User_,
       mode: "hexa",
-      dialog: false,
-      genders: Object.values(UserGender), // [UserGender.MALE, UserGender.FEMALE],
+      dialogCreate: false,
       editedItem: {} as UserUpdate,
       dialogEdit: false,
       dialogDelete: false,
-      users: {} as Paging_User_,
+      genders: Object.values(UserGender), // [UserGender.MALE, UserGender.FEMALE],
       headers: [
         { text: "Name", value: "name" },
         { text: "English Name", value: "en_name" },
