@@ -14,14 +14,19 @@
     </v-card>
     <v-data-table
       :headers="headers"
-      :items="users"
-      :options="{ itemsPerPage: 50 }"
+      :items="usersPaging.results"
       item-key="id"
       class="elevation-1"
       hide-default-footer
       :loading="loading"
-      :pagination.sync="pagination"
+      :server-items-length="usersPaging.count"
+      :options.sync="options"
     >
+      <template v-slot:no-data>
+        <v-alert :value="true" type="warning" outlined text
+          >No items found, Add one!</v-alert
+        >
+      </template>
       <template v-slot:[`item.uot_url`]="{ item }">
         <a :href="item.uot_url" target="_blank">{{ item.uot_url }}</a>
       </template>
@@ -181,10 +186,10 @@
     </v-data-table>
     <div class="text-center pt-2">
       <v-pagination
-        @input="paginationChangeHandler"
-        :value="pagination.page"
+        @input="optionsChangeHandler"
+        :value="options.page"
         :length="pages"
-        :total-visible="7"
+        :total-visible="options.itemsPerPage"
         circle
       ></v-pagination>
     </div>
@@ -192,18 +197,26 @@
 </template>
 
 <script lang="ts">
-import { UsersService, User, UserGender, UserUpdate } from "@/client";
+import {
+  UsersService,
+  User,
+  UserGender,
+  UserUpdate,
+  Paging_User_,
+} from "@/client";
 import Vue from "vue";
-import { DataOptions } from "vuetify";
 
 export default Vue.extend({
   data() {
     return {
-      users: [] as User[],
-      search: null as string | null,
-      pagination: { totalItems: 0, rowsPerPage: 50, page: 1 } as any,
-
+      usersPaging: {} as Paging_User_,
+      options: { page: 1, itemsPerPage: 25 },
       loading: false,
+      //
+      search: null as any,
+      userType: null as any,
+      roleId: null as any,
+      //
       editedItem: {} as UserUpdate,
       dialogCreate: false,
       dialogEdit: false,
@@ -220,46 +233,38 @@ export default Vue.extend({
       ],
     };
   },
-  watch: {
-    options: {
-      handler() {
-        this.getUsers();
-      },
-      deep: true,
-    },
-  },
   computed: {
     pages(): number {
-      if (
-        this.pagination.rowsPerPage == null ||
-        this.pagination.totalItems == null
-      ) {
+      if (this.options.itemsPerPage == null || this.usersPaging.count == null) {
         return 0;
       }
 
-      return Math.ceil(
-        this.pagination.totalItems / this.pagination.rowsPerPage
-      );
+      return Math.ceil(this.usersPaging.count / this.options.itemsPerPage);
     },
   },
   mounted() {
     this.getUsers();
   },
   methods: {
-    paginationChangeHandler(pageNumber: number) {
-      this.pagination.page = pageNumber;
+    optionsChangeHandler(pageNumber: number) {
+      this.options.page = pageNumber;
       this.getUsers();
     },
 
     getUsers(): void {
+      this.loading = true;
       UsersService.readUsers(
-        this.pagination.page,
-        this.pagination.rowsPerPage
+        this.search,
+        this.roleId,
+        this.userType,
+        this.options.page,
+        this.options.itemsPerPage
       ).then((value) => {
-        this.pagination.totalItems = value.count;
-        this.users = value.results;
+        this.usersPaging = value;
       });
+      this.loading = false;
     },
+
     copyUrl(item: User) {
       navigator.clipboard.writeText(
         `${window.location.origin}/users/${item.id}`
@@ -273,9 +278,6 @@ export default Vue.extend({
       this.editedItem = item;
       this.dialogEdit = true;
     },
-  },
-  created(): void {
-    // this.getUsers();
   },
 });
 </script>
