@@ -245,7 +245,7 @@ export default Vue.extend({
     this.getUsers();
   },
   methods: {
-    paginationChangeHandler(pageNumber: number): void {
+    paginationChangeHandler(pageNumber: number) {
       this.pagination.page = pageNumber;
       this.getUsers();
     },
