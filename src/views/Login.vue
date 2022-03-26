@@ -42,10 +42,11 @@
                   ></v-text-field>
                   <div class="text-center mt-3">
                     <v-btn
-                      rounded
                       name="submit"
                       type="submit"
+                      value="submit"
                       color="#232f34"
+                      rounded
                       dark
                       >SIGN IN
                     </v-btn>
