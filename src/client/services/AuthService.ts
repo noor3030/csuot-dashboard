@@ -4,6 +4,7 @@
 import type { Body_auth_login_access_token } from '../models/Body_auth_login_access_token';
 import type { Body_auth_reset_password } from '../models/Body_auth_reset_password';
 import type { Message } from '../models/Message';
+import type { Role } from '../models/Role';
 import type { Token } from '../models/Token';
 import type { User } from '../models/User';
 import type { UserCreate } from '../models/UserCreate';
@@ -72,10 +73,10 @@ requestBody: UserCreate,
     /**
      * My Permissions
      * Return my permissions
-     * @returns any Successful Response
+     * @returns Role Successful Response
      * @throws ApiError
      */
-    public static myPermissions(): CancelablePromise<any> {
+    public static myPermissions(): CancelablePromise<Role> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/auth/permissions/',

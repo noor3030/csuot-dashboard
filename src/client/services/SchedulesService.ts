@@ -62,6 +62,9 @@ subjectId?: string,
      * Get Schedule Image Url
      * Download schedule Image.
      * @param stageId 
+     * @param teacherId 
+     * @param classroomId 
+     * @param subjectId 
      * @param theme 
      * @param language 
      * @param directionality 
@@ -69,7 +72,10 @@ subjectId?: string,
      * @throws ApiError
      */
     public static getScheduleImageUrl(
-stageId: string,
+stageId?: string,
+teacherId?: string,
+classroomId?: string,
+subjectId?: string,
 theme?: ColorThemeType,
 language?: Language,
 directionality?: Directionality,
@@ -79,6 +85,9 @@ directionality?: Directionality,
             url: '/v1/schedule/image',
             query: {
                 'stage_id': stageId,
+                'teacher_id': teacherId,
+                'classroom_id': classroomId,
+                'subject_id': subjectId,
                 'theme': theme,
                 'language': language,
                 'directionality': directionality,
