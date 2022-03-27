@@ -1,12 +1,13 @@
 <template>
   <div>
     <v-card>
-      <v-card-title
-        >Search
+      <v-card-title>
         <v-spacer></v-spacer>
         <v-text-field
+         @change="onSearch"
           v-model="search"
-          append-icon="search"
+          append-icon="mdi-magnify"
+          label="Search"
           single-line
           hide-details
         ></v-text-field>
@@ -235,10 +236,6 @@ export default Vue.extend({
   },
   computed: {
     pages(): number {
-      if (this.options.itemsPerPage == null || this.usersPaging.count == null) {
-        return 0;
-      }
-
       return Math.ceil(this.usersPaging.count / this.options.itemsPerPage);
     },
   },
@@ -249,6 +246,9 @@ export default Vue.extend({
     optionsChangeHandler(pageNumber: number) {
       this.options.page = pageNumber;
       this.getUsers();
+    },
+    onSearch(){
+      this.getUsers()
     },
 
     getUsers(): void {
