@@ -211,7 +211,7 @@ export default Vue.extend({
     return {
       usersPaging: {} as Paging_User_,
       options: { page: 1, itemsPerPage: 25 },
-      loading: false,
+      loading: true,
       //
       search: null as any,
       userType: null as any,
