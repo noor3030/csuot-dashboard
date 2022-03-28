@@ -1,6 +1,6 @@
 <template>
   <nav>
-      <v-navigation-drawer app v-model="drawer">
+    <v-navigation-drawer app v-model="drawer">
       <v-list>
         <v-list-item
           v-for="link in links"
@@ -31,7 +31,6 @@
         ><span>Sign Out</span> <v-icon>mdi-exit-to-app</v-icon></v-btn
       >
     </v-app-bar>
-  
   </nav>
 </template>
 <script lang="ts">

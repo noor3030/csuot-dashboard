@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
 import Users from "../views/UsersView.vue";
+import Rooms from "../views/RoomsView.vue";
 import Login from "../views/Login.vue";
 import store from "../store";
 Vue.use(VueRouter);
@@ -23,8 +24,18 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
+    path: "/users/:id",
+    name: "UsersDetails",
+    component: Users, // TODO
+    meta: {
+      requiresAuth: true,
+      permissionGroup: "users",
+      permissionType: "read",
+    },
+  },
+  {
     path: "/users/create",
-    name: "Create User",
+    name: "CreateUser",
     component: Users,
     meta: {
       requiresAuth: true,
@@ -33,8 +44,8 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
-    path: "/branches",
-    name: "Branches",
+    path: "/rooms",
+    name: "Rooms",
     component: Users,
     meta: {
       requiresAuth: true,
@@ -42,6 +53,7 @@ const routes: Array<RouteConfig> = [
       permissionType: "create",
     },
   },
+
   {
     path: "/login",
     name: "Login",
@@ -63,33 +75,23 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
-// // login
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some((record) => record.meta.requiresAuth)) {
-//     if (store.getters.isLoggedIn) {
-//       next();
-//     } else {
-//       next({ name: "Login" });
-//     }
-//   } else {
-//     next();
-//   }
-// });
+
+// login
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next();
+    } else {
+      next({ name: "Login" });
+    }
+  } else {
+    next();
+  }
+});
+
 // permissions
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.permissionGroup != null)) {
-    
-    console.log(
-      to.matched.some(
-        (record) =>
-          `${record.meta.permissionGroup}` +
-          `${record.meta.permissionType}` +
-          (store.state.permissions as any)?.[record.meta.permissionGroup][
-            record.meta.permissionType
-          ]
-      )
-    );
-
     if (
       to.matched.some(
         (record) =>

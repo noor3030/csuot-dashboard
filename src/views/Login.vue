@@ -116,8 +116,7 @@ export default Vue.extend({
           localStorage.setItem("token", value.access_token);
           this.$router.push("/");
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
           this.dialog = true;
         });
       this.loading = false;
