@@ -7,6 +7,7 @@
           :key="link.text"
           link
           :to="link.route"
+          v-show="link.permission"
         >
           <v-list-item-icon>
             <v-icon>{{ link.icon }}</v-icon>
@@ -39,15 +40,34 @@ export default Vue.extend({
   data() {
     return {
       drawer: false,
-      links: [
-        { icon: "mdi-home", text: "Home", route: "/" },
-        { icon: "mdi-account-group", text: "Users", route: "/users" },
-        { icon: "mdi-google-classroom", text: "Rooms", route: "/rooms" },
-        { icon: "mdi-table-multiple", text: "Schedules", route: "/schedules" },
-      ],
     };
   },
 
+  computed: {
+    links() {
+      return [
+        { icon: "mdi-home", text: "Home", route: "/", permission: true },
+        {
+          icon: "mdi-account-group",
+          text: "Users",
+          route: "/users",
+          permission: this.$store.state.permissions?.users.read || false,
+        },
+        {
+          icon: "mdi-google-classroom",
+          text: "Rooms",
+          route: "/rooms",
+          permission: true,
+        },
+        {
+          icon: "mdi-table-multiple",
+          text: "Schedules",
+          route: "/schedules",
+          permission: true,
+        },
+      ];
+    },
+  },
   methods: {
     logout() {
       localStorage.removeItem("token");

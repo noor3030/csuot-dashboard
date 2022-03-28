@@ -46,7 +46,7 @@ const routes: Array<RouteConfig> = [
   {
     path: "/rooms",
     name: "Rooms",
-    component: Users,
+    component: Rooms,
     meta: {
       requiresAuth: true,
       permissionGroup: "users",

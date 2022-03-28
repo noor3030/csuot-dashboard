@@ -12,7 +12,9 @@ export default new Vuex.Store({
     getPermissions(state) {
       AuthService.myPermissions().then((value) => {
         state.permissions = value.permissions;
+       
       });
+     
     },
   },
   actions: {},
