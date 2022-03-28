@@ -21,8 +21,7 @@ export default Vue.extend({
   },
   mounted() {
     this.$store.commit("getPermissions");
-    console.log(this.$store.state.permissions?.users.read)
+    console.log(this.$store.state.permissions?.users.read);
   },
-
 });
 </script>
