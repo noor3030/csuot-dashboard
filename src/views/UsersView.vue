@@ -38,8 +38,8 @@
         <v-icon class="pl-2" @click="copyUrl(item)" small
           >mdi-content-copy</v-icon
         >
-        <v-icon small class="pl-2" @click="edit(item)">mdi-pencil</v-icon>
-        <v-icon small class="pl-2" @click="dialogDelete = true"
+        <v-icon small class="pl-2" @click="edit(item)"  v-show="permissionsGroup.update">mdi-pencil</v-icon>
+        <v-icon small class="pl-2" @click="dialogDelete = true"  v-show="permissionsGroup.delete"
           >mdi-delete</v-icon
         >
       </template>
@@ -50,7 +50,7 @@
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-btn color="primary" class="mb-2 mr-3"> download </v-btn>
-          <v-btn color="primary" dark class="mb-2" @click="dialogCreate = true">
+          <v-btn color="primary" dark class="mb-2" @click="dialogCreate = true" v-show="permissionsGroup.create">
             New Item
           </v-btn>
           <v-dialog
@@ -212,6 +212,7 @@ export default Vue.extend({
   name: "Users",
   data() {
     return {
+      permissionsGroup : this.$store.state.permissions.users,
       usersPaging: {} as Paging_User_,
       options: { page: 1, itemsPerPage: 25 },
       loading: true,
