@@ -23,6 +23,26 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
+    path: "/users/create",
+    name: "Create User",
+    component: Users,
+    meta: {
+      requiresAuth: true,
+      permissionGroup: "users",
+      permissionType: "create",
+    },
+  },
+  {
+    path: "/branches",
+    name: "Branches",
+    component: Users,
+    meta: {
+      requiresAuth: true,
+      permissionGroup: "users",
+      permissionType: "create",
+    },
+  },
+  {
     path: "/login",
     name: "Login",
     component: Login,
@@ -43,24 +63,41 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
-// login
-router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn) {
-      next();
-    } else {
-      next({ name: "Login" });
-    }
-  } else {
-    next();
-  }
-});
+// // login
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some((record) => record.meta.requiresAuth)) {
+//     if (store.getters.isLoggedIn) {
+//       next();
+//     } else {
+//       next({ name: "Login" });
+//     }
+//   } else {
+//     next();
+//   }
+// });
 // permissions
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.permissionGroup != null)) {
-    to.matched.some((record) => console.log((store.state.permissions as any)?.[record.meta.permissionGroup][record.meta.permissionType]));
-    to.matched.some((record) => console.log(store.state.permissions));
-    if (to.matched.some((record) => (store.state.permissions as any)?.[record.meta.permissionGroup][record.meta.permissionType])) {
+    
+    console.log(
+      to.matched.some(
+        (record) =>
+          `${record.meta.permissionGroup}` +
+          `${record.meta.permissionType}` +
+          (store.state.permissions as any)?.[record.meta.permissionGroup][
+            record.meta.permissionType
+          ]
+      )
+    );
+
+    if (
+      to.matched.some(
+        (record) =>
+          (store.state.permissions as any)?.[record.meta.permissionGroup][
+            record.meta.permissionType
+          ]
+      )
+    ) {
       next();
     } else {
       next({ name: "Home" });

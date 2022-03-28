@@ -7,8 +7,5 @@ import Vue from "vue";
 export default Vue.extend({
   name: "Home",
   components: {},
-  mounted() {
-    console.log("Hello" + this.$store.getters.getPermissions);
-  },
 });
 </script>

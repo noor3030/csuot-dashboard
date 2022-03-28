@@ -19,8 +19,8 @@ export default Vue.extend({
       return this.$route.path !== "/login";
     },
   },
-  created() {
-    this.$store.dispatch("getPermissions");
+  mounted() {
+    this.$store.commit("getPermissions");
   },
 });
 </script>

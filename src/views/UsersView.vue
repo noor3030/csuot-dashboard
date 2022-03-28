@@ -4,7 +4,7 @@
       <v-card-title>
         <v-spacer></v-spacer>
         <v-text-field
-         @change="onSearch"
+          @change="onSearch"
           v-model="search"
           append-icon="mdi-magnify"
           label="Search"
@@ -189,9 +189,10 @@
       <v-pagination
         @input="optionsChangeHandler"
         :value="options.page"
-        :length="pages"
+        :length="pagesLength"
         :total-visible="options.itemsPerPage"
-        circle
+        prev-icon="mdi-menu-left"
+        next-icon="mdi-menu-right"
       ></v-pagination>
     </div>
   </div>
@@ -208,6 +209,7 @@ import {
 import Vue from "vue";
 
 export default Vue.extend({
+  name: "Users",
   data() {
     return {
       usersPaging: {} as Paging_User_,
@@ -235,7 +237,10 @@ export default Vue.extend({
     };
   },
   computed: {
-    pages(): number {
+    pagesLength(): number {
+      if (this.usersPaging.count == null || this.options.itemsPerPage == null) {
+        return 0;
+      }
       return Math.ceil(this.usersPaging.count / this.options.itemsPerPage);
     },
   },
@@ -247,8 +252,8 @@ export default Vue.extend({
       this.options.page = pageNumber;
       this.getUsers();
     },
-    onSearch(){
-      this.getUsers()
+    onSearch() {
+      this.getUsers();
     },
 
     getUsers(): void {
