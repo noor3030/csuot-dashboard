@@ -18,7 +18,7 @@ const routes: Array<RouteConfig> = [
     component: Users,
     meta: {
       requiresAuth: true,
-      permission: "users",
+      permissionGroup: "users",
       permissionType: "read",
     },
   },
@@ -57,11 +57,13 @@ router.beforeEach((to, from, next) => {
 });
 // permissions
 router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.permission != null)) {
-    if (store.getters.isLoggedIn) {
+  if (to.matched.some((record) => record.meta.permissionGroup != null)) {
+    to.matched.some((record) => console.log((store.state.permissions as any)?.[record.meta.permissionGroup][record.meta.permissionType]));
+    to.matched.some((record) => console.log(store.state.permissions));
+    if (to.matched.some((record) => (store.state.permissions as any)?.[record.meta.permissionGroup][record.meta.permissionType])) {
       next();
     } else {
-      next({ name: "Login" });
+      next({ name: "Home" });
     }
   } else {
     next();

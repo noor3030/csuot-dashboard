@@ -6,12 +6,17 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    permissions: null as Permissions | null,
+    permissions: null as Permissions | null , 
   },
   mutations: {
-    getPermission(state): void {
+    getPermissions(state): void {
       AuthService.myPermissions().then((value) => {
+        console.log(value.permissions);
+        
         state.permissions = value.permissions;
+
+        console.log(state.permissions);
+
       });
     },
   },
