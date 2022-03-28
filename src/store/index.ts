@@ -6,13 +6,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    permissions: null as Permissions | null , 
+    permissions: null as Permissions | null,
   },
   mutations: {
     getPermissions(state): void {
       AuthService.myPermissions().then((value) => {
         console.log(value.permissions);
-        
+
         state.permissions = value.permissions;
 
         console.log(state.permissions);
@@ -20,9 +20,14 @@ export default new Vuex.Store({
       });
     },
   },
-  actions: {},
+  actions: {
+    getPermissions({ commit }) {
+      commit("getPermissions")
+    }
+  },
   modules: {},
   getters: {
+
     isLoggedIn() {
       return localStorage.getItem("token") != null;
     },
