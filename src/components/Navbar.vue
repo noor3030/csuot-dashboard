@@ -28,7 +28,7 @@
         <span>Dashboard</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn flat color="#fff" text @click="logout"
+      <v-btn color="#fff" text @click="logout"
         ><span>Sign Out</span> <v-icon>mdi-exit-to-app</v-icon></v-btn
       >
     </v-app-bar>
