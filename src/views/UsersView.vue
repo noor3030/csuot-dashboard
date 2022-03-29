@@ -221,15 +221,14 @@ import {
   UserGender,
   UserUpdate,
   Paging_User_,
+  PermissionGroup,
 } from "@/client";
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "Users",
   data() {
     return {
-      permissionsGroup: this.$store.state.permissions.users,
-      usersPaging: {} as Paging_User_,
+      usersPaging: { count: 0, results: [] } as Paging_User_,
       options: { page: 1, itemsPerPage: 25 },
       loading: true,
       //
@@ -254,6 +253,10 @@ export default Vue.extend({
     };
   },
   computed: {
+    permissionsGroup(): PermissionGroup {
+      return this.$store.state.permissions?.users || {};
+    },
+
     pagesLength(): number {
       if (this.usersPaging.count == null || this.options.itemsPerPage == null) {
         return 0;
@@ -261,7 +264,9 @@ export default Vue.extend({
       return Math.ceil(this.usersPaging.count / this.options.itemsPerPage);
     },
   },
-  mounted() {
+  created() {
+    console.log("Hello");
+
     this.getUsers();
   },
   methods: {
@@ -282,7 +287,10 @@ export default Vue.extend({
         this.options.page,
         this.options.itemsPerPage
       ).then((value) => {
-        this.usersPaging = value;
+        console.log("Hello");
+        console.log("Hello");
+
+        this.usersPaging = value as Paging_User_;
       });
       this.loading = false;
     },
