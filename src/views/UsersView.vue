@@ -83,31 +83,49 @@
                 <v-toolbar-title>Add New User</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
-                  <v-btn dark text @click="dialogCreate = false"> Save </v-btn>
+                  <v-btn dark text @click="createUser"> Save </v-btn>
                 </v-toolbar-items>
               </v-toolbar>
               <v-card-text>
                 <v-container>
                   <v-row>
                     <v-col>
-                      <v-text-field ref="name" label="Name" required>
+                      <v-text-field
+                        ref="name"
+                        v-model="userCreate.name"
+                        label="Name"
+                        required
+                      >
                       </v-text-field>
                     </v-col>
                     <v-col>
-                      <v-text-field ref="en_name" label="English Name" required>
-                      </v-text-field>
+                      <v-text-field
+                        color="#232f34"
+                        ref="email"
+                        :rules="email"
+                        label="Email"
+                        name="email"
+                        type="email"
+                        prepend-icon="mdi-email"
+                        required
+                        v-model="userCreate.email"
+                      ></v-text-field>
                     </v-col>
                     <v-col>
-                      <v-select :items="genders" label="Gender"></v-select>
+                      <v-select
+                        :items="genders"
+                        label="Gender"
+                        ref="geneder"
+                        v-model="userCreate.gender"
+                      ></v-select>
                     </v-col>
                   </v-row>
                   <v-row
                     ><v-col>
-                      <v-text-field ref="uot_url" label="Uot Url" required>
-                      </v-text-field>
                       <v-color-picker
                         :mode.sync="mode"
                         canvas-height="100"
+                        ref="userCreate.color"
                       ></v-color-picker> </v-col
                   ></v-row>
                 </v-container>
@@ -222,12 +240,20 @@ import {
   UserUpdate,
   Paging_User_,
   PermissionGroup,
+  UserCreate,
 } from "@/client";
+
 import Vue from "vue";
 
 export default Vue.extend({
   data() {
     return {
+      userCreate: {
+        name: "",
+
+        email: "",
+        geneder: null,
+      } as UserCreate,
       usersPaging: { count: 0, results: [] } as Paging_User_,
       options: { page: 1, itemsPerPage: 25 },
       loading: true,
@@ -249,6 +275,10 @@ export default Vue.extend({
         { text: "Uot Url", value: "uot_url" },
         { text: "Color", value: "color" },
         { text: "Actions", value: "actions", sortable: false },
+      ],
+      email: [
+        (v: string) => !!v || "E-mail is required",
+        (v: string) => /.+@.+/.test(v) || "E-mail must be valid",
       ],
     };
   },
@@ -287,14 +317,16 @@ export default Vue.extend({
         this.options.page,
         this.options.itemsPerPage
       ).then((value) => {
-        console.log("Hello");
-        console.log("Hello");
-
         this.usersPaging = value as Paging_User_;
       });
       this.loading = false;
     },
-
+    createUser() {
+      UsersService.createUser(this.userCreate).then(()=>{
+        this.getUsers()
+      });
+      this.dialogCreate = false;
+    },
     copyUrl(item: User) {
       navigator.clipboard.writeText(
         `${window.location.origin}/users/${item.id}`
