@@ -1,18 +1,34 @@
 <template>
-  <div>
-    <v-card>
-      <v-card-title>
-        <v-spacer></v-spacer>
-        <v-text-field
-          @change="onSearch"
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
-      </v-card-title>
-    </v-card>
+  <div class="pa-5">
+    <v-container>
+      <v-row>
+        <v-col cols="6" sm="3">
+          <v-text-field
+            height="55"
+            @change="onSearch"
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+            filled
+            rounded
+          >
+          </v-text-field
+        ></v-col>
+        <v-col cols="6" sm="3">
+          <v-autocomplete
+          label="User Types"
+            rounded
+            clearable
+            outlined
+            :items="userTypes"
+            v-model="userType"
+            @change="getUsers"
+          ></v-autocomplete>
+        </v-col>
+      </v-row>
+    </v-container>
     <v-data-table
       :headers="headers"
       :items="usersPaging.results"
@@ -69,6 +85,7 @@
           >
             New Item
           </v-btn>
+
           <v-dialog
             v-model="dialogCreate"
             fullscreen
@@ -237,6 +254,7 @@ import {
   UsersService,
   User,
   UserGender,
+  StaffType,
   UserUpdate,
   Paging_User_,
   PermissionGroup,
@@ -267,6 +285,7 @@ export default Vue.extend({
       dialogEdit: false,
       dialogDelete: false,
       genders: Object.values(UserGender), // [UserGender.MALE, UserGender.FEMALE],
+      userTypes: Object.values(StaffType),
       mode: "hexa",
       headers: [
         { text: "Name", value: "name" },
@@ -322,8 +341,8 @@ export default Vue.extend({
       this.loading = false;
     },
     createUser() {
-      UsersService.createUser(this.userCreate).then(()=>{
-        this.getUsers()
+      UsersService.createUser(this.userCreate).then(() => {
+        this.getUsers();
       });
       this.dialogCreate = false;
     },
