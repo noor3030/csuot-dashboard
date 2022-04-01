@@ -10,7 +10,7 @@ export default new Vuex.Store({
   },
   mutations: {
     getPermissions(state) {
-      AuthService.myPermissions().then((value) => {
+      AuthService.getMyPermissions().then((value) => {
         state.permissions = value.permissions;
       });
     },
