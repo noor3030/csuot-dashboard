@@ -2,14 +2,16 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import { UserGender } from "./UserGender";
+
 export type Body_users_update_user = {
     image?: Blob;
     job_titles?: Array<string>;
-    name: any;
-    color: any;
-    email?: any;
-    password?: any;
-    uot_url?: any;
-    gender?: any;
-    role_id: any;
+    name: string;
+    color: string;
+    email?: string;
+    password?: string;
+    uot_url?: string;
+    gender?: UserGender;
+    role_id: string;
 };
