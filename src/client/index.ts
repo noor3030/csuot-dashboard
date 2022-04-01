@@ -13,6 +13,8 @@ export type { app__schemas__user__JobTitle } from './models/app__schemas__user__
 export type { Body_asc_seed_db } from './models/Body_asc_seed_db';
 export type { Body_auth_login_access_token } from './models/Body_auth_login_access_token';
 export type { Body_auth_reset_password } from './models/Body_auth_reset_password';
+export type { Body_users_create_user } from './models/Body_users_create_user';
+export type { Body_users_update_user } from './models/Body_users_update_user';
 export type { BranchCreate } from './models/BranchCreate';
 export type { BranchUpdate } from './models/BranchUpdate';
 export type { Building } from './models/Building';
@@ -97,11 +99,10 @@ export type { TelegramUserCreate } from './models/TelegramUserCreate';
 export type { TelegramUserUpdate } from './models/TelegramUserUpdate';
 export type { Token } from './models/Token';
 export type { User } from './models/User';
-export type { UserCreate } from './models/UserCreate';
+export type { UserCreateDB } from './models/UserCreateDB';
 export { UserGender } from './models/UserGender';
 export { UserScrapeFrom } from './models/UserScrapeFrom';
 export { UserType } from './models/UserType';
-export type { UserUpdate } from './models/UserUpdate';
 export type { ValidationError } from './models/ValidationError';
 
 export { AscService } from './services/AscService';

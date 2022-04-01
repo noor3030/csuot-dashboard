@@ -5,7 +5,7 @@
 import type { Permissions } from './Permissions';
 
 export type RoleUpdate = {
-    ar_name: string;
-    en_name: string;
+    name: string;
+    enum?: string;
     permissions: Permissions;
 };

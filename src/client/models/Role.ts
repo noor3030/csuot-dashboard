@@ -5,8 +5,8 @@
 import type { Permissions } from './Permissions';
 
 export type Role = {
-    ar_name: string;
-    en_name: string;
+    name: string;
+    enum?: string;
     permissions: Permissions;
     id: string;
 };

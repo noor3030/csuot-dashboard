@@ -6,8 +6,7 @@ import type { Body_auth_reset_password } from '../models/Body_auth_reset_passwor
 import type { Message } from '../models/Message';
 import type { Role } from '../models/Role';
 import type { Token } from '../models/Token';
-import type { User } from '../models/User';
-import type { UserCreate } from '../models/UserCreate';
+import type { UserCreateDB } from '../models/UserCreateDB';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -44,7 +43,7 @@ formData: Body_auth_login_access_token,
      * @throws ApiError
      */
     public static signUp(
-requestBody: UserCreate,
+requestBody: UserCreateDB,
 ): CancelablePromise<Message> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -58,25 +57,12 @@ requestBody: UserCreate,
     }
 
     /**
-     * Test Token
-     * Test access token
-     * @returns User Successful Response
-     * @throws ApiError
-     */
-    public static testToken(): CancelablePromise<User> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/v1/auth/login/test.json-token',
-        });
-    }
-
-    /**
-     * My Permissions
+     * Get My Permissions
      * Return my permissions
      * @returns Role Successful Response
      * @throws ApiError
      */
-    public static myPermissions(): CancelablePromise<Role> {
+    public static getMyPermissions(): CancelablePromise<Role> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/v1/auth/permissions/',

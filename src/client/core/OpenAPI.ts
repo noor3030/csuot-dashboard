@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ApiRequestOptions } from './ApiRequestOptions';
-import { BASE_URL } from '@/utils/config';
 
 type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;
 type Headers = Record<string, string>;
@@ -20,11 +19,11 @@ export type OpenAPIConfig = {
 };
 
 export const OpenAPI: OpenAPIConfig = {
-    BASE: BASE_URL,
+    BASE: '',
     VERSION: '1',
     WITH_CREDENTIALS: false,
     CREDENTIALS: 'include',
-    TOKEN: localStorage.getItem("token") as string,
+    TOKEN: undefined,
     USERNAME: undefined,
     PASSWORD: undefined,
     HEADERS: undefined,

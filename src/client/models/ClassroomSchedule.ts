@@ -5,10 +5,8 @@
 import type { RoomType } from './RoomType';
 
 export type ClassroomSchedule = {
-    name?: string;
-    color?: string;
-    color_light?: string;
-    color_dark?: string;
+    name: string;
+    color: string;
     building_id?: string;
     floor_id?: string;
     type?: RoomType;

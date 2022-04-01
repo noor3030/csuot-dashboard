@@ -18,7 +18,7 @@
         ></v-col>
         <v-col cols="6" sm="3">
           <v-autocomplete
-          label="User Types"
+            label="User Types"
             rounded
             clearable
             outlined
@@ -198,15 +198,6 @@
                       </v-text-field>
                     </v-col>
                     <v-col>
-                      <v-text-field
-                        ref="en_name"
-                        v-model="editedItem.en_name"
-                        label="English Name"
-                        required
-                      >
-                      </v-text-field>
-                    </v-col>
-                    <v-col>
                       <v-select
                         :items="genders"
                         v-model="editedItem.gender"
@@ -255,25 +246,21 @@ import {
   User,
   UserGender,
   StaffType,
-  UserUpdate,
+  Body_users_update_user as UserUpdate,
   Paging_User_,
   PermissionGroup,
-  UserCreate,
+  Body_users_create_user as UserCreate,
 } from "@/client";
 
 import Vue from "vue";
+import { DataOptions } from "vuetify";
 
 export default Vue.extend({
   data() {
     return {
-      userCreate: {
-        name: "",
-
-        email: "",
-        geneder: null,
-      } as UserCreate,
+      userCreate: {} as UserCreate,
       usersPaging: { count: 0, results: [] } as Paging_User_,
-      options: { page: 1, itemsPerPage: 25 },
+      options: { page: 1, itemsPerPage: 25 } as DataOptions,
       loading: true,
       //
       search: null as any,
@@ -333,6 +320,7 @@ export default Vue.extend({
         this.search,
         this.roleId,
         this.userType,
+        [],
         this.options.page,
         this.options.itemsPerPage
       ).then((value) => {
@@ -347,16 +335,14 @@ export default Vue.extend({
       this.dialogCreate = false;
     },
     copyUrl(item: User) {
-      navigator.clipboard.writeText(
-        `${window.location.origin}/users/${item.id}`
-      );
+      navigator.clipboard.writeText(`${process.env.BASE_URL}/users/${item.id}`);
     },
     closeDelete() {
       this.dialogDelete = false;
     },
 
     edit(item: User) {
-      this.editedItem = item;
+      this.editedItem = item as any;
       this.dialogEdit = true;
     },
   },
