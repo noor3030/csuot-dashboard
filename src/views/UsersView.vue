@@ -27,6 +27,35 @@
             @change="getUsers"
           ></v-autocomplete>
         </v-col>
+        <v-col cols="6" sm="3">
+          <v-autocomplete
+            label="Roles"
+            rounded
+            clearable
+            outlined
+            :items="roles"
+            item-text="name"
+            item-value="id"
+            v-model="roleId"
+            @change="getUsers"
+          ></v-autocomplete>
+        </v-col>
+         <v-col cols="6" sm="3">
+          <v-autocomplete
+            label="Job Title"
+            rounded
+            clearable
+            outlined
+            :items="jobTitle"
+            item-text="name"
+             small-chips
+            item-value="id"
+            chips
+            v-model="jobTitleIds"
+            multiple
+            @change="getUsers"
+          ></v-autocomplete>
+        </v-col>
       </v-row>
     </v-container>
     <v-data-table
@@ -242,6 +271,10 @@
 
 <script lang="ts">
 import {
+  RolesService,
+  JobTitlesService,
+  app__schemas__job_title__JobTitle,
+  Role,
   UsersService,
   User,
   UserGender,
@@ -260,12 +293,16 @@ export default Vue.extend({
     return {
       userCreate: {} as UserCreate,
       usersPaging: { count: 0, results: [] } as Paging_User_,
+      roles: [] as Array<Role>,
+      jobTitle: [] as Array<app__schemas__job_title__JobTitle>,
+      jobTitleIds:[] as Array <string>,
       options: { page: 1, itemsPerPage: 25 } as DataOptions,
       loading: true,
       //
       search: null as any,
       userType: null as any,
       roleId: null as any,
+
       //
       editedItem: {} as UserUpdate,
       dialogCreate: false,
@@ -304,6 +341,8 @@ export default Vue.extend({
     console.log("Hello");
 
     this.getUsers();
+    this.getRoles();
+    this.getJobTitle()
   },
   methods: {
     optionsChangeHandler(pageNumber: number) {
@@ -320,7 +359,7 @@ export default Vue.extend({
         this.search,
         this.roleId,
         this.userType,
-        [],
+        this.jobTitleIds,
         this.options.page,
         this.options.itemsPerPage
       ).then((value) => {
@@ -344,6 +383,17 @@ export default Vue.extend({
     edit(item: User) {
       this.editedItem = item as any;
       this.dialogEdit = true;
+    },
+    getRoles() {
+      RolesService.readRoles(1, 100).then((value) => {
+        this.roles = value.results;
+        console.log(value);
+      });
+    },
+    getJobTitle() {
+      JobTitlesService.readJobTitles(1,100).then((value) => {
+        this.jobTitle = value.results;
+      });
     },
   },
 });

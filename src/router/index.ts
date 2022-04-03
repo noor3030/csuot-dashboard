@@ -90,22 +90,22 @@ router.beforeEach((to, from, next) => {
 });
 
 // permissions
-router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.permissionGroup != null)) {
-    if (
-      to.matched.some(
-        (record) =>
-          (store.state.permissions as any)?.[record.meta.permissionGroup][
-            record.meta.permissionType
-          ]
-      )
-    ) {
-      next();
-    } else {
-      next({ name: "Home" });
-    }
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some((record) => record.meta.permissionGroup != null)) {
+//     if (
+//       to.matched.some(
+//         (record) =>
+//           (store.state.permissions as any)?.[record.meta.permissionGroup][
+//             record.meta.permissionType
+//           ]
+//       )
+//     ) {
+//       next();
+//     } else {
+//       next({ name: "Home" });
+//     }
+//   } else {
+//     next();
+//   }
+// });
 export default router;
