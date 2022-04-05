@@ -1,63 +1,12 @@
 <template>
   <div class="pa-5">
-    <v-container>
-      <v-row>
-        <v-col cols="6" sm="3">
-          <v-text-field
-            height="55"
-            @change="onSearch"
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-            filled
-            rounded
-          >
-          </v-text-field
-        ></v-col>
-        <v-col cols="6" sm="3">
-          <v-autocomplete
-            label="User Types"
-            rounded
-            clearable
-            outlined
-            :items="userTypes"
-            v-model="userType"
-            @change="getUsers"
-          ></v-autocomplete>
-        </v-col>
-        <v-col cols="6" sm="3">
-          <v-autocomplete
-            label="Roles"
-            rounded
-            clearable
-            outlined
-            :items="roles"
-            item-text="name"
-            item-value="id"
-            v-model="roleId"
-            @change="getUsers"
-          ></v-autocomplete>
-        </v-col>
-         <v-col cols="6" sm="3">
-          <v-autocomplete
-            label="Job Title"
-            rounded
-            clearable
-            outlined
-            :items="jobTitle"
-            item-text="name"
-             small-chips
-            item-value="id"
-            chips
-            v-model="jobTitleIds"
-            multiple
-            @change="getUsers"
-          ></v-autocomplete>
-        </v-col>
-      </v-row>
-    </v-container>
+    <UserFilters
+      @changed="getUsers"
+      :roles="roles"
+      :userTypes="userTypes"
+      :roleId="roleId"
+    />
+
     <v-data-table
       :headers="headers"
       :items="usersPaging.results"
@@ -271,9 +220,9 @@
 
 <script lang="ts">
 import {
+  app__schemas__job_title__JobTitle,
   RolesService,
   JobTitlesService,
-  app__schemas__job_title__JobTitle,
   Role,
   UsersService,
   User,
@@ -287,21 +236,23 @@ import {
 
 import Vue from "vue";
 import { DataOptions } from "vuetify";
-
+import UserFilters from "@/components/UserFilters.vue";
 export default Vue.extend({
   data() {
     return {
+      jobsTitle: [] as Array<app__schemas__job_title__JobTitle>,
+      jobsTitleIds: [] as Array<string>,
+      roles: [] as Array<Role>,
+      roleId: null as any,
+      userType: null as any,
+      userTypes: Object.values(StaffType),
+      search: null as any,
       userCreate: {} as UserCreate,
       usersPaging: { count: 0, results: [] } as Paging_User_,
-      roles: [] as Array<Role>,
-      jobTitle: [] as Array<app__schemas__job_title__JobTitle>,
-      jobTitleIds:[] as Array <string>,
+
       options: { page: 1, itemsPerPage: 25 } as DataOptions,
       loading: true,
       //
-      search: null as any,
-      userType: null as any,
-      roleId: null as any,
 
       //
       editedItem: {} as UserUpdate,
@@ -309,7 +260,6 @@ export default Vue.extend({
       dialogEdit: false,
       dialogDelete: false,
       genders: Object.values(UserGender), // [UserGender.MALE, UserGender.FEMALE],
-      userTypes: Object.values(StaffType),
       mode: "hexa",
       headers: [
         { text: "Name", value: "name" },
@@ -342,14 +292,11 @@ export default Vue.extend({
 
     this.getUsers();
     this.getRoles();
-    this.getJobTitle()
+    this.getJobTitle();
   },
   methods: {
     optionsChangeHandler(pageNumber: number) {
       this.options.page = pageNumber;
-      this.getUsers();
-    },
-    onSearch() {
       this.getUsers();
     },
 
@@ -359,7 +306,7 @@ export default Vue.extend({
         this.search,
         this.roleId,
         this.userType,
-        this.jobTitleIds,
+        this.jobsTitleIds,
         this.options.page,
         this.options.itemsPerPage
       ).then((value) => {
@@ -391,11 +338,12 @@ export default Vue.extend({
       });
     },
     getJobTitle() {
-      JobTitlesService.readJobTitles(1,100).then((value) => {
-        this.jobTitle = value.results;
+      JobTitlesService.readJobTitles(1, 100).then((value) => {
+        this.jobsTitle = value.results;
       });
     },
   },
+  components: { UserFilters },
 });
 </script>
 
