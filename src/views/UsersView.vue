@@ -118,11 +118,40 @@
                   <v-row
                     ><v-col>
                       <v-color-picker
+                        v-model="color"
                         :mode.sync="mode"
                         canvas-height="100"
                         ref="userCreate.color"
-                      ></v-color-picker> </v-col
-                  ></v-row>
+                      ></v-color-picker>
+                    </v-col>
+                    <v-col>
+                      <v-autocomplete
+                        label="Job Title"
+                        rounded
+                        clearable
+                        outlined
+                        :items="jobsTitle"
+                        item-text="name"
+                        small-chips
+                        item-value="id"
+                        chips
+                        v-model="userCreate.job_titles"
+                        multiple
+                      ></v-autocomplete>
+                    </v-col>
+                    <v-col>
+                      <v-autocomplete
+                        label="Roles"
+                        rounded
+                        clearable
+                        outlined
+                        :items="roles"
+                        item-text="name"
+                        item-value="id"
+                        v-model="userCreate.role_id"
+                      ></v-autocomplete>
+                    </v-col>
+                  </v-row>
                 </v-container>
               </v-card-text>
             </v-card>
@@ -175,6 +204,7 @@
                       >
                       </v-text-field>
                     </v-col>
+
                     <v-col>
                       <v-select
                         :items="genders"
@@ -192,6 +222,7 @@
                         required
                       >
                       </v-text-field>
+
                       <v-color-picker
                         :mode.sync="mode"
                         :value="editedItem.color"
@@ -260,13 +291,15 @@ export default Vue.extend({
       dialogEdit: false,
       dialogDelete: false,
       genders: Object.values(UserGender), // [UserGender.MALE, UserGender.FEMALE],
-      mode: "hexa",
+      mode: "hex",
+      color:null as any,
       headers: [
         { text: "Name", value: "name" },
         { text: "English Name", value: "en_name" },
         { text: "Gender", value: "gender" },
         { text: "Uot Url", value: "uot_url" },
         { text: "Color", value: "color" },
+
         { text: "Actions", value: "actions", sortable: false },
       ],
       email: [
@@ -279,7 +312,12 @@ export default Vue.extend({
     permissionsGroup(): PermissionGroup {
       return this.$store.state.permissions?.users || {};
     },
+    // color: {
+    //         get () {
+    //           return this.mode
 
+    //         },
+    // },
     pagesLength(): number {
       if (this.usersPaging.count == null || this.options.itemsPerPage == null) {
         return 0;
@@ -294,6 +332,7 @@ export default Vue.extend({
     this.getRoles();
     this.getJobTitle();
   },
+
   methods: {
     optionsChangeHandler(pageNumber: number) {
       this.options.page = pageNumber;
@@ -315,6 +354,8 @@ export default Vue.extend({
       this.loading = false;
     },
     createUser() {
+      console.log(this.color);
+      this.userCreate.color= this.color.hex
       UsersService.createUser(this.userCreate).then(() => {
         this.getUsers();
       });
