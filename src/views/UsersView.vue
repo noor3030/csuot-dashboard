@@ -1,10 +1,11 @@
 <template>
   <div class="pa-5">
     <UserFilters
-      @changed="getUsers"
+      @changed="onFilterChange"
       :roles="roles"
       :userTypes="userTypes"
       :roleId="roleId"
+      :jobTitles="jobTitles"
     />
 
     <v-data-table
@@ -82,55 +83,55 @@
                 </v-toolbar-items>
               </v-toolbar>
               <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col>
+                <v-container class="mt-5">
+                  <v-layout row wrap>
+                    <v-flex xs12 md6>
                       <v-text-field
+                        class="mr-3"
+                        rounded
+                        outlined
                         ref="name"
                         v-model="userCreate.name"
                         label="Name"
                         required
                       >
                       </v-text-field>
-                    </v-col>
-                    <v-col>
+                    </v-flex>
+                    <v-spacer></v-spacer>
+                    <v-flex xs12 md6>
                       <v-text-field
+                        rounded
+                        outlined
                         color="#232f34"
                         ref="email"
                         :rules="email"
                         label="Email"
                         name="email"
                         type="email"
-                        prepend-icon="mdi-email"
                         required
                         v-model="userCreate.email"
                       ></v-text-field>
-                    </v-col>
-                    <v-col>
-                      <v-select
+                    </v-flex>
+
+                    <v-flex xs12 md6>
+                      <v-autocomplete
+                        rounded
+                        outlined
                         :items="genders"
                         label="Gender"
                         ref="geneder"
                         v-model="userCreate.gender"
-                      ></v-select>
-                    </v-col>
-                  </v-row>
-                  <v-row
-                    ><v-col>
-                      <v-color-picker
-                        v-model="color"
-                        :mode.sync="mode"
-                        canvas-height="100"
-                        ref="userCreate.color"
-                      ></v-color-picker>
-                    </v-col>
+                      ></v-autocomplete>
+                    </v-flex>
+                  </v-layout>
+                  <v-row>
                     <v-col>
                       <v-autocomplete
                         label="Job Title"
                         rounded
                         clearable
                         outlined
-                        :items="jobsTitle"
+                        :items="jobTitles"
                         item-text="name"
                         small-chips
                         item-value="id"
@@ -152,6 +153,14 @@
                       ></v-autocomplete>
                     </v-col>
                   </v-row>
+                  <v-col>
+                    <v-color-picker
+                      v-model="color"
+                      :mode.sync="mode"
+                      canvas-height="100"
+                      ref="userCreate.color"
+                    ></v-color-picker>
+                  </v-col>
                 </v-container>
               </v-card-text>
             </v-card>
@@ -166,8 +175,11 @@
                 <v-btn color="blue darken-1" text @click="closeDelete"
                   >Cancel</v-btn
                 >
-
-                <v-btn color="blue darken-1" text>OK</v-btn>
+                <template v-slot:[`item.id`]="{ item }">
+                  <v-btn color="blue darken-1" text @click="deleteUser(item)"
+                    >OK</v-btn
+                  ></template
+                >
                 <v-spacer></v-spacer>
               </v-card-actions> </v-card
           ></v-dialog>
@@ -263,6 +275,7 @@ import {
   Paging_User_,
   PermissionGroup,
   Body_users_create_user as UserCreate,
+  UserType,
 } from "@/client";
 
 import Vue from "vue";
@@ -271,7 +284,8 @@ import UserFilters from "@/components/UserFilters.vue";
 export default Vue.extend({
   data() {
     return {
-      jobsTitle: [] as Array<app__schemas__job_title__JobTitle>,
+      userId: String,
+      jobTitles: [] as Array<app__schemas__job_title__JobTitle>,
       jobsTitleIds: [] as Array<string>,
       roles: [] as Array<Role>,
       roleId: null as any,
@@ -283,16 +297,13 @@ export default Vue.extend({
 
       options: { page: 1, itemsPerPage: 25 } as DataOptions,
       loading: true,
-      //
-
-      //
       editedItem: {} as UserUpdate,
       dialogCreate: false,
       dialogEdit: false,
       dialogDelete: false,
-      genders: Object.values(UserGender), // [UserGender.MALE, UserGender.FEMALE],
+      genders: Object.values(UserGender),
       mode: "hex",
-      color:null as any,
+      color: null as any,
       headers: [
         { text: "Name", value: "name" },
         { text: "English Name", value: "en_name" },
@@ -312,12 +323,6 @@ export default Vue.extend({
     permissionsGroup(): PermissionGroup {
       return this.$store.state.permissions?.users || {};
     },
-    // color: {
-    //         get () {
-    //           return this.mode
-
-    //         },
-    // },
     pagesLength(): number {
       if (this.usersPaging.count == null || this.options.itemsPerPage == null) {
         return 0;
@@ -326,8 +331,6 @@ export default Vue.extend({
     },
   },
   created() {
-    console.log("Hello");
-
     this.getUsers();
     this.getRoles();
     this.getJobTitle();
@@ -336,6 +339,18 @@ export default Vue.extend({
   methods: {
     optionsChangeHandler(pageNumber: number) {
       this.options.page = pageNumber;
+      this.getUsers();
+    },
+    onFilterChange(
+      roleId: string | null,
+      jobTitlesIds: Array<string>,
+      userType: UserType | null,
+      search: string | null
+    ) {
+      this.roleId = roleId;
+      this.jobsTitleIds = jobTitlesIds;
+      this.userType = userType;
+      this.search = search;
       this.getUsers();
     },
 
@@ -354,12 +369,16 @@ export default Vue.extend({
       this.loading = false;
     },
     createUser() {
-      console.log(this.color);
-      this.userCreate.color= this.color.hex
+     
+      this.userCreate.color = this.color.hex;
       UsersService.createUser(this.userCreate).then(() => {
         this.getUsers();
       });
       this.dialogCreate = false;
+    },
+    deleteUser(id: string) {
+      UsersService.deleteUser(id);
+      console.log(id);
     },
     copyUrl(item: User) {
       navigator.clipboard.writeText(`${process.env.BASE_URL}/users/${item.id}`);
@@ -375,12 +394,12 @@ export default Vue.extend({
     getRoles() {
       RolesService.readRoles(1, 100).then((value) => {
         this.roles = value.results;
-        console.log(value);
+        
       });
     },
     getJobTitle() {
       JobTitlesService.readJobTitles(1, 100).then((value) => {
-        this.jobsTitle = value.results;
+        this.jobTitles = value.results;
       });
     },
   },

@@ -45,12 +45,12 @@
           rounded
           clearable
           outlined
-          :items="jobsTitle"
+          :items="jobTitles"
           item-text="name"
           small-chips
           item-value="id"
           chips
-          v-model="jobsTitleIds"
+          v-model="jobTitlesIds"
           multiple
           @change="getUsers"
         ></v-autocomplete>
@@ -60,41 +60,31 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import {
-  app__schemas__job_title__JobTitle,
-  Role,
-  StaffType,
-  JobTitlesService,
-  RolesService,
-} from "@/client";
 export default Vue.extend({
   data() {
     return {
-      jobsTitle: [] as Array<app__schemas__job_title__JobTitle>,
-      jobsTitleIds: [] as Array<string>,
+      jobTitlesIds: [] as Array<string>,
 
       userType: null as any,
       search: null as any,
+      roleId: null as any,
     };
   },
   props: {
     roles: { type: Array },
-    userTypes: { type: Object },
-    roleId: { type: String },
+    userTypes: { type: Array },
+    jobTitles: { type: Array },
   },
   methods: {
     getUsers() {
-      this.$emit("changed");
+      this.$emit(
+        "changed",
+        this.roleId,
+        this.jobTitlesIds,
+        this.userType,
+        this.search
+      );
     },
-
-    getJobTitle() {
-      JobTitlesService.readJobTitles(1, 100).then((value) => {
-        this.jobsTitle = value.results;
-      });
-    },
-  },
-  created() {
-    this.getJobTitle();
   },
 });
 </script>
