@@ -36,14 +36,14 @@
         <v-icon
           small
           class="pl-2"
-          @click="edit(item)"
+          @click="userId = item.id"
           v-show="permissionsGroup.update"
           >mdi-pencil</v-icon
         >
         <v-icon
           small
           class="pl-2"
-          @click="dialogDelete = true"
+          @click="userId = item.id"
           v-show="permissionsGroup.delete"
           >mdi-delete</v-icon
         >
@@ -64,107 +64,15 @@
           >
             New Item
           </v-btn>
+          <UserCreateView
+            :dialogCreate="dialogCreate"
+            @clicked="createUser"
+            :jobTitles="jobTitles"
+            :roles="roles"
+            :userCreate="userCreate"
+            :genders="genders"
+          />
 
-          <v-dialog
-            v-model="dialogCreate"
-            fullscreen
-            hide-overlay
-            transition="dialog-bottom-transition"
-          >
-            <v-card>
-              <v-toolbar dark color="primary">
-                <v-btn icon dark @click="dialogCreate = false">
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
-                <v-toolbar-title>Add New User</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-toolbar-items>
-                  <v-btn dark text @click="createUser"> Save </v-btn>
-                </v-toolbar-items>
-              </v-toolbar>
-              <v-card-text>
-                <v-container class="mt-5">
-                  <v-layout row wrap>
-                    <v-flex xs12 md6>
-                      <v-text-field
-                        class="mr-3"
-                        rounded
-                        outlined
-                        ref="name"
-                        v-model="userCreate.name"
-                        label="Name"
-                        required
-                      >
-                      </v-text-field>
-                    </v-flex>
-                    <v-spacer></v-spacer>
-                    <v-flex xs12 md6>
-                      <v-text-field
-                        rounded
-                        outlined
-                        color="#232f34"
-                        ref="email"
-                        :rules="email"
-                        label="Email"
-                        name="email"
-                        type="email"
-                        required
-                        v-model="userCreate.email"
-                      ></v-text-field>
-                    </v-flex>
-
-                    <v-flex xs12 md6>
-                      <v-autocomplete
-                        rounded
-                        outlined
-                        :items="genders"
-                        label="Gender"
-                        ref="geneder"
-                        v-model="userCreate.gender"
-                      ></v-autocomplete>
-                    </v-flex>
-                  </v-layout>
-                  <v-row>
-                    <v-col>
-                      <v-autocomplete
-                        label="Job Title"
-                        rounded
-                        clearable
-                        outlined
-                        :items="jobTitles"
-                        item-text="name"
-                        small-chips
-                        item-value="id"
-                        chips
-                        v-model="userCreate.job_titles"
-                        multiple
-                      ></v-autocomplete>
-                    </v-col>
-                    <v-col>
-                      <v-autocomplete
-                        label="Roles"
-                        rounded
-                        clearable
-                        outlined
-                        :items="roles"
-                        item-text="name"
-                        item-value="id"
-                        v-model="userCreate.role_id"
-                      ></v-autocomplete>
-                    </v-col>
-                  </v-row>
-                  <v-col>
-                    <v-color-picker
-                      v-model="color"
-                      :mode.sync="mode"
-                      canvas-height="100"
-                      ref="userCreate.color"
-                    ></v-color-picker>
-                  </v-col>
-                </v-container>
-              </v-card-text>
-            </v-card>
-          </v-dialog>
           <v-dialog v-model="dialogDelete" max-width="500px"
             ><v-card>
               <v-card-title class="text-h5"
@@ -172,79 +80,21 @@
               >
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDelete"
+                <v-btn color="blue darken-1" text @click="closeDeleteDialog"
                   >Cancel</v-btn
                 >
-                <template v-slot:[`item.id`]="{ item }">
-                  <v-btn color="blue darken-1" text @click="deleteUser(item)"
-                    >OK</v-btn
-                  ></template
-                >
+
+                <v-btn color="blue darken-1" text @click="deleteUser">OK</v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions> </v-card
           ></v-dialog>
-          <v-dialog
-            v-model="dialogEdit"
-            fullscreen
-            hide-overlay
-            transition="dialog-bottom-transition"
-          >
-            <v-card>
-              <v-toolbar dark color="primary">
-                <v-btn icon dark @click="dialogEdit = false">
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
-                <v-toolbar-title>Edit User</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-toolbar-items>
-                  <v-btn dark text @click="dialogCreate = false"> Save </v-btn>
-                </v-toolbar-items>
-              </v-toolbar>
-              <v-card-text>
-                <v-container>
-                  <v-row
-                    ><v-avatar width="100" height="100" class="pt-2">
-                      <img :src="editedItem.image" alt="alt" /> </v-avatar
-                  ></v-row>
-                  <v-row>
-                    <v-col>
-                      <v-text-field
-                        ref="name"
-                        v-model="editedItem.name"
-                        label="Name"
-                        required
-                      >
-                      </v-text-field>
-                    </v-col>
 
-                    <v-col>
-                      <v-select
-                        :items="genders"
-                        v-model="editedItem.gender"
-                        label="Gender"
-                      ></v-select>
-                    </v-col>
-                  </v-row>
-                  <v-row
-                    ><v-col>
-                      <v-text-field
-                        ref="uot_url"
-                        v-model="editedItem.uot_url"
-                        label="Uot Url"
-                        required
-                      >
-                      </v-text-field>
-
-                      <v-color-picker
-                        :mode.sync="mode"
-                        :value="editedItem.color"
-                        canvas-height="100"
-                      ></v-color-picker> </v-col
-                  ></v-row>
-                </v-container>
-              </v-card-text>
-            </v-card>
-          </v-dialog>
+          <UserEditView
+            :dialogEdit="dialogEdit"
+            :editedItem="editedItem"
+            :genders="genders"
+            @edit="editUser"
+          />
         </v-toolbar>
       </template>
     </v-data-table>
@@ -281,10 +131,13 @@ import {
 import Vue from "vue";
 import { DataOptions } from "vuetify";
 import UserFilters from "@/components/UserFilters.vue";
+import UserCreateView from "@/components/UserCreateView.vue";
+import UserEditView from "@/components/UserEditView.vue";
+
 export default Vue.extend({
   data() {
     return {
-      userId: String,
+      userId: null as string | null,
       jobTitles: [] as Array<app__schemas__job_title__JobTitle>,
       jobsTitleIds: [] as Array<string>,
       roles: [] as Array<Role>,
@@ -299,8 +152,7 @@ export default Vue.extend({
       loading: true,
       editedItem: {} as UserUpdate,
       dialogCreate: false,
-      dialogEdit: false,
-      dialogDelete: false,
+     
       genders: Object.values(UserGender),
       mode: "hex",
       color: null as any,
@@ -312,10 +164,6 @@ export default Vue.extend({
         { text: "Color", value: "color" },
 
         { text: "Actions", value: "actions", sortable: false },
-      ],
-      email: [
-        (v: string) => !!v || "E-mail is required",
-        (v: string) => /.+@.+/.test(v) || "E-mail must be valid",
       ],
     };
   },
@@ -329,6 +177,12 @@ export default Vue.extend({
       }
       return Math.ceil(this.usersPaging.count / this.options.itemsPerPage);
     },
+    dialogDelete(): boolean {
+      return this.userId != null;
+    },
+ dialogEdit():boolean{
+   return this.userId != null
+ }
   },
   created() {
     this.getUsers();
@@ -369,32 +223,33 @@ export default Vue.extend({
       this.loading = false;
     },
     createUser() {
-     
       this.userCreate.color = this.color.hex;
       UsersService.createUser(this.userCreate).then(() => {
         this.getUsers();
       });
       this.dialogCreate = false;
     },
-    deleteUser(id: string) {
-      UsersService.deleteUser(id);
-      console.log(id);
+    deleteUser() {
+      UsersService.deleteUser(this.userId!).then(() => {
+        this.getUsers();
+      });
+      this.closeDeleteDialog();
+    },
+    closeDeleteDialog() {
+      this.userId = null;
     },
     copyUrl(item: User) {
       navigator.clipboard.writeText(`${process.env.BASE_URL}/users/${item.id}`);
     },
-    closeDelete() {
-      this.dialogDelete = false;
-    },
 
-    edit(item: User) {
+    editUser(item: User) {
+      UsersService.updateUser(item.id,this.editedItem)
       this.editedItem = item as any;
       this.dialogEdit = true;
     },
     getRoles() {
       RolesService.readRoles(1, 100).then((value) => {
         this.roles = value.results;
-        
       });
     },
     getJobTitle() {
@@ -403,7 +258,7 @@ export default Vue.extend({
       });
     },
   },
-  components: { UserFilters },
+  components: { UserFilters, UserCreateView, UserEditView },
 });
 </script>
 
