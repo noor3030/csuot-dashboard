@@ -13,7 +13,7 @@
         <v-toolbar-title>Edit User</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn dark text @click="save"> Save </v-btn>
+          <v-btn dark text @click="editUser"> Save </v-btn>
         </v-toolbar-items>
       </v-toolbar>
       <v-card-text>
@@ -50,6 +50,13 @@
                 required
               >
               </v-text-field> </v-col
+            ><v-col
+              ><v-color-picker
+                v-model="userEdit.color"
+                :mode.sync="mode"
+                canvas-height="100"
+                ref="color"
+              ></v-color-picker></v-col
           ></v-row>
         </v-container>
       </v-card-text>
@@ -69,6 +76,7 @@ export default Vue.extend({
   data() {
     return {
       mode: "hex",
+      color: null as any,
       userEdit: {} as UserEdit,
     };
   },
@@ -98,18 +106,18 @@ export default Vue.extend({
       UsersService.readUser(this.id).then((value) => {
         this.userEdit = {
           name: value.name,
+          email: value.email,
+          gender: value.gender,
+          uot_url: value.uot_url,
+          job_titles: value.job_titles.map((value) => value.id),
+          image: value.image_url,
+          color: value.color,
         } as UserEdit;
-
-        // .name = value.name;
-        // this.userEdit.color = value.color;
-        // this.userEdit.email = value.email;
-        // this.userEdit.gender = value.gender;
-        // this.userEdit.uot_url = value.uot_url;
-        // this.userEdit.job_titles = value.job_titles.map((value) => value.id);
-        // console.log(this.userEdit);
-
-        // this.userEdit.image = value.image_url;
       });
+    },
+    editUser() {
+      UsersService.updateUser(this.id, this.userEdit)
+      this.closeEditDialog()
     },
   },
 });
