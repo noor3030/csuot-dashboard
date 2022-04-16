@@ -91,11 +91,10 @@
           ></v-dialog>
 
           <UserEditView
-         :genders="genders"
-           :showDialog="dialogEdit"
-            :userId="userIdEdit"
+            :genders="genders"
+            :showDialog="dialogEdit"
+            :id="userIdEdit"
             @closeEditDialog="closeEditDialog"
-            
           />
         </v-toolbar>
       </template>
@@ -155,7 +154,7 @@ export default Vue.extend({
 
       options: { page: 1, itemsPerPage: 25 } as DataOptions,
       loading: true,
-  
+
       dialogCreate: false,
 
       genders: Object.values(UserGender),
@@ -250,7 +249,6 @@ export default Vue.extend({
       navigator.clipboard.writeText(`${process.env.BASE_URL}/users/${item.id}`);
     },
 
-  
     getRoles() {
       RolesService.readRoles(1, 100).then((value) => {
         this.roles = value.results;

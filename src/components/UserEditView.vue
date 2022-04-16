@@ -49,13 +49,7 @@
                 label="Uot Url"
                 required
               >
-              </v-text-field>
-
-              <v-color-picker
-                :mode.sync="mode"
-                :value="userEdit.color"
-                canvas-height="100"
-              ></v-color-picker> </v-col
+              </v-text-field> </v-col
           ></v-row>
         </v-container>
       </v-card-text>
@@ -66,7 +60,11 @@
 <script lang="ts">
 import Vue from "vue";
 
-import { UsersService, User, Body_users_update_user as UserEdit} from "@/client";
+import {
+  UsersService,
+  User,
+  Body_users_update_user as UserEdit,
+} from "@/client";
 export default Vue.extend({
   data() {
     return {
@@ -74,28 +72,45 @@ export default Vue.extend({
       userEdit: {} as UserEdit,
     };
   },
+  watch: {
+    id: {
+      handler(newValue, oldValue) {
+        if (newValue) {
+          this.getUser();
+        }
+      },
+    },
+  },
   props: {
-    genders: { type: Array },
-    userId: { type: String },
-    showDialog: { type: Boolean },
+    genders: { type: Array, required: true },
+    id: { type: String },
+    showDialog: { type: Boolean, required: true },
   },
   methods: {
     save() {
       this.$emit("editUser");
-      this.getUser;
     },
 
     closeEditDialog() {
       this.$emit("closeEditDialog");
     },
     getUser() {
-      UsersService.readUser(this.userId).then((value) => {
-        this.userEdit.name = value.name
+      UsersService.readUser(this.id).then((value) => {
+        this.userEdit = {
+          name: value.name,
+        } as UserEdit;
+
+        // .name = value.name;
+        // this.userEdit.color = value.color;
+        // this.userEdit.email = value.email;
+        // this.userEdit.gender = value.gender;
+        // this.userEdit.uot_url = value.uot_url;
+        // this.userEdit.job_titles = value.job_titles.map((value) => value.id);
+        // console.log(this.userEdit);
+
+        // this.userEdit.image = value.image_url;
       });
     },
   },
-  created(){
-    this.getUser()
-  }
 });
 </script>
