@@ -36,14 +36,14 @@
         <v-icon
           small
           class="pl-2"
-          @click="userId = item.id"
+          @click="userIdEdit = item.id"
           v-show="permissionsGroup.update"
           >mdi-pencil</v-icon
         >
         <v-icon
           small
           class="pl-2"
-          @click="userId = item.id"
+          @click="userIdDelete = item.id"
           v-show="permissionsGroup.delete"
           >mdi-delete</v-icon
         >
@@ -71,6 +71,7 @@
             :roles="roles"
             :userCreate="userCreate"
             :genders="genders"
+            :userIdEdit="userIdEdit"
           />
 
           <v-dialog v-model="dialogDelete" max-width="500px"
@@ -90,10 +91,11 @@
           ></v-dialog>
 
           <UserEditView
-            :dialogEdit="dialogEdit"
-            :editedItem="editedItem"
-            :genders="genders"
-            @edit="editUser"
+         :genders="genders"
+           :showDialog="dialogEdit"
+            :userId="userIdEdit"
+            @closeEditDialog="closeEditDialog"
+            
           />
         </v-toolbar>
       </template>
@@ -126,6 +128,7 @@ import {
   PermissionGroup,
   Body_users_create_user as UserCreate,
   UserType,
+  Body_users_update_user,
 } from "@/client";
 
 import Vue from "vue";
@@ -137,7 +140,9 @@ import UserEditView from "@/components/UserEditView.vue";
 export default Vue.extend({
   data() {
     return {
-      userId: null as string | null,
+      userIdDelete: null as string | null,
+      userIdEdit: null as string | null,
+
       jobTitles: [] as Array<app__schemas__job_title__JobTitle>,
       jobsTitleIds: [] as Array<string>,
       roles: [] as Array<Role>,
@@ -150,9 +155,9 @@ export default Vue.extend({
 
       options: { page: 1, itemsPerPage: 25 } as DataOptions,
       loading: true,
-      editedItem: {} as UserUpdate,
+  
       dialogCreate: false,
-     
+
       genders: Object.values(UserGender),
       mode: "hex",
       color: null as any,
@@ -178,11 +183,11 @@ export default Vue.extend({
       return Math.ceil(this.usersPaging.count / this.options.itemsPerPage);
     },
     dialogDelete(): boolean {
-      return this.userId != null;
+      return this.userIdDelete != null;
     },
- dialogEdit():boolean{
-   return this.userId != null
- }
+    dialogEdit(): boolean {
+      return this.userIdEdit != null;
+    },
   },
   created() {
     this.getUsers();
@@ -230,23 +235,22 @@ export default Vue.extend({
       this.dialogCreate = false;
     },
     deleteUser() {
-      UsersService.deleteUser(this.userId!).then(() => {
+      UsersService.deleteUser(this.userIdDelete!).then(() => {
         this.getUsers();
       });
       this.closeDeleteDialog();
     },
     closeDeleteDialog() {
-      this.userId = null;
+      this.userIdDelete = null;
+    },
+    closeEditDialog() {
+      this.userIdEdit = null;
     },
     copyUrl(item: User) {
       navigator.clipboard.writeText(`${process.env.BASE_URL}/users/${item.id}`);
     },
 
-    editUser(item: User) {
-      UsersService.updateUser(item.id,this.editedItem)
-      this.editedItem = item as any;
-      this.dialogEdit = true;
-    },
+  
     getRoles() {
       RolesService.readRoles(1, 100).then((value) => {
         this.roles = value.results;
