@@ -19,39 +19,82 @@
       <v-card-text>
         <v-container>
           <v-row>
-            <v-avatar width="100" height="100" class="pt-2">
-              <img :src="user.image_url" :alt="user.name" />
-            </v-avatar>
+            <v-col>
+              <v-avatar width="100" height="100" class="pt-2">
+                <v-img v-if="image" :src="url"></v-img>
+                <img v-else :src="user.image_url" :alt="user.name" />
+              </v-avatar>
+              <v-file-input
+                @change="previewImage"
+                v-model="image"
+                accept="image/png, image/jpeg"
+                placeholder="Pick an avatar"
+                prepend-icon="mdi-camera"
+                label="Avatar"
+                hide-input
+              >
+              </v-file-input>
+            </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col cols="12" sm="6">
               <v-text-field
                 ref="name"
                 v-model="userEdit.name"
                 label="Name"
                 required
+                outlined
               >
               </v-text-field>
             </v-col>
 
-            <v-col>
-              <v-select
-                :items="genders"
-                v-model="userEdit.gender"
-                label="Gender"
-              ></v-select>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
+           
+             <v-col>
               <v-text-field
                 ref="uot_url"
                 v-model="userEdit.uot_url"
                 label="Uot Url"
                 required
+                outlined
               >
               </v-text-field>
             </v-col>
+            <v-col>
+              <v-autocomplete
+                label="Job Title"
+                clearable
+                outlined
+                :items="jobTitles"
+                item-text="name"
+                small-chips
+                item-value="id"
+                chips
+                v-model="userEdit.job_titles"
+                multiple
+              ></v-autocomplete>
+            </v-col>
+             <v-col cols="12" sm="6">
+              <v-select
+                :items="genders"
+                v-model="userEdit.gender"
+                label="Gender"
+                outlined
+              ></v-select>
+            </v-col>
+            <v-col>
+              <v-autocomplete
+                label="Roles"
+                clearable
+                outlined
+                :items="roles"
+                item-text="name"
+                item-value="id"
+                v-model="userEdit.role_id"
+              ></v-autocomplete>
+            </v-col>
+          </v-row>
+          <v-row>
+           
             <v-col>
               <v-color-picker v-model="userEdit.color" flat></v-color-picker>
             </v-col>
@@ -77,6 +120,8 @@ export default Vue.extend({
       color: null,
       userEdit: {} as UserEdit,
       user: {} as User,
+      url: null as null | string,
+      image: null as any,
     };
   },
   watch: {
@@ -92,8 +137,15 @@ export default Vue.extend({
     genders: { type: Array, required: true },
     id: { type: String },
     showDialog: { type: Boolean, required: true },
+    jobTitles: { type: Array },
+    roles: { type: Array },
   },
   methods: {
+    previewImage() {
+      this.url = URL.createObjectURL(this.image);
+      console.log(this.image, this.url);
+    },
+
     save() {
       this.$emit("editUser");
     },
@@ -119,6 +171,9 @@ export default Vue.extend({
       });
     },
     editUser() {
+      if (this.image) {
+        this.userEdit.image = this.image;
+      }
       UsersService.updateUser(this.id, this.userEdit).then((value) => {
         console.log(value);
       });
