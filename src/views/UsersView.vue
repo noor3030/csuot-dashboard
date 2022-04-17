@@ -243,7 +243,8 @@ export default Vue.extend({
       this.userIdDelete = null;
     },
     closeEditDialog() {
-      this.userIdEdit = null;
+        this.userIdEdit = null;
+        
     },
     copyUrl(item: User) {
       navigator.clipboard.writeText(`${process.env.BASE_URL}/users/${item.id}`);
