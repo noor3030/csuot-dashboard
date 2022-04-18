@@ -24,7 +24,7 @@
                 <v-img :src="url"></v-img>
               </v-avatar>
               <v-file-input
-                 @change="previewImage"
+                @change="previewImage"
                 v-model="image"
                 accept="image/png, image/jpeg"
                 placeholder="Pick an avatar"
@@ -114,6 +114,9 @@
             ></v-color-picker>
           </v-col>
         </v-container>
+        <v-snackbar :value="error" color="error">
+          {{ error }}
+        </v-snackbar>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -133,6 +136,7 @@ export default Vue.extend({
       url: null as null | string,
       userCreate: {} as UserCreate,
       image: null as any,
+      error: null as null | string,
     };
   },
   props: {
@@ -142,13 +146,19 @@ export default Vue.extend({
     genders: { type: Array },
   },
   methods: {
-    createUser() {
+    createUser(): void {
       this.userCreate.image = this.image;
       this.userCreate.color = this.color.hex;
-      UsersService.createUser(this.userCreate).then(() => {
-        this.$emit("userCreated");
-      });
-      this.closeDialog();
+      UsersService.createUser(this.userCreate)
+        .then(() => {
+          this.closeDialog();
+
+          this.$emit("userCreated");
+          // this.userCreate = {} as UserCreate;
+        })
+        .catch((error) => {
+          this.error = error.body.detail;
+        });
     },
     previewImage() {
       this.url = URL.createObjectURL(this.image);
