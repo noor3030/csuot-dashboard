@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="6" sm="3">
+      <v-col cols="12" sm="3">
         <v-text-field
           height="55"
           @change="getUsers"
@@ -11,14 +11,12 @@
           single-line
           hide-details
           filled
-          rounded
         >
         </v-text-field
       ></v-col>
-      <v-col cols="6" sm="3">
+      <v-col cols="12" sm="3">
         <v-autocomplete
           label="User Types"
-          rounded
           clearable
           outlined
           :items="userTypes"
@@ -26,10 +24,9 @@
           @change="getUsers"
         ></v-autocomplete>
       </v-col>
-      <v-col cols="6" sm="3">
+      <v-col cols="12" sm="3">
         <v-autocomplete
           label="Roles"
-          rounded
           clearable
           outlined
           :items="roles"
@@ -39,10 +36,9 @@
           @change="getUsers"
         ></v-autocomplete>
       </v-col>
-      <v-col cols="6" sm="3">
+      <v-col cols="12" sm="3">
         <v-autocomplete
           label="Job Title"
-          rounded
           clearable
           outlined
           :items="jobTitles"

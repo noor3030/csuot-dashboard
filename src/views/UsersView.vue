@@ -65,11 +65,11 @@
             New Item
           </v-btn>
           <UserCreateView
-            :dialogCreate="dialogCreate"
-            @clicked="createUser"
+            @close="dialogCreate = false"
+            @userCreated="getUsers"
+            :show="dialogCreate"
             :jobTitles="jobTitles"
             :roles="roles"
-            :userCreate="userCreate"
             :genders="genders"
             :userIdEdit="userIdEdit"
           />
@@ -116,27 +116,16 @@
 
 <script lang="ts">
 import {
-  app__schemas__job_title__JobTitle,
-  RolesService,
-  JobTitlesService,
-  Role,
-  UsersService,
-  User,
-  UserGender,
-  StaffType,
-  Body_users_update_user as UserUpdate,
-  Paging_User_,
-  PermissionGroup,
-  Body_users_create_user as UserCreate,
-  UserType,
-  Body_users_update_user,
+  app__schemas__job_title__JobTitle, JobTitlesService, Paging_User_,
+  PermissionGroup, Role, RolesService, StaffType, User,
+  UserGender, UsersService, UserType
 } from "@/client";
-
-import Vue from "vue";
-import { DataOptions } from "vuetify";
-import UserFilters from "@/components/UserFilters.vue";
 import UserCreateView from "@/components/UserCreateView.vue";
 import UserEditView from "@/components/UserEditView.vue";
+import UserFilters from "@/components/UserFilters.vue";
+import Vue from "vue";
+import { DataOptions } from "vuetify";
+
 
 export default Vue.extend({
   data() {
@@ -151,14 +140,11 @@ export default Vue.extend({
       userType: null as any,
       userTypes: Object.values(StaffType),
       search: null as any,
-      userCreate: {} as UserCreate,
-      usersPaging: { count: 0, results: [] } as Paging_User_,
 
+      usersPaging: { count: 0, results: [] } as Paging_User_,
       options: { page: 1, itemsPerPage: 25 } as DataOptions,
       loading: true,
-
       dialogCreate: false,
-
       genders: Object.values(UserGender),
       mode: "hex",
       color: null as any,
@@ -228,13 +214,7 @@ export default Vue.extend({
       });
       this.loading = false;
     },
-    createUser() {
-      this.userCreate.color = this.color.hex;
-      UsersService.createUser(this.userCreate).then(() => {
-        this.getUsers();
-      });
-      this.dialogCreate = false;
-    },
+
     deleteUser() {
       UsersService.deleteUser(this.userIdDelete!).then(() => {
         this.getUsers();

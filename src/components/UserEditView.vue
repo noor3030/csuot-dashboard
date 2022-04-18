@@ -47,9 +47,7 @@
               >
               </v-text-field>
             </v-col>
-
-           
-             <v-col>
+            <v-col cols="12" sm="6">
               <v-text-field
                 ref="uot_url"
                 v-model="userEdit.uot_url"
@@ -59,7 +57,7 @@
               >
               </v-text-field>
             </v-col>
-            <v-col>
+            <v-col cols="12" sm="4">
               <v-autocomplete
                 label="Job Title"
                 clearable
@@ -73,15 +71,15 @@
                 multiple
               ></v-autocomplete>
             </v-col>
-             <v-col cols="12" sm="6">
-              <v-select
+            <v-col cols="12" sm="4">
+              <v-autocomplete
                 :items="genders"
                 v-model="userEdit.gender"
                 label="Gender"
                 outlined
-              ></v-select>
+              ></v-autocomplete>
             </v-col>
-            <v-col>
+            <v-col cols="12" sm="4">
               <v-autocomplete
                 label="Roles"
                 clearable
@@ -94,9 +92,12 @@
             </v-col>
           </v-row>
           <v-row>
-           
             <v-col>
-              <v-color-picker v-model="userEdit.color" flat></v-color-picker>
+              <v-color-picker
+                v-model="userEdit.color"
+                flat
+                hide-inputs
+              ></v-color-picker>
             </v-col>
           </v-row>
         </v-container>
@@ -144,10 +145,6 @@ export default Vue.extend({
     previewImage() {
       this.url = URL.createObjectURL(this.image);
       console.log(this.image, this.url);
-    },
-
-    save() {
-      this.$emit("editUser");
     },
 
     closeEditDialog() {

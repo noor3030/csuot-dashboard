@@ -1,13 +1,13 @@
 <template>
   <v-dialog
-    v-model="dialogCreate"
+    v-model="show"
     fullscreen
     hide-overlay
     transition="dialog-bottom-transition"
   >
     <v-card>
       <v-toolbar dark color="primary">
-        <v-btn icon dark @click="dialogCreate = false">
+        <v-btn icon dark @click="closeDialog">
           <v-icon>mdi-close</v-icon>
         </v-btn>
         <v-toolbar-title>Add New User</v-toolbar-title>
@@ -18,11 +18,26 @@
       </v-toolbar>
       <v-card-text>
         <v-container class="mt-5">
-          <v-layout row wrap>
-            <v-flex xs12 md6>
+          <v-row>
+            <v-col>
+              <v-avatar width="100" height="100" class="pt-2">
+                <v-img :src="url"></v-img>
+              </v-avatar>
+              <v-file-input
+                 @change="previewImage"
+                v-model="image"
+                accept="image/png, image/jpeg"
+                placeholder="Pick an avatar"
+                prepend-icon="mdi-camera"
+                label="Avatar"
+                hide-input
+              >
+              </v-file-input>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" sm="4">
               <v-text-field
-                class="mr-3"
-                rounded
                 outlined
                 ref="name"
                 v-model="userCreate.name"
@@ -30,13 +45,11 @@
                 required
               >
               </v-text-field>
-            </v-flex>
+            </v-col>
             <v-spacer></v-spacer>
-            <v-flex xs12 md6>
+            <v-col cols="12" sm="4">
               <v-text-field
-                rounded
                 outlined
-                color="#232f34"
                 ref="email"
                 :rules="email"
                 label="Email"
@@ -45,24 +58,32 @@
                 required
                 v-model="userCreate.email"
               ></v-text-field>
-            </v-flex>
+            </v-col>
+            <v-col cols="12" sm="4">
+              <v-text-field
+                ref="uot_url"
+                v-model="userCreate.uot_url"
+                label="Uot Url"
+                required
+                outlined
+              >
+              </v-text-field>
+            </v-col>
+          </v-row>
 
-            <v-flex xs12 md6>
+          <v-row>
+            <v-col cols="12" sm="4">
               <v-autocomplete
-                rounded
                 outlined
                 :items="genders"
                 label="Gender"
                 ref="gender"
                 v-model="userCreate.gender"
               ></v-autocomplete>
-            </v-flex>
-          </v-layout>
-          <v-row>
-            <v-col>
+            </v-col>
+            <v-col cols="12" sm="4">
               <v-autocomplete
                 label="Job Title"
-                rounded
                 clearable
                 outlined
                 :items="jobTitles"
@@ -74,10 +95,9 @@
                 multiple
               ></v-autocomplete>
             </v-col>
-            <v-col>
+            <v-col cols="12" sm="4">
               <v-autocomplete
                 label="Roles"
-                rounded
                 clearable
                 outlined
                 :items="roles"
@@ -90,9 +110,7 @@
           <v-col>
             <v-color-picker
               v-model="color"
-              :mode.sync="mode"
               canvas-height="100"
-              ref="userCreate.color"
             ></v-color-picker>
           </v-col>
         </v-container>
@@ -102,28 +120,41 @@
 </template>
 
 <script lang="ts">
+import { UsersService, Body_users_create_user as UserCreate } from "@/client";
 import Vue from "vue";
 export default Vue.extend({
   data() {
     return {
-      mode: "hex",
       color: null as any,
       email: [
         (v: string) => !!v || "E-mail is required",
         (v: string) => /.+@.+/.test(v) || "E-mail must be valid",
       ],
+      url: null as null | string,
+      userCreate: {} as UserCreate,
+      image: null as any,
     };
   },
   props: {
-    dialogCreate: { type: Boolean },
+    show: { type: Boolean },
     jobTitles: { type: Array },
     roles: { type: Array },
-    userCreate: { type: Object },
     genders: { type: Array },
   },
   methods: {
     createUser() {
-      this.$emit("clicked");
+      this.userCreate.image = this.image;
+      this.userCreate.color = this.color.hex;
+      UsersService.createUser(this.userCreate).then(() => {
+        this.$emit("userCreated");
+      });
+      this.closeDialog();
+    },
+    previewImage() {
+      this.url = URL.createObjectURL(this.image);
+    },
+    closeDialog() {
+      this.$emit("close");
     },
   },
 });
