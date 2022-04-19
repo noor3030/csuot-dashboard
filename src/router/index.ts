@@ -5,6 +5,7 @@ import Users from "../views/UsersView.vue";
 import Rooms from "../views/RoomsView.vue";
 import Login from "../views/Login.vue";
 import store from "../store";
+import UserDetailsView from '../views/UserDetailsView.vue';
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
@@ -24,9 +25,9 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
-    path: "/users/:id",
-    name: "UsersDetails",
-    component: Users, // TODO
+    path: "/user/:id",
+    name: "UserDetailsView",
+    component: UserDetailsView, // TODO
     meta: {
       requiresAuth: true,
       permissionGroup: "users",
@@ -59,6 +60,7 @@ const routes: Array<RouteConfig> = [
     name: "Login",
     component: Login,
   },
+ 
   {
     path: "/about",
     name: "About",

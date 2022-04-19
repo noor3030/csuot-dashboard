@@ -17,6 +17,7 @@
       :loading="loading"
       :server-items-length="usersPaging.count"
       :options.sync="options"
+      @click:row="goToUserDetails"
     >
       <template v-slot:no-data>
         <v-alert :value="true" type="warning" outlined text
@@ -116,16 +117,23 @@
 
 <script lang="ts">
 import {
-  app__schemas__job_title__JobTitle, JobTitlesService, Paging_User_,
-  PermissionGroup, Role, RolesService, StaffType, User,
-  UserGender, UsersService, UserType
+  app__schemas__job_title__JobTitle,
+  JobTitlesService,
+  Paging_User_,
+  PermissionGroup,
+  Role,
+  RolesService,
+  StaffType,
+  User,
+  UserGender,
+  UsersService,
+  UserType,
 } from "@/client";
 import UserCreateView from "@/components/UserCreateView.vue";
 import UserEditView from "@/components/UserEditView.vue";
 import UserFilters from "@/components/UserFilters.vue";
 import Vue from "vue";
 import { DataOptions } from "vuetify";
-
 
 export default Vue.extend({
   data() {
@@ -240,6 +248,9 @@ export default Vue.extend({
       JobTitlesService.readJobTitles(1, 100).then((value) => {
         this.jobTitles = value.results;
       });
+    },
+    goToUserDetails(item: any) {
+      this.$router.push("/user/" + item.id);
     },
   },
   components: { UserFilters, UserCreateView, UserEditView },
