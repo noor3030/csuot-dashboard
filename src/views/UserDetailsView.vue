@@ -1,40 +1,32 @@
 <template>
-  <v-container class="fill-height" fluid>
-    <v-row justify="center">
-      <v-col cols="12" sm="8" md="8">
-        <v-card elevation="12">
-          <v-row>
-            <v-col cols="12" md="8">
-              <v-card-text class="mt-12">
-                <h1
-                  class="text-center display-2 text--accent-3"
-                  style="color: #232f34"
-                >
-                  User Profile
-                </h1>
-                <h3 class="text--secondary">Name</h3>
-                <h2 style="color: #232f34">{{ user.name }}</h2>
-                <h3 class="text--secondary">Color</h3>
-                <v-icon :color="user.color"> mdi-square</v-icon>
-                <h3 class="text--secondary">Uot Url</h3>
-                <a :href="user.uot_url" target="_blank">{{ user.uot_url }}</a>
-                <h3 class="text--secondary">Gender</h3>
-                <h2 style="color: #232f34">{{ user.gender }}</h2>
-                <h3 class="text--secondary">Job Title</h3>
-                <h2
-                  style="color: #232f34"
-                  v-for="title in user.job_titles"
-                  :key="title"
-                >
-                  {{ title.name }}
-                </h2>
-              </v-card-text>
-            </v-col>
-            <v-col cols="12" md="4" style="background-color: #232f34">
-              <v-img :src="user.image_url" :key="user.id" sizes="99"></v-img
-            ></v-col>
-          </v-row>
-        </v-card>
+  <v-container class="pt-5">
+    <v-row>
+      <v-col cols="12" sm="3">
+        <v-avatar width="200" height="200">
+          <img :src="user.image_url" :alt="user.name" />
+        </v-avatar>
+      </v-col>
+      <v-col cols="12" sm="3">
+        <h1>{{ user.name }}</h1>
+        <a
+          :href="user.uot_url"
+          class="grey--text"
+          style="text-decoration: none; font-size: 20px"
+          ><v-icon color="grey" size="30">mdi-search-web</v-icon> UOT
+        </a>
+        <br />
+        <p v-for="title in user.job_titles" :key="title">
+          {{ title.name }}
+        </p>
+        <v-row
+          ><h3>Color</h3>
+          <v-icon :color="user.color"> mdi-square</v-icon></v-row
+        >
+      </v-col>
+      <v-col cols="12" sm="3">
+        <v-btn color="#399cf6" elevation="0" class="white--text" rounded x-large
+          >Edit Profile</v-btn
+        >
       </v-col>
     </v-row>
   </v-container>
@@ -70,8 +62,24 @@ export default Vue.extend({
 </script>
 
 <style>
-h2,
+@import url("https://fonts.googleapis.com/css2?family=Lora&family=Nunito+Sans:wght@200&family=Outfit&family=Tajawal:wght@500&display=swap");
+
+.v-container {
+  color: #f8fafb;
+}
+h1 {
+  font-family: "Tajawal", sans-serif !important;
+  color: #364250;
+}
+p {
+  font-family: "Tajawal", sans-serif !important;
+  font-size: 20px;
+  margin-left: 104px;
+  margin-top: 10px;
+  color: gray;
+}
 h3 {
-  padding-top: 7px;
+  font-family: "Tajawal", sans-serif !important;
+  color: gray;
 }
 </style>
