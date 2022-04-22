@@ -113,6 +113,10 @@ import {
   UsersService,
   Body_users_update_user as UserEdit,
   User,
+  RolesService,
+  JobTitlesService,
+  Role,
+  app__schemas__job_title__JobTitle,
 } from "@/client";
 export default Vue.extend({
   data() {
@@ -123,6 +127,8 @@ export default Vue.extend({
       user: {} as User,
       url: null as null | string,
       image: null as any,
+      roles: [] as Array<Role>,
+      jobTitles: [] as Array<app__schemas__job_title__JobTitle>,
     };
   },
   watch: {
@@ -138,10 +144,18 @@ export default Vue.extend({
     genders: { type: Array, required: true },
     id: { type: String },
     showDialog: { type: Boolean, required: true },
-    jobTitles: { type: Array },
-    roles: { type: Array },
   },
   methods: {
+    getRoles() {
+      RolesService.readRoles(1, 100).then((value) => {
+        this.roles = value.results;
+      });
+    },
+    getJobTitle() {
+      JobTitlesService.readJobTitles(1, 100).then((value) => {
+        this.jobTitles = value.results;
+      });
+    },
     previewImage() {
       this.url = URL.createObjectURL(this.image);
       console.log(this.image, this.url);
@@ -176,6 +190,11 @@ export default Vue.extend({
       });
       this.closeEditDialog();
     },
+  },
+  created() {
+    this.getRoles();
+    this.getJobTitle();
+    
   },
 });
 </script>

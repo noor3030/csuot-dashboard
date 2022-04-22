@@ -37,14 +37,14 @@
         <v-icon
           small
           class="pl-2"
-          @click="userIdEdit = item.id"
+          @click.stop="userIdEdit = item.id"
           v-show="permissionsGroup.update"
           >mdi-pencil</v-icon
         >
         <v-icon
           small
           class="pl-2"
-          @click="userIdDelete = item.id"
+          @click.stop="userIdDelete = item.id"
           v-show="permissionsGroup.delete"
           >mdi-delete</v-icon
         >
@@ -96,8 +96,7 @@
             :showDialog="dialogEdit"
             :id="userIdEdit"
             @closeEditDialog="closeEditDialog"
-            :jobTitles="jobTitles"
-            :roles="roles"
+           
           />
         </v-toolbar>
       </template>
