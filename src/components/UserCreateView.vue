@@ -114,8 +114,8 @@
             ></v-color-picker>
           </v-col>
         </v-container>
-        <v-snackbar :value="error" color="error">
-          {{ error }}
+        <v-snackbar :value="errorDetails" color="error">
+          {{ errorDetails }}
         </v-snackbar>
       </v-card-text>
     </v-card>
@@ -136,7 +136,7 @@ export default Vue.extend({
       url: null as null | string,
       userCreate: {} as UserCreate,
       image: null as any,
-      error: null as null | string,
+      errorDetails: null as null | string,
     };
   },
   props: {
@@ -157,7 +157,9 @@ export default Vue.extend({
           // this.userCreate = {} as UserCreate;
         })
         .catch((error) => {
-          this.error = error.body.detail;
+          this.errorDetails = error.body.detail;
+          console.log(JSON.stringify(this.errorDetails));
+          
         });
     },
     previewImage() {

@@ -20,4 +20,5 @@ export type User = {
     role_id: string;
     id: string;
     job_titles: Array<app__schemas__user__JobTitle>;
+    schedule: any
 };
