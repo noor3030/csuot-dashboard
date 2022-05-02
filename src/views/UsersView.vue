@@ -130,7 +130,6 @@ import UserCreateView from "@/components/UserCreateView.vue";
 import UserEditView from "@/components/UserEditView.vue";
 import UserFilters from "@/components/UserFilters.vue";
 import Vue from "vue";
-import { DataOptions } from "vuetify";
 
 interface UsersData {
   userIdDelete: string | null;
@@ -151,7 +150,7 @@ interface UsersData {
 
   paging: {
     users: Paging_User_;
-    options: DataOptions;
+    options: { page: number; itemsPerPage: number };
   };
 
   headers: Array<{ text: string; value: string; sortable?: boolean }>;
@@ -177,8 +176,8 @@ export default Vue.extend({
       },
 
       paging: {
-        users: { count: 0, results: [] } as Paging_User_,
-        options: { page: 1, itemsPerPage: 25 } as DataOptions,
+        users: { count: 0, results: [] },
+        options: { page: 1, itemsPerPage: 25 },
       },
 
       headers: [
@@ -193,7 +192,7 @@ export default Vue.extend({
   },
   computed: {
     permissionsGroup(): PermissionGroup {
-      return this.$store.state.permissions?.users || {};
+      return this.$store.state.permissions?.users;
     },
     pagesLength(): number {
       if (
