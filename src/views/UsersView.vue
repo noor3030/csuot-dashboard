@@ -2,21 +2,21 @@
   <div class="pa-5">
     <UserFilters
       @changed="onFilterChange"
-      :roles="roles"
-      :userTypes="userTypes"
-      :roleId="roleId"
-      :jobTitles="jobTitles"
+      :roles="filter.roles"
+      :userTypes="filter.userTypes"
+      :roleId="filter.roleId"
+      :jobTitles="filter.jobTitles"
     />
 
     <v-data-table
       :headers="headers"
-      :items="usersPaging.results"
+      :items="paging.users.results"
       item-key="id"
       class="elevation-1"
       hide-default-footer
       :loading="loading"
-      :server-items-length="usersPaging.count"
-      :options.sync="options"
+      :server-items-length="paging.users.count"
+      :options.sync="paging.options"
       @click:row="goToUserDetails"
     >
       <template v-slot:no-data>
@@ -69,9 +69,9 @@
             @close="dialogCreate = false"
             @userCreated="getUsers"
             :show="dialogCreate"
-            :jobTitles="jobTitles"
-            :roles="roles"
-            :genders="genders"
+            :jobTitles="filter.jobTitles"
+            :roles="filter.roles"
+            :genders="filter.genders"
             :userIdEdit="userIdEdit"
           />
 
@@ -92,11 +92,10 @@
           ></v-dialog>
 
           <UserEditView
-            :genders="genders"
+            :genders="filter.genders"
             :showDialog="dialogEdit"
             :id="userIdEdit"
             @closeEditDialog="closeEditDialog"
-           
           />
         </v-toolbar>
       </template>
@@ -104,9 +103,9 @@
     <div class="text-center pt-2">
       <v-pagination
         @input="optionsChangeHandler"
-        :value="options.page"
+        :value="paging.options.page"
         :length="pagesLength"
-        :total-visible="options.itemsPerPage"
+        :total-visible="paging.options.itemsPerPage"
         prev-icon="mdi-menu-left"
         next-icon="mdi-menu-right"
       ></v-pagination>
@@ -116,7 +115,7 @@
 
 <script lang="ts">
 import {
-  app__schemas__job_title__JobTitle,
+  app__schemas__job_title__JobTitle as JobTitle,
   JobTitlesService,
   Paging_User_,
   PermissionGroup,
@@ -126,7 +125,6 @@ import {
   User,
   UserGender,
   UsersService,
-  UserType,
 } from "@/client";
 import UserCreateView from "@/components/UserCreateView.vue";
 import UserEditView from "@/components/UserEditView.vue";
@@ -134,34 +132,61 @@ import UserFilters from "@/components/UserFilters.vue";
 import Vue from "vue";
 import { DataOptions } from "vuetify";
 
+interface UsersData {
+  userIdDelete: string | null;
+  userIdEdit: string | null;
+  loading: boolean;
+  dialogCreate: boolean;
+
+  filter: {
+    search?: string;
+    jobTitles: Array<JobTitle>;
+    jobsTitleIds: Array<string>;
+    roles: Array<Role>;
+    roleId?: string;
+    userTypes: Array<StaffType>;
+    userType?: Array<StaffType>;
+    genders: Array<UserGender>;
+  };
+
+  paging: {
+    users: Paging_User_;
+    options: DataOptions;
+  };
+
+  headers: Array<{ text: string; value: string; sortable?: boolean }>;
+}
+
 export default Vue.extend({
-  data() {
+  data(): UsersData {
     return {
-      userIdDelete: null as string | null,
-      userIdEdit: null as string | null,
-
-      jobTitles: [] as Array<app__schemas__job_title__JobTitle>,
-      jobsTitleIds: [] as Array<string>,
-      roles: [] as Array<Role>,
-      roleId: null as any,
-      userType: null as any,
-      userTypes: Object.values(StaffType),
-      search: null as any,
-
-      usersPaging: { count: 0, results: [] } as Paging_User_,
-      options: { page: 1, itemsPerPage: 25 } as DataOptions,
+      userIdDelete: null,
+      userIdEdit: null,
       loading: true,
       dialogCreate: false,
-      genders: Object.values(UserGender),
-      mode: "hex",
-      color: null as any,
+
+      filter: {
+        search: undefined,
+        jobTitles: [],
+        jobsTitleIds: [],
+        roles: [],
+        roleId: undefined,
+        userTypes: Object.values(StaffType),
+        userType: [],
+        genders: Object.values(UserGender),
+      },
+
+      paging: {
+        users: { count: 0, results: [] } as Paging_User_,
+        options: { page: 1, itemsPerPage: 25 } as DataOptions,
+      },
+
       headers: [
         { text: "Name", value: "name" },
         { text: "English Name", value: "en_name" },
         { text: "Gender", value: "gender" },
         { text: "Uot Url", value: "uot_url" },
         { text: "Color", value: "color" },
-
         { text: "Actions", value: "actions", sortable: false },
       ],
     };
@@ -171,10 +196,15 @@ export default Vue.extend({
       return this.$store.state.permissions?.users || {};
     },
     pagesLength(): number {
-      if (this.usersPaging.count == null || this.options.itemsPerPage == null) {
+      if (
+        this.paging.users.count == null ||
+        this.paging.options.itemsPerPage == null
+      ) {
         return 0;
       }
-      return Math.ceil(this.usersPaging.count / this.options.itemsPerPage);
+      return Math.ceil(
+        this.paging.users.count / this.paging.options.itemsPerPage
+      );
     },
     dialogDelete(): boolean {
       return this.userIdDelete != null;
@@ -191,33 +221,33 @@ export default Vue.extend({
 
   methods: {
     optionsChangeHandler(pageNumber: number) {
-      this.options.page = pageNumber;
+      this.paging.options.page = pageNumber;
       this.getUsers();
     },
     onFilterChange(
-      roleId: string | null,
       jobTitlesIds: Array<string>,
-      userType: UserType | null,
-      search: string | null
+      userType: Array<StaffType>,
+      search?: string,
+      roleId?: string
     ) {
-      this.roleId = roleId;
-      this.jobsTitleIds = jobTitlesIds;
-      this.userType = userType;
-      this.search = search;
+      this.filter.roleId = roleId;
+      this.filter.jobsTitleIds = jobTitlesIds;
+      this.filter.userType = userType;
+      this.filter.search = search;
       this.getUsers();
     },
 
     getUsers(): void {
       this.loading = true;
       UsersService.readUsers(
-        this.search,
-        this.roleId,
-        this.userType,
-        this.jobsTitleIds,
-        this.options.page,
-        this.options.itemsPerPage
+        this.filter.search,
+        this.filter.roleId,
+        this.filter.userType,
+        this.filter.jobsTitleIds,
+        this.paging.options.page,
+        this.paging.options.itemsPerPage
       ).then((value) => {
-        this.usersPaging = value as Paging_User_;
+        this.paging.users = value;
       });
       this.loading = false;
     },
@@ -240,12 +270,12 @@ export default Vue.extend({
 
     getRoles() {
       RolesService.readRoles(1, 100).then((value) => {
-        this.roles = value.results;
+        this.filter.roles = value.results;
       });
     },
     getJobTitle() {
       JobTitlesService.readJobTitles(1, 100).then((value) => {
-        this.jobTitles = value.results;
+        this.filter.jobTitles = value.results;
       });
     },
     goToUserDetails(item: any) {

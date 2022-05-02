@@ -84,11 +84,11 @@
   </v-container>
 </template>
 <script lang="ts">
+import Vue from "vue";
 import { AuthService } from "@/client";
 import { TOKEN } from "@/utils/keys";
 import { Validation } from "@/types";
 import { emailValidation, passwordValidation } from "@/utils/validations";
-import Vue from "vue";
 
 interface LoginData {
   dialog: boolean;
