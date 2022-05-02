@@ -97,6 +97,12 @@ export default Vue.extend({
           route: "/schedules",
           permission: true,
         },
+         {
+          icon: "mdi-account-check",
+          text: "Roles",
+          route: "/roles",
+          permission: true,
+        },
       ];
     },
   },
