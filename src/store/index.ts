@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { AuthService, Permissions } from "@/client";
+import { TOKEN } from "@/utils/keys";
 
 Vue.use(Vuex);
 
@@ -19,7 +20,7 @@ export default new Vuex.Store({
   modules: {},
   getters: {
     isLoggedIn() {
-      return localStorage.getItem("token") != null;
+      return localStorage.getItem(TOKEN) != null;
     },
   },
 });

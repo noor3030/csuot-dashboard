@@ -35,6 +35,7 @@
   </nav>
 </template>
 <script lang="ts">
+import { TOKEN } from "@/utils/keys";
 import Vue from "vue";
 export default Vue.extend({
   data() {
@@ -70,7 +71,7 @@ export default Vue.extend({
   },
   methods: {
     logout() {
-      localStorage.removeItem("token");
+      localStorage.removeItem(TOKEN);
       this.$router.push("/login");
     },
   },

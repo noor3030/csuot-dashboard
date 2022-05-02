@@ -10,7 +10,7 @@
                   class="text-center display-2 text--accent-3"
                   style="color: #232f34"
                 >
-                  Sign in
+                  Login
                 </h1>
                 <h4 class="text-center mt-4">
                   Ensure your email for registration
@@ -48,7 +48,8 @@
                       color="#232f34"
                       rounded
                       dark
-                      >SIGN IN
+                    >
+                      Login
                     </v-btn>
                   </div>
                 </v-form>
@@ -73,7 +74,7 @@
     <div class="text-center">
       <v-dialog v-model="dialog" width="500">
         <v-card>
-          <v-card-title>Error ouccurred!</v-card-title>
+          <v-card-title>Error occurred!</v-card-title>
           <v-card-actions>
             <v-btn v-btn color="primary" text @click="dialog = false">Ok</v-btn>
           </v-card-actions>
@@ -84,6 +85,7 @@
 </template>
 <script lang="ts">
 import { AuthService } from "@/client";
+import { TOKEN } from "@/utils/keys";
 import Vue from "vue";
 
 export default Vue.extend({
@@ -107,13 +109,13 @@ export default Vue.extend({
   },
 
   methods: {
-    login() {
+    login(): void {
       AuthService.loginAccessToken({
         username: this.form.email,
         password: this.form.password,
       })
         .then((value) => {
-          localStorage.setItem("token", value.access_token);
+          localStorage.setItem(TOKEN, value.access_token);
           this.$router.push("/");
         })
         .catch(() => {
