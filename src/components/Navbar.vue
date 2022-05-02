@@ -31,6 +31,33 @@
       <v-btn color="#fff" text @click="logout"
         ><span>Sign Out</span> <v-icon>mdi-exit-to-app</v-icon></v-btn
       >
+
+
+      <v-menu offset-y>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn v-if="$vuetify.breakpoint.xsOnly" icon v-bind="attrs" v-on="on">
+          <v-icon medium >mdi-web</v-icon>
+        </v-btn>
+        <v-btn
+          v-else
+          rounded
+          text
+          class="mx-2"
+          v-bind="attrs"
+          v-on="on"
+        >
+          Language
+          <v-icon medium class="ms-1">mdi-web</v-icon>
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item v-for="(item, index) in items" :key="index">
+          <v-list-item-title @click="changeLanguage(item)">{{
+            item.title
+          }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
     </v-app-bar>
   </nav>
 </template>
@@ -41,6 +68,10 @@ export default Vue.extend({
   data() {
     return {
       drawer: false,
+      items: [
+        { language: "ar", rtl: true, title: "العربية" },
+        { language: "en", rtl: false, title: "الانكليزية" },
+      ],
     };
   },
 
@@ -73,6 +104,11 @@ export default Vue.extend({
     logout() {
       localStorage.removeItem(TOKEN);
       this.$router.push("/login");
+    },
+
+    changeLanguage(item: { language: string; rtl: boolean; title: string }) {
+      this.$vuetify.rtl = item.rtl;
+      this.$vuetify.lang.current = item.language;
     },
   },
 });

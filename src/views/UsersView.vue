@@ -52,7 +52,9 @@
 
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Users</v-toolbar-title>
+          <v-toolbar-title>
+            {{ t("users", $vuetify) }}
+          </v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-btn color="primary" class="mb-2 mr-3"> download </v-btn>
@@ -129,6 +131,8 @@ import {
 import UserCreateView from "@/components/UserCreateView.vue";
 import UserEditView from "@/components/UserEditView.vue";
 import UserFilters from "@/components/UserFilters.vue";
+import { Header } from "@/types";
+import { t } from "@/i18n/translate";
 import Vue from "vue";
 
 interface UsersData {
@@ -153,7 +157,7 @@ interface UsersData {
     options: { page: number; itemsPerPage: number };
   };
 
-  headers: Array<{ text: string; value: string; sortable?: boolean }>;
+  headers: Array<Header>;
 }
 
 export default Vue.extend({
@@ -280,6 +284,7 @@ export default Vue.extend({
     goToUserDetails(item: any) {
       this.$router.push("/user/" + item.id);
     },
+    t,
   },
   components: { UserFilters, UserCreateView, UserEditView },
 });
