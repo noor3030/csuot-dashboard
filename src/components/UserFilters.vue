@@ -75,10 +75,10 @@ export default Vue.extend({
     getUsers() {
       this.$emit(
         "changed",
-        this.roleId,
         this.jobTitlesIds,
         this.userType,
-        this.search
+        this.search,
+        this.roleId,
       );
     },
   },
