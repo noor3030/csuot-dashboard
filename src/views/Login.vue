@@ -19,7 +19,7 @@
                   <v-text-field
                     color="#232f34"
                     v-model="form.email"
-                    :rules="email"
+                    :rules="emailValidation"
                     label="Email"
                     name="email"
                     type="email"
@@ -29,7 +29,7 @@
                   <v-text-field
                     color="#232f34"
                     v-model="form.password"
-                    :rules="password"
+                    :rules="emailValidation"
                     label="Password"
                     name="password"
                     :type="showPassword ? 'text' : 'password'"
@@ -86,10 +86,21 @@
 <script lang="ts">
 import { AuthService } from "@/client";
 import { TOKEN } from "@/utils/keys";
+import { Validation } from "@/types";
+import { emailValidation, passwordValidation } from "@/utils/validations";
 import Vue from "vue";
 
+interface LoginData {
+  dialog: boolean;
+  loading: boolean;
+  showPassword: boolean;
+  form: any;
+  emailValidation: Validation;
+  passwordValidation: Validation;
+}
+
 export default Vue.extend({
-  data() {
+  data(): LoginData {
     const defaultForm = Object.freeze({
       password: "",
       email: "",
@@ -99,12 +110,8 @@ export default Vue.extend({
       loading: false,
       showPassword: false,
       form: Object.assign({}, defaultForm),
-
-      email: [
-        (v: string) => !!v || "E-mail is required",
-        (v: string) => /.+@.+/.test(v) || "E-mail must be valid",
-      ],
-      password: [(v: string) => v.length >= 8 || "Min 8 characters"],
+      emailValidation: emailValidation,
+      passwordValidation: passwordValidation,
     };
   },
 
