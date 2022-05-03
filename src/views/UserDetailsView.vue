@@ -40,7 +40,7 @@
             rounded
             x-large
             @click="dialog = true"
-            >Edit Profile</v-btn
+            >{{ $t("editProfile") }}</v-btn
           >
         </v-col>
       </v-row>

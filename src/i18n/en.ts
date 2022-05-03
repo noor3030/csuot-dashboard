@@ -10,7 +10,7 @@ const local: localizations = {
   home: "home",
   users: "Users",
   roles: "Roles",
-  rooms:"Rooms",
+  rooms: "Rooms",
   schedules: "Schedules",
   role: "Role",
   login: "Login",
@@ -32,6 +32,7 @@ const local: localizations = {
   jobTitle: "Job Title",
   userTypes: "User Types",
   search: "Search",
+  editProfile: "Edit Profile"
 };
 
 export default local;

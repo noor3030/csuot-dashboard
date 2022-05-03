@@ -32,4 +32,5 @@ export default interface localizations extends VuetifyLocale {
   jobTitle: string;
   userTypes: string;
   search: string;
+  editProfile:string;
 }

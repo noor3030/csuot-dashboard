@@ -32,6 +32,7 @@ const local: localizations = {
   jobTitle: "العنوان الوظيفي",
   userTypes: "انواع المستخدمين",
   search: "بحث",
+  editProfile: "تعديل الملف الشخصي"
 };
 
 export default local;
