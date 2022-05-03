@@ -3,11 +3,11 @@
     <v-row>
       <v-col cols="12" sm="3">
         <v-text-field
+          :label="$t('search')"
           height="55"
           @change="getUsers"
           v-model="search"
           append-icon="mdi-magnify"
-          label="Search"
           single-line
           hide-details
           filled
@@ -16,7 +16,7 @@
       ></v-col>
       <v-col cols="12" sm="3">
         <v-autocomplete
-          label="User Types"
+          :label="$t('userTypes')"
           clearable
           outlined
           :items="userTypes"
@@ -26,7 +26,7 @@
       </v-col>
       <v-col cols="12" sm="3">
         <v-autocomplete
-          label="Roles"
+          :label="$t('roles')"
           clearable
           outlined
           :items="roles"
@@ -38,7 +38,7 @@
       </v-col>
       <v-col cols="12" sm="3">
         <v-autocomplete
-          label="Job Title"
+          :label="$t('jobTitle')"
           clearable
           outlined
           :items="jobTitles"
@@ -55,15 +55,22 @@
   </v-container>
 </template>
 <script lang="ts">
+import { StaffType } from "@/client";
 import Vue from "vue";
-export default Vue.extend({
-  data() {
-    return {
-      jobTitlesIds: [] as Array<string>,
 
-      userType: null as any,
-      search: null as any,
-      roleId: null as any,
+interface UsersFilterData {
+  jobTitlesIds: Array<string>;
+  userType?: StaffType;
+  search?: string;
+  roleId?: string;
+}
+export default Vue.extend({
+  data(): UsersFilterData {
+    return {
+      jobTitlesIds: [],
+      userType: undefined,
+      search: undefined,
+      roleId: undefined,
     };
   },
   props: {
@@ -78,7 +85,7 @@ export default Vue.extend({
         this.jobTitlesIds,
         this.userType,
         this.search,
-        this.roleId,
+        this.roleId
       );
     },
   },

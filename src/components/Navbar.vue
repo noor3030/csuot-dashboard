@@ -75,7 +75,7 @@ export default Vue.extend({
     };
   },
 
-  computed: {
+  computed: { 
     links() {
       return [
         { icon: "mdi-home", text: "Home", route: "/", permission: true },

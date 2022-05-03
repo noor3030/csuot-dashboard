@@ -3,10 +3,18 @@ import localizations from "./localizations";
 
 const local: localizations = {
   ...ar,
+  appName: "لوحة تحكم الجدول",
+  arabic: "العربية",
+  english: "الانكليزية",
+  language: "اللغة",
+  home: "الرئيسية",
   users: "المستخدمين",
   roles: "الادوار",
+  schedules: "الجداول الدراسية",
+  rooms: "الغرف",
   role: "دور",
   login: "تسجيل الدخول",
+  signOut: "تسحيل الخروج",
   loginMessage: "ادخل معلوماتك",
   errorOccurred: "حدث خطأ",
   actions: "الخيارات",
@@ -20,7 +28,10 @@ const local: localizations = {
   ok: "موافق",
   cancel: "الغاء",
   newItem: "اضافة",
-  download: "تحميل"
+  download: "تحميل",
+  jobTitle: "العنوان الوظيفي",
+  userTypes: "انواع المستخدمين",
+  search: "بحث",
 };
 
 export default local;
