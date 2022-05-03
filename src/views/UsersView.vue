@@ -20,9 +20,9 @@
       @click:row="goToUserDetails"
     >
       <template v-slot:no-data>
-        <v-alert :value="true" type="warning" outlined text
-          >No items found, Add one!</v-alert
-        >
+        <v-alert :value="true" type="warning" outlined text>{{
+          $t("noItemsFound")
+        }}</v-alert>
       </template>
       <template v-slot:[`item.uot_url`]="{ item }">
         <a :href="item.uot_url" target="_blank">{{ item.uot_url }}</a>
@@ -53,11 +53,13 @@
       <template v-slot:top>
         <v-toolbar flat>
           <v-toolbar-title>
-            {{ t("users", $vuetify) }}
+            {{ $t("users") }}
           </v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
-          <v-btn color="primary" class="mb-2 mr-3"> download </v-btn>
+          <v-btn color="primary" class="mb-2 mx-2">
+            {{ $t("download") }}
+          </v-btn>
           <v-btn
             color="primary"
             dark
@@ -65,7 +67,7 @@
             @click="dialogCreate = true"
             v-show="permissionsGroup.create"
           >
-            New Item
+            {{ $t("newItem") }}
           </v-btn>
           <UserCreateView
             @close="dialogCreate = false"
@@ -79,16 +81,18 @@
 
           <v-dialog v-model="dialogDelete" max-width="500px"
             ><v-card>
-              <v-card-title class="text-h5"
-                >Are you sure you want to delete this item?</v-card-title
-              >
+              <v-card-title class="text-h5">{{
+                $t("deleteItemMessage")
+              }}</v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDeleteDialog"
-                  >Cancel</v-btn
-                >
+                <v-btn color="blue darken-1" text @click="closeDeleteDialog">{{
+                  $t("cancel")
+                }}</v-btn>
 
-                <v-btn color="blue darken-1" text @click="deleteUser">OK</v-btn>
+                <v-btn color="blue darken-1" text @click="deleteUser">{{
+                  $t("ok")
+                }}</v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions> </v-card
           ></v-dialog>
@@ -132,7 +136,6 @@ import UserCreateView from "@/components/UserCreateView.vue";
 import UserEditView from "@/components/UserEditView.vue";
 import UserFilters from "@/components/UserFilters.vue";
 import { Header } from "@/types";
-import { t } from "@/i18n/translate";
 import Vue from "vue";
 
 interface UsersData {
@@ -156,8 +159,6 @@ interface UsersData {
     users: Paging_User_;
     options: { page: number; itemsPerPage: number };
   };
-
-  headers: Array<Header>;
 }
 
 export default Vue.extend({
@@ -183,18 +184,19 @@ export default Vue.extend({
         users: { count: 0, results: [] },
         options: { page: 1, itemsPerPage: 25 },
       },
-
-      headers: [
-        { text: "Name", value: "name" },
-        { text: "English Name", value: "en_name" },
-        { text: "Gender", value: "gender" },
-        { text: "Uot Url", value: "uot_url" },
-        { text: "Color", value: "color" },
-        { text: "Actions", value: "actions", sortable: false },
-      ],
     };
   },
   computed: {
+    headers(): Array<Header> {
+      return [
+        { text: this.$t("name"), value: "name" },
+        { text: this.$t("englishName"), value: "en_name" },
+        { text: this.$t("gender"), value: "gender" },
+        { text: this.$t("uotUrl"), value: "uot_url" },
+        { text: this.$t("color"), value: "color" },
+        { text: this.$t("actions"), value: "actions", sortable: false },
+      ];
+    },
     permissionsGroup(): PermissionGroup {
       return this.$store.state.permissions?.users;
     },
@@ -284,7 +286,6 @@ export default Vue.extend({
     goToUserDetails(item: any) {
       this.$router.push("/user/" + item.id);
     },
-    t,
   },
   components: { UserFilters, UserCreateView, UserEditView },
 });

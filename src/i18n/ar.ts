@@ -9,6 +9,18 @@ const local: localizations = {
   login: "تسجيل الدخول",
   loginMessage: "ادخل معلوماتك",
   errorOccurred: "حدث خطأ",
+  actions: "الخيارات",
+  name: "الاسم",
+  englishName: "الاسم الانكليزي",
+  gender: "الجنس",
+  uotUrl: "رابط موقع الجامعة",
+  color: "اللون",
+  noItemsFound: "لا توجد عناصر",
+  deleteItemMessage: "امسح العنصر",
+  ok: "موافق",
+  cancel: "الغاء",
+  newItem: "اضافة",
+  download: "تحميل"
 };
 
 export default local;

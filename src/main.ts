@@ -7,9 +7,21 @@ import vuetify from "./plugins/vuetify";
 
 Vue.config.productionTip = true;
 
-Vue.prototype.$t = function (key: string) {
-  return vuetify.framework.lang.t(`$vuetify.${key}`);
-};
+export type LangTranslator = (
+  key: string,
+  ...params: Array<string | number>
+) => string;
+
+function t(key: string, ...params: Array<string | number>): string {
+  return vuetify.framework.lang.t(`$vuetify.${key}`, ...params);
+}
+declare module "vue/types/vue" {
+  export interface Vue {
+    $t: LangTranslator;
+  }
+}
+
+Vue.prototype.$t = t;
 
 new Vue({
   router,
