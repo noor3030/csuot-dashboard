@@ -6,7 +6,7 @@
       color="primary"
       indeterminate
     ></v-progress-circular>
-    <v-container class="pt-5" v-if="state === States.SUCCESS">
+    <v-container class="pt-5" v-if="state === States.SUCCESS && user">
       <v-row class="pb-5">
         <v-col cols="6" sm="3">
           <v-avatar width="200" height="200">
@@ -114,24 +114,19 @@ export default Vue.extend({
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Lora&family=Nunito+Sans:wght@200&family=Outfit&family=Tajawal:wght@500&display=swap");
-
 .v-container {
   color: #f8fafb;
 }
 h1 {
-  font-family: "Tajawal", sans-serif !important;
   color: #364250;
 }
 p {
-  font-family: "Tajawal", sans-serif !important;
   font-size: 20px;
 
   margin-top: 10px;
   color: gray;
 }
 h3 {
-  font-family: "Tajawal", sans-serif !important;
   color: gray;
 }
 .v-progress-circular {

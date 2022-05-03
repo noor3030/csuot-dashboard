@@ -10,10 +10,10 @@
                   class="text-center display-2 text--accent-3"
                   style="color: #232f34"
                 >
-                  Login
+                  {{ $t("users") }}
                 </h1>
                 <h4 class="text-center mt-4">
-                  Ensure your email for registration
+                  {{ $t("loginMessage") }}
                 </h4>
                 <v-form ref="form" @submit.prevent="login">
                   <v-text-field
@@ -54,18 +54,6 @@
                   </div>
                 </v-form>
               </v-card-text>
-            </v-col>
-            <v-col cols="12" md="4" style="background-color: #232f34">
-              <v-card-text>
-                <h3 class="text-center" style="color: #ffff">
-                  Enter your personal details and start journay with us
-                </h3>
-              </v-card-text>
-              <div class="text-center">
-                <v-btn rounded outlined dark to="/create_account"
-                  >SIGN UP</v-btn
-                >
-              </div>
             </v-col>
           </v-row>
         </v-card>

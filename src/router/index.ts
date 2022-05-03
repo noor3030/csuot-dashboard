@@ -6,7 +6,7 @@ import Rooms from "../views/RoomsView.vue";
 import Login from "../views/Login.vue";
 import store from "../store";
 import UserDetailsView from "../views/UserDetailsView.vue";
-import Roles from "../views/Roles.vue"
+import Roles from "../views/Roles.vue";
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
@@ -15,7 +15,7 @@ const routes: Array<RouteConfig> = [
     name: "Home",
     component: Home,
   },
-  
+
   {
     path: "/users",
     name: "Users",
@@ -26,15 +26,15 @@ const routes: Array<RouteConfig> = [
       permissionType: "read",
     },
   },
-    {
-      path: "/roles",
-      name: "Roles",
-      component: Roles,
-      meta: {
-        requiresAuth: true,
-        permissionGroup: "roles",
-        permissionType: "read",
-      },
+  {
+    path: "/roles",
+    name: "Roles",
+    component: Roles,
+    meta: {
+      requiresAuth: true,
+      permissionGroup: "roles",
+      permissionType: "read",
+    },
   },
   {
     path: "/user/:id",

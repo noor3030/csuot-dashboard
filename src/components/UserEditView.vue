@@ -116,7 +116,7 @@ import {
   RolesService,
   JobTitlesService,
   Role,
-  app__schemas__job_title__JobTitle,
+  app__schemas__job_title__JobTitle as JobTitle,
 } from "@/client";
 export default Vue.extend({
   data() {
@@ -128,7 +128,7 @@ export default Vue.extend({
       url: null as null | string,
       image: null as any,
       roles: [] as Array<Role>,
-      jobTitles: [] as Array<app__schemas__job_title__JobTitle>,
+      jobTitles: [] as Array<JobTitle>,
     };
   },
   watch: {
@@ -194,7 +194,6 @@ export default Vue.extend({
   created() {
     this.getRoles();
     this.getJobTitle();
-    
   },
 });
 </script>
