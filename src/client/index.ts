@@ -73,7 +73,7 @@ export type { PeriodCreate } from './models/PeriodCreate';
 export type { PeriodSchedule } from './models/PeriodSchedule';
 export type { PeriodUpdate } from './models/PeriodUpdate';
 export type { PermissionGroup } from './models/PermissionGroup';
-export type { Permissions } from './models/Permissions';
+export  { Permissions } from './models/Permissions';
 export type { Role } from './models/Role';
 export type { RoleCreate } from './models/RoleCreate';
 export type { RoleUpdate } from './models/RoleUpdate';

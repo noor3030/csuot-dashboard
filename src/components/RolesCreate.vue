@@ -50,6 +50,7 @@
               open-all
             ></v-treeview
           ></v-row>
+          <button @click="test">test</button>
         </v-container>
         <v-snackbar :value="errorDetails" color="error">
           {{ errorDetails }}
@@ -60,34 +61,28 @@
 </template>
 
 <script lang="ts">
-import { RolesService, RoleCreate } from "@/client";
+import { RolesService, RoleCreate, Permissions as Permission } from "@/client";
 import Vue from "vue";
 export default Vue.extend({
   data() {
     return {
       roleCreate: {} as RoleCreate,
       selection: [],
-      items: [
-        {
-          id: 1,
-          name: "Users",
-          children: [
-            { id: "test", name: "create" },
-            { id: 3, name: "update" },
-            { id: 4, name: "read" },
-            { id: 5, name: "delete" },
-          ],
-        },
-        {
-          id: 6,
-          name: "Roles",
-          children: [
-            { id: 7, name: "create" },
-            { id: 8, name: "update" },
-            { id: 9, name: "read" },
-            { id: 10, name: "delete" },
-          ],
-        },
+      permissions: [
+        "users",
+        "roles",
+        "periods",
+        "job_titles",
+        "departments",
+        "branches",
+        "days",
+        "stages",
+        "buildings",
+        "rooms",
+        "floors",
+        "subjects",
+        "lessons",
+        "cards",
       ],
       errorDetails: null as null | string,
     };
@@ -109,6 +104,7 @@ export default Vue.extend({
           console.log(JSON.stringify(this.errorDetails));
         });
     },
+
     closeDialog() {
       this.$emit("close");
     },
@@ -116,6 +112,25 @@ export default Vue.extend({
   watch: {
     selection(newselection, oldSelection) {
       console.log(newselection);
+    },
+  },
+  computed: {
+    items() {
+      const itemList: Array<object> = [];
+      for (let i = 0; i < this.permissions.length; i++) {
+        const element = this.permissions[i];
+        const item = {
+          id: element,
+          name: this.$t(element),
+          children: [
+            { id: `${element}-create`, name: "create" },
+            { id: `${element}-update`, name: "update" },
+            { id: `${element}-read`, name: "read" },
+            { id: `${element}-delete`, name: "delete" },
+          ],
+        };
+      }
+      return item;
     },
   },
 });
