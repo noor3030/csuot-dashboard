@@ -32,7 +32,23 @@ const local: localizations = {
   jobTitle: "Job Title",
   userTypes: "User Types",
   search: "Search",
-  editProfile: "Edit Profile"
+  editProfile: "Edit Profile",
+  permissionItem: {
+    users: "Users",
+    roles: "Roles",
+    periods: "Periods",
+    job_titles: "Job Titles",
+    departments: "Department",
+    branches: "Branches",
+    days: "Days",
+    stages: "Stages",
+    buildings: "Buildings",
+    rooms: "Rooms",
+    floors: "Floors",
+    subjects: "Subjects",
+    lessons: "Lessons",
+    cards: "Cards"
+  }
 };
 
 export default local;

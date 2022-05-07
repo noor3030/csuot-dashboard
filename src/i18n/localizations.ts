@@ -32,5 +32,21 @@ export default interface localizations extends VuetifyLocale {
   jobTitle: string;
   userTypes: string;
   search: string;
-  editProfile:string;
+  editProfile: string;
+  permissionItem: {
+    users: string;
+    roles: string;
+    periods: string;
+    job_titles: string;
+    departments: string;
+    branches: string;
+    days: string;
+    stages: string;
+    buildings: string;
+    rooms: string;
+    floors: string;
+    subjects: string;
+    lessons: string;
+    cards: string;
+  };
 }

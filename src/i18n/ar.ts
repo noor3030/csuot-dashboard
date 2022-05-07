@@ -32,7 +32,23 @@ const local: localizations = {
   jobTitle: "العنوان الوظيفي",
   userTypes: "انواع المستخدمين",
   search: "بحث",
-  editProfile: "تعديل الملف الشخصي"
+  editProfile: "تعديل الملف الشخصي",
+  permissionItem: {
+    users: "المستخدمين",
+    roles: "الادوار",
+    periods: "الفترات",
+    job_titles: "العناوين الوظيفية",
+    departments: "الاقسام",
+    branches: "الافرع",
+    days: "الايام",
+    stages: "المراحل",
+    buildings: "البنايات",
+    rooms: "الغرف",
+    floors: "الطوابق",
+    subjects: "المواد",
+    lessons: "الدروس",
+    cards: "الجدول",
+  },
 };
 
 export default local;

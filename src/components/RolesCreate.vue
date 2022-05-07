@@ -40,6 +40,7 @@
               </v-text-field>
             </v-col>
           </v-row>
+          <button @click="test">test</button>
           <v-row>
             <v-treeview
               selectable
@@ -50,8 +51,8 @@
               open-all
             ></v-treeview
           ></v-row>
-          <button @click="test">test</button>
         </v-container>
+
         <v-snackbar :value="errorDetails" color="error">
           {{ errorDetails }}
         </v-snackbar>
@@ -61,13 +62,24 @@
 </template>
 
 <script lang="ts">
-import { RolesService, RoleCreate, Permissions as Permission } from "@/client";
+import { RolesService, RoleCreate, Permissions } from "@/client";
 import Vue from "vue";
+import { tr } from "vuetify/src/locale";
+
+type TreeItem = {
+  id: string;
+  name: string;
+  children?: Array<TreeItem>;
+};
+type SelectItem = {
+  name: string;
+  id: string;
+};
 export default Vue.extend({
   data() {
     return {
       roleCreate: {} as RoleCreate,
-      selection: [],
+      selection: [] as Array<SelectItem>,
       permissions: [
         "users",
         "roles",
@@ -91,7 +103,11 @@ export default Vue.extend({
     show: { type: Boolean },
   },
   methods: {
+    test() {
+      console.log(this.permission);
+    },
     createRole(): void {
+      this.roleCreate.permissions = this.permission;
       RolesService.createRole(this.roleCreate)
         .then(() => {
           this.closeDialog();
@@ -110,18 +126,18 @@ export default Vue.extend({
     },
   },
   watch: {
-    selection(newselection, oldSelection) {
-      console.log(newselection);
+    selection(newSelection, _) {
+      console.log(newSelection);
     },
   },
   computed: {
-    items() {
-      const itemList: Array<object> = [];
+    items(): Array<TreeItem> {
+      let itemList: Array<TreeItem> = [];
       for (let i = 0; i < this.permissions.length; i++) {
         const element = this.permissions[i];
-        const item = {
+        const item: TreeItem = {
           id: element,
-          name: this.$t(element),
+          name: this.$t(`permissionItem.${element}`),
           children: [
             { id: `${element}-create`, name: "create" },
             { id: `${element}-update`, name: "update" },
@@ -129,8 +145,34 @@ export default Vue.extend({
             { id: `${element}-delete`, name: "delete" },
           ],
         };
+        itemList.push(item);
       }
-      return item;
+      return itemList;
+    },
+    permission() {
+      let _permission: any = {} as Permissions;
+
+      this.permissions.forEach((group) => {
+        // _permission["users"] = {};
+        _permission[group] = {
+          read: false,
+          create: false,
+          update: false,
+          delete: false,
+        };
+
+        this.selection.forEach((select) => {
+          // users, create
+          let [selectedGroup, action] = select.id.split("-");
+
+          if (group == selectedGroup) {
+            // _permission["users"]["create"] = true;
+            _permission[group][action] = true;
+          }
+        });
+      });
+
+      return _permission;
     },
   },
 });

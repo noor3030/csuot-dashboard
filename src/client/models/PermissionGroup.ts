@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 export type PermissionGroup = {
-    read?: boolean;
+    read?: boolean ;
     create?: boolean;
     update?: boolean;
     delete?: boolean;
