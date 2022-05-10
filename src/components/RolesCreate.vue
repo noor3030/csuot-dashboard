@@ -40,7 +40,7 @@
               </v-text-field>
             </v-col>
           </v-row>
-          <button @click="test">test</button>
+         
           <v-row>
             <v-treeview
               selectable
@@ -103,9 +103,7 @@ export default Vue.extend({
     show: { type: Boolean },
   },
   methods: {
-    test() {
-      console.log(this.permission);
-    },
+    
     createRole(): void {
       this.roleCreate.permissions = this.permission;
       RolesService.createRole(this.roleCreate)
