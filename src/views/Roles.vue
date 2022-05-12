@@ -9,7 +9,11 @@
     :server-items-length="roles.count"
   >
     <template v-slot:[`item.actions`]="{ item }">
-      <v-icon small class="pl-2" v-show="permissionsGroup.update"
+      <v-icon
+        small
+        class="pl-2"
+        v-show="permissionsGroup.update"
+        @click.stop="roleIdEdit = item.id"
         >mdi-pencil</v-icon
       >
       <v-icon
@@ -27,7 +31,7 @@
         </v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
-        <v-btn color="primary" class="mb-2 mr-3"> download </v-btn>
+        <v-btn color="primary" class="mb-2 mr-3"> {{ $t("download") }} </v-btn>
         <v-btn
           color="primary"
           dark
@@ -35,21 +39,28 @@
           v-show="permissionsGroup.create"
           @click="dialogCreate = true"
         >
-          New Item
+          {{ $t("newItem") }}
         </v-btn>
-        <RolesCreate :show="dialogCreate" @close="dialogCreate = false" />
+        <RoleCreate :show="dialogCreate" @close="dialogCreate = false" />
+        <RoleEdit
+          :show="dialogEdit"
+          @close="closeEditDialog"
+          :id="roleIdEdit"
+        />
         <v-dialog max-width="500px" v-model="dialogDelete"
           ><v-card>
-            <v-card-title class="text-h5"
-              >Are you sure you want to delete this item?</v-card-title
-            >
+            <v-card-title class="text-h5">
+              {{ $t("deleteItemMessage") }}
+            </v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDeleteDialog"
-                >Cancel</v-btn
-              >
+              <v-btn color="blue darken-1" text @click="closeDeleteDialog">{{
+                $t("cancel")
+              }}</v-btn>
 
-              <v-btn color="blue darken-1" text @click="deleteRole">OK</v-btn>
+              <v-btn color="blue darken-1" text @click="deleteRole">{{
+                $t("ok")
+              }}</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions> </v-card
         ></v-dialog>
@@ -61,18 +72,23 @@
 import { t } from "@/i18n/translate";
 import Vue from "vue";
 import { Header } from "@/types";
-import RolesCreate from "@/components/RolesCreate.vue";
+import RoleCreate from "@/components/RoleCreate.vue";
 import { RolesService, Paging_Role_, PermissionGroup } from "@/client";
+import RoleEdit from "@/components/RoleEdit.vue";
 interface RolesData {
   roles: Paging_Role_;
   headers: Array<Header>;
   loading: boolean;
   dialogCreate: boolean;
+
   roleIdDelete: string | null;
+  roleIdEdit: string | null;
 }
 export default Vue.extend({
   data(): RolesData {
     return {
+      roleIdEdit: null,
+
       roleIdDelete: null,
       dialogCreate: false,
       loading: true,
@@ -102,6 +118,9 @@ export default Vue.extend({
     closeDeleteDialog() {
       this.roleIdDelete = null;
     },
+    closeEditDialog() {
+      this.roleIdEdit = null;
+    },
   },
   created() {
     this.getRoles();
@@ -113,9 +132,13 @@ export default Vue.extend({
     dialogDelete(): boolean {
       return this.roleIdDelete != null;
     },
+    dialogEdit(): boolean {
+      return this.roleIdEdit != null;
+    },
   },
   components: {
-    RolesCreate,
+    RoleCreate,
+    RoleEdit,
   },
 });
 </script>
