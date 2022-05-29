@@ -31,7 +31,7 @@
         </v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
-        <v-btn color="primary" class="mb-2 mr-3"> {{ $t("download") }} </v-btn>
+        <v-btn color="primary" class="mb-2 mx-3"> {{ $t("download") }} </v-btn>
         <v-btn
           color="primary"
           dark
