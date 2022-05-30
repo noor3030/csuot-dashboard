@@ -158,7 +158,6 @@ export default Vue.extend({
     },
     previewImage() {
       this.url = URL.createObjectURL(this.image);
-    
     },
 
     closeEditDialog() {
@@ -166,8 +165,6 @@ export default Vue.extend({
     },
     getUser() {
       UsersService.readUser(this.id).then((value) => {
-      
-
         this.userEdit = {
           name: value.name,
           email: value.email,
@@ -185,7 +182,7 @@ export default Vue.extend({
       if (this.image) {
         this.userEdit.image = this.image;
       }
-      UsersService.updateUser(this.id, this.userEdit)
+      UsersService.updateUser(this.id, this.userEdit);
       this.closeEditDialog();
     },
   },

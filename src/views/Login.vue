@@ -75,7 +75,7 @@
 import Vue from "vue";
 import { AuthService } from "@/client";
 import { TOKEN } from "@/utils/keys";
-import { Validation } from "@/types";
+import { Validation } from "@/types/Validation";
 import { emailValidation, passwordValidation } from "@/utils/validations";
 
 interface LoginData {

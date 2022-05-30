@@ -6,6 +6,8 @@ import Rooms from "../views/RoomsView.vue";
 import Login from "../views/Login.vue";
 import store from "../store";
 import UserDetailsView from "../views/UserDetailsView.vue";
+import RoomDetailsView from "../views/RoomDetailsView.vue";
+
 import Roles from "../views/Roles.vue";
 Vue.use(VueRouter);
 
@@ -39,10 +41,20 @@ const routes: Array<RouteConfig> = [
   {
     path: "/user/:id",
     name: "UserDetailsView",
-    component: UserDetailsView, // TODO
+    component: UserDetailsView,
     meta: {
       requiresAuth: true,
       permissionGroup: "users",
+      permissionType: "read",
+    },
+  },
+  {
+    path: "/room/:id",
+    name: "RoomDetailsView",
+    component: RoomDetailsView, 
+    meta: {
+      requiresAuth: true,
+      permissionGroup: "rooms",
       permissionType: "read",
     },
   },
@@ -62,7 +74,7 @@ const routes: Array<RouteConfig> = [
     component: Rooms,
     meta: {
       requiresAuth: true,
-      permissionGroup: "users",
+      permissionGroup: "rooms",
       permissionType: "create",
     },
   },

@@ -3,7 +3,7 @@
     v-model="show"
     fullscreen
     hide-overlay
-    transition="dialog-bottom-transition"
+    transition="dialog-top-transition"
   >
     <v-card>
       <v-toolbar dark color="primary">

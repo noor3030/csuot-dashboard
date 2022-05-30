@@ -57,18 +57,21 @@
           </v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
-          <v-btn color="primary" class="mb-2 mx-2">
-            {{ $t("download") }}
-          </v-btn>
-          <v-btn
-            color="primary"
-            dark
-            class="mb-2"
-            @click="dialogCreate = true"
-            v-show="permissionsGroup.create"
-          >
-            {{ $t("newItem") }}
-          </v-btn>
+          <v-row justify="end">
+            <v-btn color="primary">
+              {{ $t("download") }}
+            </v-btn>
+            <v-btn
+              color="primary"
+              dark
+              class="mx-2"
+              @click="dialogCreate = true"
+              v-show="permissionsGroup.create"
+            >
+              {{ $t("newItem") }}
+            </v-btn>
+          </v-row>
+
           <UserCreateView
             @close="dialogCreate = false"
             @userCreated="getUsers"
@@ -135,7 +138,7 @@ import {
 import UserCreateView from "@/components/UserCreateView.vue";
 import UserEditView from "@/components/UserEditView.vue";
 import UserFilters from "@/components/UserFilters.vue";
-import { Header } from "@/types";
+import { Header } from "@/types/Headers";
 import Vue from "vue";
 
 interface UsersData {

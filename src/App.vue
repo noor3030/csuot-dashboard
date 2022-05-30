@@ -25,6 +25,7 @@ export default Vue.extend({
 });
 </script>
 
+
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Lora&family=Nunito+Sans:wght@200&family=Outfit&family=Tajawal:wght@500&display=swap");
 #app {

@@ -31,16 +31,21 @@
         </v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
-        <v-btn color="primary" class="mb-2 mx-3"> {{ $t("download") }} </v-btn>
-        <v-btn
-          color="primary"
-          dark
-          class="mb-2"
-          v-show="permissionsGroup.create"
-          @click="dialogCreate = true"
+        <v-row justify="end">
+          <v-btn color="primary">
+            {{ $t("download") }}
+          </v-btn>
+          <v-btn
+            color="primary"
+            dark
+            class="mx-2"
+            v-show="permissionsGroup.create"
+            @click="dialogCreate = true"
+          >
+            {{ $t("newItem") }}
+          </v-btn></v-row
         >
-          {{ $t("newItem") }}
-        </v-btn>
+
         <RoleCreate :show="dialogCreate" @close="dialogCreate = false" />
         <RoleEdit
           :show="dialogEdit"
@@ -71,7 +76,7 @@
 <script lang="ts">
 import { t } from "@/i18n/translate";
 import Vue from "vue";
-import { Header } from "@/types";
+import { Header } from "@/types/Headers";
 import RoleCreate from "@/components/RoleCreate.vue";
 import { RolesService, Paging_Role_, PermissionGroup } from "@/client";
 import RoleEdit from "@/components/RoleEdit.vue";

@@ -49,6 +49,12 @@ const local: localizations = {
     lessons: "الدروس",
     cards: "الجدول",
   },
+  roomType: "نوع الغرفة",
+  addNewRoom: "اضافة غرفة جديدة",
+  save: "حفظ",
+  building: "البناية",
+  floor: "الطابق",
+  editRoom: "تعديل الغرفة"
 };
 
 export default local;

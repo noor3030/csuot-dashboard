@@ -7,7 +7,7 @@ const local: localizations = {
   arabic: "Arabic",
   english: "English",
   language: "Language",
-  home: "home",
+  home: "Home",
   users: "Users",
   roles: "Roles",
   rooms: "Rooms",
@@ -48,7 +48,13 @@ const local: localizations = {
     subjects: "Subjects",
     lessons: "Lessons",
     cards: "Cards"
-  }
+  },
+  roomType: "Room Type",
+  addNewRoom: "Add New Room",
+  save: "Save",
+  building: "Building",
+  floor: "Floor",
+  editRoom: "Edit Room"
 };
 
 export default local;

@@ -33,6 +33,7 @@ export default interface localizations extends VuetifyLocale {
   userTypes: string;
   search: string;
   editProfile: string;
+  roomType: string;
   permissionItem: {
     users: string;
     roles: string;
@@ -49,4 +50,9 @@ export default interface localizations extends VuetifyLocale {
     lessons: string;
     cards: string;
   };
+  addNewRoom: string;
+  save: string;
+  building: string;
+  floor: string;
+  editRoom: string;
 }

@@ -1,13 +1,17 @@
 <template>
-  <div>
-    <v-progress-circular
-      v-if="state === States.LOADING"
-      :size="200"
-      color="primary"
-      indeterminate
-    ></v-progress-circular>
-    <v-container class="pt-5" v-if="state === States.SUCCESS && user">
-      <v-row class="pb-5">
+  <div >
+    <v-row align="center" justify="center" class="pt-16"
+      ><v-col align-self="center"
+        ><v-progress-circular
+          v-if="state === States.LOADING"
+          :size="200"
+          color="primary"
+          indeterminate
+        ></v-progress-circular></v-col
+    ></v-row>
+
+    <v-container  v-if="state === States.SUCCESS && user">
+      <v-row>
         <v-col cols="6" sm="3">
           <v-avatar width="200" height="200">
             <img :src="user.image_url" :alt="user.name" />
@@ -15,32 +19,25 @@
         </v-col>
         <v-col cols="6" sm="3">
           <h1>{{ user.name }}</h1>
-          <a
-            :href="user.uot_url"
-            class="grey--text"
-            style="text-decoration: none; font-size: 20px"
-            ><v-icon color="grey" size="30">mdi-search-web</v-icon> UOT
-          </a>
-          <br />
-          <v-row>
-            <p v-for="title in user.job_titles" :key="title" class="pl-2">
+          <v-row align="center " justify="center" class="py-5">
+            <p v-for="title in user.job_titles" :key="title" class="px-2">
               {{ title.name }}
-            </p></v-row
-          >
+            </p>
+          </v-row>
+
+          <br />
+
           <v-row
-            ><h3>Color</h3>
-            <v-icon :color="user.color"> mdi-square</v-icon></v-row
-          >
-        </v-col>
-        <v-col cols="12" sm="3">
-          <v-btn
-            color="#399cf6"
-            elevation="0"
-            class="white--text"
-            rounded
-            x-large
-            @click="dialog = true"
-            >{{ $t("editProfile") }}</v-btn
+            ><h3>{{ $t("color") }}</h3>
+            <v-icon :color="user.color"> mdi-square</v-icon>
+            <a
+              :href="user.uot_url"
+              class="grey--text px-4"
+              style="text-decoration: none; font-size: 20px"
+            >
+              UOT
+              <v-icon color="grey" size="30">mdi-search-web</v-icon>
+            </a></v-row
           >
         </v-col>
       </v-row>
@@ -94,6 +91,7 @@ export default Vue.extend({
         .then((value) => {
           this.user = value;
           this.state = States.SUCCESS;
+          this.id = value.id;
         })
         .catch((error) => {
           this.errorDetails = error.body.detail;
@@ -123,14 +121,9 @@ h1 {
 p {
   font-size: 20px;
 
-  margin-top: 10px;
   color: gray;
 }
 h3 {
   color: gray;
-}
-.v-progress-circular {
-  margin: 300px;
-  margin-left: 700px;
 }
 </style>
