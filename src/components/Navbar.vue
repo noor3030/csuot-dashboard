@@ -117,6 +117,12 @@ export default Vue.extend({
           route: "/roles",
           permission: true,
         },
+         {
+          icon: "mdi-source-branch",
+          text: `${this.$t("branches")}`,
+          route: "/branches",
+          permission: true,
+        },
       ];
     },
   },

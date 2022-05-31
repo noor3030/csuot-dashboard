@@ -55,4 +55,11 @@ export default interface localizations extends VuetifyLocale {
   building: string;
   floor: string;
   editRoom: string;
+  branch:string;
+  branches:string
+  abbr:string
+  vision:string
+  addNewBranch:string
+  department:string
+  editBranch:string
 }

@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Users from "../views/UsersView.vue";
 import Rooms from "../views/RoomsView.vue";
 import Login from "../views/Login.vue";
+import Branches from "../views/BranchesView.vue";
 import store from "../store";
 import UserDetailsView from "../views/UserDetailsView.vue";
 import RoomDetailsView from "../views/RoomDetailsView.vue";
@@ -75,10 +76,19 @@ const routes: Array<RouteConfig> = [
     meta: {
       requiresAuth: true,
       permissionGroup: "rooms",
-      permissionType: "create",
+      permissionType: "read",
     },
   },
-
+  {
+    path: "/branches",
+    name: "Branches",
+    component: Branches,
+    meta: {
+      requiresAuth: true,
+      permissionGroup: "branches",
+      permissionType: "read",
+    },
+  },
   {
     path: "/login",
     name: "Login",

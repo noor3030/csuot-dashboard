@@ -54,7 +54,14 @@ const local: localizations = {
   save: "حفظ",
   building: "البناية",
   floor: "الطابق",
-  editRoom: "تعديل الغرفة"
+  editRoom: "تعديل الغرفة",
+  branch: "الفرع",
+  branches: "الفروع",
+  abbr: "اختصار",
+  vision: "الرؤية",
+  addNewBranch: "اضافة فرع جديد",
+  department: "القسم",
+  editBranch: "تعديل الفرع"
 };
 
 export default local;

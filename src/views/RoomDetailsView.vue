@@ -20,8 +20,8 @@
           </v-col
         >
       </v-row>
-      <v-row justify="start"
-        ><h3>{{ $t("color") }}</h3>
+      <v-row class="mx-5"
+        ><h3 >{{ $t("color") }}</h3>
         <v-icon :color="room.color"> mdi-square</v-icon>
       </v-row>
       <Timetable />

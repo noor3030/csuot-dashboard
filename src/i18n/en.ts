@@ -54,7 +54,14 @@ const local: localizations = {
   save: "Save",
   building: "Building",
   floor: "Floor",
-  editRoom: "Edit Room"
+  editRoom: "Edit Room",
+  branch: "Branch",
+  branches: "Branches",
+  abbr: "Abbr",
+  vision: "Vision",
+  addNewBranch: "Add New Branch",
+  department: "Department",
+  editBranch: "Edit Branch"
 };
 
 export default local;
