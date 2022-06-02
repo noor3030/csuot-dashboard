@@ -62,4 +62,10 @@ export default interface localizations extends VuetifyLocale {
   addNewBranch:string
   department:string
   editBranch:string
+  stage:string
+  stages:string
+  shift:string
+  level:string
+  addNewStage:string
+  editStage: string;
 }

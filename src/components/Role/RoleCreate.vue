@@ -3,17 +3,17 @@
     v-model="show"
     fullscreen
     hide-overlay
-    transition="dialog-bottom-transition"
+    transition="dialog-top-transition"
   >
     <v-card>
       <v-toolbar dark color="primary">
         <v-btn icon dark @click="closeDialog">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title>Edit Role</v-toolbar-title>
+        <v-toolbar-title>Add New Role</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn dark text @click="editRole"> Save </v-btn>
+          <v-btn dark text @click="createRole"> Save </v-btn>
         </v-toolbar-items>
       </v-toolbar>
       <v-card-text>
@@ -23,9 +23,9 @@
               <v-text-field
                 outlined
                 ref="name"
+                v-model="roleCreate.name"
                 label="Name"
                 required
-                v-model="roleEdit.name"
               >
               </v-text-field>
             </v-col>
@@ -33,61 +33,61 @@
               <v-text-field
                 outlined
                 ref="enum"
+                v-model="roleCreate.enum"
                 label="English Name"
                 required
-                v-model="roleEdit.enum"
               >
               </v-text-field>
             </v-col>
           </v-row>
-          <RoleTree @changed="changed" :oldPermissions="roleEdit.permissions" />
+          <RoleTree @changed="changed" />
         </v-container>
+
+        <v-snackbar :value="errorDetails" color="error">
+          {{ errorDetails }}
+        </v-snackbar>
       </v-card-text>
     </v-card>
   </v-dialog>
 </template>
+
 <script lang="ts">
-import { Permissions, Role, RolesService, RoleUpdate } from "@/client";
-import RoleTree from "@/components/RoleTree.vue";
+import { RolesService, RoleCreate, Permissions } from "@/client";
 import Vue from "vue";
+import RoleTree from "@/components/Role/RoleTree.vue";
+
 export default Vue.extend({
   data() {
     return {
-      roleEdit: {} as RoleUpdate,
-      role: {} as Role,
+      roleCreate: {} as RoleCreate,
+      item: {} as Permissions,
+      errorDetails: null as null | string,
     };
-  },
-  watch: {
-    id: {
-      handler(newValue) {
-        if (newValue) {
-          this.getRole();
-        }
-      },
-    },
   },
   props: {
     show: { type: Boolean },
-    id: { type: String },
   },
   methods: {
-    closeDialog() {
-      this.$emit("close");
-    },
-    editRole() {
-      RolesService.updateRole(this.id, this.roleEdit);
-    },
-    getRole() {
-      RolesService.readRole(this.id).then((value) => {
-        this.roleEdit = {
-          name: value.name,
-          enum: value.enum,
-          permissions: value.permissions,
-        } as RoleUpdate;
-      });
+    createRole(): void {
+      this.roleCreate.permissions = this.item;
+      RolesService.createRole(this.roleCreate)
+        .then(() => {
+          this.closeDialog();
+
+          this.$emit("roleCreated");
+          // this.roleCreate = {} as RoleCreate;
+        })
+        .catch((error) => {
+          this.errorDetails = error.body.detail;
+          console.log(JSON.stringify(this.errorDetails));
+        });
     },
     changed(permission: Permissions) {
-      this.roleEdit.permissions = permission;
+      this.item = permission;
+    },
+
+    closeDialog() {
+      this.$emit("close");
     },
   },
   components: {

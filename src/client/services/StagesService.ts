@@ -24,7 +24,7 @@ export class StagesService {
      */
     public static readStages(
 branchId?: string,
-branchName?: string,
+branchName?: null,
 page: number = 1,
 perPage: number = 15,
 ): CancelablePromise<Paging_Stage_> {

@@ -61,7 +61,7 @@
 import Vue from "vue";
 import { UsersService, User } from "@/client";
 import { States } from "@/States";
-import UserEditView from "@/components/UserEditView.vue";
+import UserEditView from "@/components/User/UserEditView.vue";
 import Timetable from "pure-timetable";
 import ErrorView from "@/components/ErrorView.vue";
 interface UserDetailsData {

@@ -1,4 +1,5 @@
 <template>
+<div class="pa-6">
   <v-data-table
     :headers="headers"
     :items="roles.results"
@@ -72,14 +73,15 @@
       </v-toolbar>
     </template>
   </v-data-table>
+</div>
 </template>
 <script lang="ts">
 import { t } from "@/i18n/translate";
 import Vue from "vue";
 import { Header } from "@/types/Headers";
-import RoleCreate from "@/components/RoleCreate.vue";
+import RoleCreate from "@/components/Role/RoleCreate.vue";
 import { RolesService, Paging_Role_, PermissionGroup } from "@/client";
-import RoleEdit from "@/components/RoleEdit.vue";
+import RoleEdit from "@/components/Role/RoleEdit.vue";
 interface RolesData {
   roles: Paging_Role_;
   headers: Array<Header>;

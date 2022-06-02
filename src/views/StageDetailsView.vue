@@ -10,21 +10,18 @@
         ></v-progress-circular></v-col
     ></v-row>
 
-    <v-container v-if="state === States.SUCCESS && room">
+    <v-container v-if="state === States.SUCCESS && stage">
       <v-row justify="center">
         <v-col>
-          <h1>{{ room.name }}</h1>
-          <p>
-          {{room.type}}
-          </p>
-          </v-col
-        >
+          <h1>{{ stage.name }}</h1>
+        </v-col>
       </v-row>
-      <v-row class="mx-5"
-        ><h3 >{{ $t("color") }}</h3>
-        <v-icon :color="room.color"> mdi-square</v-icon>
+      <v-row justify="space-between" class="pt-10">
+        <p>{{ $t("department") }} :  {{ stage.branch.department.name }}</p>
+        <p>{{ $t("branch") }} : {{ stage.branch.name }}</p>
+        <p>{{ $t("level") }} : {{ stage.level }}</p>
+        <p>{{ $t("shift") }} : {{ stage.shift }}</p>
       </v-row>
-      <Timetable />
     </v-container>
     <ErrorView
       :errorDetails="errorDetails"
@@ -35,25 +32,24 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { RoomsService, Room } from "@/client";
+import { StagesService, Stage } from "@/client";
 import { States } from "@/States";
-import Timetable from "pure-timetable";
 import ErrorView from "@/components/ErrorView.vue";
-interface RoomDetailsData {
+interface StageDetailsData {
   id?: string;
-  room?: Room;
- 
+  stage?: Stage;
+
   state: States;
   States: any;
   errorDetails: null | string;
   errorStatus: null | number;
 }
 export default Vue.extend({
-  data(): RoomDetailsData {
+  data(): StageDetailsData {
     return {
       id: undefined,
-      room: undefined,
-     
+      stage: undefined,
+
       state: States.LOADING,
       States: States,
       errorDetails: null,
@@ -61,10 +57,10 @@ export default Vue.extend({
     };
   },
   methods: {
-    getRoom() {
-      RoomsService.readRoom(this.id!)
+    getStage() {
+      StagesService.readStage(this.id!)
         .then((value) => {
-          this.room = value;
+          this.stage = value;
           this.state = States.SUCCESS;
           this.id = value.id;
         })
@@ -74,12 +70,11 @@ export default Vue.extend({
           this.state = States.ERROR;
         });
     },
-    
   },
   created() {
     this.id = this.$route.params.id;
-    this.getRoom();
+    this.getStage();
   },
-  components: { Timetable, ErrorView },
+  components: { ErrorView },
 });
 </script>

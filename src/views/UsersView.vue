@@ -135,9 +135,9 @@ import {
   UserGender,
   UsersService,
 } from "@/client";
-import UserCreateView from "@/components/UserCreateView.vue";
-import UserEditView from "@/components/UserEditView.vue";
-import UserFilters from "@/components/UserFilters.vue";
+import UserCreateView from "@/components/User/UserCreateView.vue";
+import UserEditView from "@/components/User/UserEditView.vue";
+import UserFilters from "@/components/User/UserFilters.vue";
 import { Header } from "@/types/Headers";
 import Vue from "vue";
 

@@ -3,11 +3,14 @@ import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
 import Users from "../views/UsersView.vue";
 import Rooms from "../views/RoomsView.vue";
+import Stages from "../views/StagesView.vue";
+
 import Login from "../views/Login.vue";
 import Branches from "../views/BranchesView.vue";
 import store from "../store";
 import UserDetailsView from "../views/UserDetailsView.vue";
 import RoomDetailsView from "../views/RoomDetailsView.vue";
+import StageDetailsView from "../views/StageDetailsView.vue"
 
 import Roles from "../views/Roles.vue";
 Vue.use(VueRouter);
@@ -49,6 +52,8 @@ const routes: Array<RouteConfig> = [
       permissionType: "read",
     },
   },
+  
+ 
   {
     path: "/room/:id",
     name: "RoomDetailsView",
@@ -56,6 +61,16 @@ const routes: Array<RouteConfig> = [
     meta: {
       requiresAuth: true,
       permissionGroup: "rooms",
+      permissionType: "read",
+    },
+  },
+  {
+    path: "/stage/:id",
+    name: "StageDetailsView",
+    component: StageDetailsView, 
+    meta: {
+      requiresAuth: true,
+      permissionGroup: "stages",
       permissionType: "read",
     },
   },
@@ -78,6 +93,16 @@ const routes: Array<RouteConfig> = [
       permissionGroup: "rooms",
       permissionType: "read",
     },
+  },
+    {
+      path: "/stages",
+      name: "Stages",
+      component: Stages,
+      meta: {
+        requiresAuth: true,
+        permissionGroup: "stages",
+        permissionType: "read",
+      },
   },
   {
     path: "/branches",

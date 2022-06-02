@@ -61,7 +61,13 @@ const local: localizations = {
   vision: "Vision",
   addNewBranch: "Add New Branch",
   department: "Department",
-  editBranch: "Edit Branch"
+  editBranch: "Edit Branch",
+  stage: "Stage",
+  stages: "Stages",
+  shift: "Shift",
+  level: "Level",
+  addNewStage: "Add New Stage",
+  editStage: "Edit Stage"
 };
 
 export default local;

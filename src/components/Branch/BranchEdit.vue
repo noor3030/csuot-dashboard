@@ -49,32 +49,30 @@
               >
               </v-text-field>
             </v-col>
-
-       
           </v-row>
-                <v-row justify="center">
-          <v-col cols="12" md="4">
-            <v-textarea
-              auto-grow
-              outlined
-              ref="vision"
-              v-model="branchEdit.vision"
-              :label="$t('vision')"
-              required
-            ></v-textarea
-          ></v-col>
-          <v-col cols="12" md="3">
-            <v-autocomplete
-              :label="$t('department')"
-              clearable
-              outlined
-              :items="departments"
-              item-text="name"
-              item-value="id"
-              v-model="branchEdit.department_id"
-            ></v-autocomplete>
-          </v-col>
-        </v-row>
+          <v-row justify="center">
+            <v-col cols="12" md="4">
+              <v-textarea
+                auto-grow
+                outlined
+                ref="vision"
+                v-model="branchEdit.vision"
+                :label="$t('vision')"
+                required
+              ></v-textarea
+            ></v-col>
+            <v-col cols="12" md="3">
+              <v-autocomplete
+                :label="$t('department')"
+                clearable
+                outlined
+                :items="departments"
+                item-text="name"
+                item-value="id"
+                v-model="branchEdit.department_id"
+              ></v-autocomplete>
+            </v-col>
+          </v-row>
         </v-container>
       </v-card-text>
     </v-card>

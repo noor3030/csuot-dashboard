@@ -1,38 +1,40 @@
 <template>
   <div class="pa-6">
+    <StageFilters
+      :branches="branches.results"
+      :branch_id="branch_id"
+      @changed="onFilterChange"
+    />
     <v-data-table
       :headers="headers"
-      :items="branches.results"
+      :items="stages.results"
       item-key="id"
       class="elevation-1"
       hide-default-footer
       :loading="loading"
-      :server-items-length="branches.results"
-    
+      :server-items-length="stages.results"
+      @click:row="goToStageDetails"
     >
-      <template v-slot:[`item.color`]="{ item }">
-        <v-icon :color="item.color">mdi-square</v-icon>
-      </template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon
           small
           class="pl-2"
           v-show="permissionsGroup.update"
-          @click.stop="branchIdEdit = item.id"
+          @click.stop="stageIdEdit = item.id"
           >mdi-pencil</v-icon
         >
         <v-icon
           small
           class="pl-2"
           v-show="permissionsGroup.delete"
-          @click.stop="branchIdDelete = item.id"
+          @click.stop="stageIdDelete = item.id"
           >mdi-delete</v-icon
         >
       </template>
       <template v-slot:top>
         <v-toolbar flat>
           <v-toolbar-title>
-            {{ t("branches", $vuetify) }}
+            {{ t("stages", $vuetify) }}
           </v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
@@ -51,18 +53,20 @@
             </v-btn></v-row
           >
 
-          <BranchCreate
+          <StageCreate
             :show="dialogCreate"
             @close="dialogCreate = false"
-            @branchCreated="getBranches"
-            :departments="departments"
+            @stageCreated="getStages"
+            :branches="branches.results"
+            :shifts="shifts"
           />
-          <BranchEdit
+          <StageEdit
             :show="dialogEdit"
             @closeEditDialog="closeEditDialog"
-            @branchEdit="getBranches"
-            :id="branchIdEdit"
-            :departments="departments"
+            @stageEdit="getStages"
+            :id="stageIdEdit"
+            :branches="branches.results"
+            :shifts="shifts"
           />
           <v-dialog max-width="500px" v-model="dialogDelete"
             ><v-card>
@@ -75,7 +79,7 @@
                   $t("cancel")
                 }}</v-btn>
 
-                <v-btn color="blue darken-1" text @click="deleteBranches">{{
+                <v-btn color="blue darken-1" text @click="deleteStages">{{
                   $t("ok")
                 }}</v-btn>
                 <v-spacer></v-spacer>
@@ -87,95 +91,109 @@
   </div>
 </template>
 
+
 <script lang="ts">
 import { t } from "@/i18n/translate";
 import Vue from "vue";
 import { Header } from "@/types/Headers";
-import BranchCreate from "@/components/Branch/BranchCreate.vue";
+import StageCreate from "@/components/Stage/StageCreate.vue";
+import StageFilters from "@/components/Stage/StageFilters.vue";
+
 import {
+  StagesService,
+  Paging_Stage_,
+  PermissionGroup,
   BranchesService,
   Paging_Branch_,
-  PermissionGroup,
-  Department,
-  DepartmentsService,
+  CollageShifts,
 } from "@/client";
-import BranchEdit from "@/components/Branch/BranchEdit.vue";
-interface BranchData {
+import StageEdit from "@/components/Stage/StageEdit.vue";
+interface StageData {
+  stages: Paging_Stage_;
   branches: Paging_Branch_;
-  departments: Array<Department>;
   loading: boolean;
   dialogCreate: boolean;
-  branchIdDelete: string | null;
-  branchIdEdit: string | null;
+  stageIdDelete: string | null;
+  stageIdEdit: string | null;
+  branch_id?: string;
+  shifts: Array<CollageShifts>;
 }
 export default Vue.extend({
-  data(): BranchData {
+  data(): StageData {
     return {
-      branchIdEdit: null,
-
-      branchIdDelete: null,
+      stageIdEdit: null,
+      branches: { count: 0, results: [] },
+      stageIdDelete: null,
       dialogCreate: false,
       loading: true,
-      departments: [],
-      branches: { count: 0, results: [] },
+      branch_id: undefined,
+      stages: { count: 0, results: [] },
+      shifts: Object.values(CollageShifts),
     };
   },
+
   methods: {
-    getBranches() {
+    getStages() {
       this.loading = true;
-      BranchesService.readBranches(1, 100).then((value) => {
-        this.branches = value;
+      StagesService.readStages(this.branch_id, null, 1, 100).then((value) => {
+        this.stages = value;
       });
       this.loading = false;
     },
-    t,
 
-    deleteBranches() {
-      BranchesService.deleteBranch(this.branchIdDelete!).then(() => {
-        this.getBranches();
+    t,
+    getBranches() {
+      BranchesService.readBranches(1, 100).then((value) => {
+        this.branches.results = value.results;
+      });
+    },
+    deleteStages() {
+      StagesService.deleteStage(this.stageIdDelete!).then(() => {
+        this.getStages();
       });
       this.closeDeleteDialog();
     },
     closeDeleteDialog() {
-      this.branchIdDelete = null;
+      this.stageIdDelete = null;
     },
     closeEditDialog() {
-      this.branchIdEdit = null;
+      this.stageIdEdit = null;
     },
-    getDepartment() {
-      DepartmentsService.readDepartments(1, 100).then((value) => {
-        this.departments = value.results;
-      });
+    onFilterChange(branch_id?: string) {
+      this.branch_id = branch_id;
+      this.getStages();
     },
-   
+      goToStageDetails(item: any) {
+      this.$router.push("/stage/" + item.id);
+    },
   },
   created() {
+    this.getStages();
     this.getBranches();
-    this.getDepartment();
   },
   computed: {
     headers(): Array<Header> {
       return [
         { text: this.$t("name"), value: "name" },
-        { text: this.$t("englishName"), value: "en_name" },
-        { text: this.$t("abbr"), value: "abbr" },
-        { text: this.$t("vision"), value: "vision" },
+        { text: this.$t("shift"), value: "shift" },
+        { text: this.$t("level"), value: "level" },
         { text: this.$t("actions"), value: "actions", sortable: false },
       ];
     },
     permissionsGroup(): PermissionGroup {
-      return this.$store.state.permissions?.branches;
+      return this.$store.state.permissions?.stages;
     },
     dialogDelete(): boolean {
-      return this.branchIdDelete != null;
+      return this.stageIdDelete != null;
     },
     dialogEdit(): boolean {
-      return this.branchIdEdit != null;
+      return this.stageIdEdit != null;
     },
   },
   components: {
-    BranchCreate,
-    BranchEdit,
+    StageCreate,
+    StageEdit,
+    StageFilters,
   },
 });
 </script>

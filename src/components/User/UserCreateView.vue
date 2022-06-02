@@ -3,7 +3,7 @@
     v-model="show"
     fullscreen
     hide-overlay
-    transition="dialog-bottom-transition"
+    transition="dialog-top-transition"
   >
     <v-card>
       <v-toolbar dark color="primary">
@@ -41,7 +41,7 @@
                 outlined
                 ref="name"
                 v-model="userCreate.name"
-                label="Name"
+                :label="$t('name')"
                 required
               >
               </v-text-field>

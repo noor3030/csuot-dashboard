@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pa-6">
     <v-data-table
       :headers="headers"
       :items="paging.rooms.results"
@@ -104,7 +104,7 @@
 import { t } from "@/i18n/translate";
 import Vue from "vue";
 import { Header } from "@/types/Headers";
-import RoomCreate from "@/components/RoomCreate.vue";
+import RoomCreate from "@/components/Room/RoomCreate.vue";
 import {
   RoomsService,
   Paging_Room_,
@@ -115,7 +115,7 @@ import {
   Floor,
   Building,
 } from "@/client";
-import RoomEdit from "@/components/RoomEdit.vue";
+import RoomEdit from "@/components/Room/RoomEdit.vue";
 interface RoomsData {
   paging: {
     rooms: Paging_Room_;

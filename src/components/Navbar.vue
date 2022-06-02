@@ -123,6 +123,12 @@ export default Vue.extend({
           route: "/branches",
           permission: true,
         },
+        {
+          icon: "mdi-layers-triple",
+          text: `${this.$t("stages")}`,
+          route: "/stages",
+          permission: true,
+        },
       ];
     },
   },

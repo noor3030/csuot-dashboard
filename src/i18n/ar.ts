@@ -61,7 +61,13 @@ const local: localizations = {
   vision: "الرؤية",
   addNewBranch: "اضافة فرع جديد",
   department: "القسم",
-  editBranch: "تعديل الفرع"
+  editBranch: "تعديل الفرع",
+  stage: "المرحلة",
+  stages: "المراحل",
+  shift: "نوع الدراسة",
+  level: "المرحلة",
+  addNewStage: "اضافة مرحلة جديدة",
+  editStage: "تعديل المرحلة"
 };
 
 export default local;
